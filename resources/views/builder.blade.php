@@ -70,7 +70,7 @@
                     <a href="#!" class="brand-logo"><i class="material-icons">account_balance</i>BUILDER</a>
                     <ul class="right hide-on-med-and-down">
                         <!-- Trigger del Menu de Opciones-->
-                        <li><a class="dropdown-button" href="#!" data-activates="dropdown_opciones">Opciones<i class="material-icons right">more_vert</i></a></li>
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown_opciones">@if (Auth::guest()) Visitante @else {{ Auth::user()->name }} @endif<i class="material-icons right">more_vert</i></a></li>
                     </ul>
                 </div>
             </nav>

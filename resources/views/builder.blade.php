@@ -45,7 +45,7 @@
             <!-- Estructura del Menu de Opciones -->
             <ul id="dropdown_opciones" class="dropdown-content">
                 @if (Route::has('login'))
-                <li><a href="#!"><b>Cuenta</b></a></li>
+                <li><a href="#!"><b>@if (Auth::guest()) Visitante @else {{ Auth::user()->name }} @endif</b></a></li>
                     @if (Auth::check())
                         <li id="user_account"><a href="{{ url('/home') }}">Mi cuenta</a></li>
                     @else
@@ -123,7 +123,7 @@
 
     <!-- Boton de herramientas -->
     <div class="fixed-action-btn vertical click-to-toggle">
-        <a class="btn-floating btn-large">
+        <a id="tools_btn" class="btn-floating btn-large">
             <i class="material-icons">build</i>
         </a>
         <ul id="tools">

@@ -10,11 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
 	return view('builder');
     //return view('welcome');
 });
+
+//Guardar mapa actual
+Route::get('/save-map','MapsController@save');
+
+Route::get('/show-maps/{id}','MapsController@show');
 
 //Para crear los roles en la base de datos (Admin/Member/Guest)
 Route::get('/setup-roles', function () {

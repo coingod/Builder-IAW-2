@@ -241,5 +241,73 @@ define([
         $("#canvas").css({ top: top, left: left });
     };
 
+    Canvas.createPNG = function() {
+        var buffer = document.createElement("canvas").getContext("2d");
+        buffer.canvas.width = parseInt($("#canvas").css("width"));
+        buffer.canvas.height = parseInt($("#canvas").css("height"));
+        //console.log( "Canvas: " + buffer.canvas.width + "-" + buffer.canvas.height);
+
+        //Precargamos las imagenes de los tilesets
+        var sources = [];
+        var tilesets = Editor.Tileset.info.categories;
+        //console.log(tilesets);
+        var i = 0;
+        for (i = 0; i < tilesets.length; i++) {
+            sources.push($(tilesets).get(i).path);
+        }
+        //console.log(sources);
+
+        loadImages(sources, function(tilesets) {
+            var x, y, offset, ofx, ofy, ts_id;
+
+            //console.log(tilesets);
+
+            //Recorremos todas las capas
+            $(".layer").each(function(index) {
+                //console.log( index + ": " + $( this ) );
+                console.log( "Layer " + index );
+                //Recorremos todos los tiles de la capa
+                $(this).children().each(function(index2) {
+                    //console.log( "  -" + index2 + ": " + $( this ) );
+                    //Obtenemos las coordenadas del tile en el canvas
+                    x = parseInt($(this).css("left"));//$(this).attr('left');
+                    y = parseInt($(this).css("top"));//$(this).attr('top');
+                    //Obtenemos las coordenadas del tile en el tileset
+                    //img.setAttribute('src', $(this).css("background-image"));
+                    offset = $(this).css("background-position").split(" ");
+                    ofx = -parseInt(offset[0]);
+                    ofy = -parseInt(offset[1]);
+                    //Obtenemos la id del tileset
+                    ts_id = parseInt($(this).attr("class").split("_")[1]);
+                    //Dibujamos el tile en el buffer de la imagen PNG
+                    buffer.drawImage(tilesets[ts_id], ofx, ofy, tw, th, x, y, tw, th);
+                    //console.log("   Img: " + ofx + " " + ofy + " " + tw + " " + th + " " + x + " " + y + " " + tw + " " + th);
+                });
+            });
+
+            //Abrimos una ventana nueva y mostramos la imagen completa
+            window.open(buffer.canvas.toDataURL());
+        });
+    };
+
+    function loadImages(sources, callback) {
+        var images = {};
+        var loadedImages = 0;
+        var numImages = 0;
+        // get num of sources
+        for(var src in sources) {
+          numImages++;
+        }
+        for(var src in sources) {
+          images[src] = new Image();
+          images[src].onload = function() {
+            if(++loadedImages >= numImages) {
+              callback(images);
+            }
+          };
+          images[src].src = sources[src];
+        }
+      }
+
     return Canvas;
 });

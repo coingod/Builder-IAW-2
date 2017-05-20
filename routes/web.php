@@ -25,7 +25,7 @@ Route::get('/setup-roles', function () {
 	$user->id = 1;
 	$user->name = 'admin';
 	$user->email = 'admin@builder.com';
-	$user->password = 'root';
+	$user->password = bcrypt('root');
 	$user->save();
 
 	//Creamos el perfil de Administrador

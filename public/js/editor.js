@@ -64,6 +64,11 @@ define([
         $("#import_map").on("click", function() {
             $("#dialog_import").modal("open");
         });
+        $("#export_png").on("click", function() {
+            //$("#dialog_import").modal("open");
+            Editor.Canvas.createPNG();
+        });
+
 
         //Seteamos Modo de edicion por defecto
         $("#edit_mode").click();

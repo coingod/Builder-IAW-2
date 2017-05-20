@@ -11,7 +11,7 @@ define([
         layers = Editor.Layers;
 
         botonExportar = document.createElement('a');
-        botonExportar.textContent = "Exportar";
+        botonExportar.textContent = "Exportar JSON";
         document.getElementById("export_map").appendChild(botonExportar);
 
         //Inicializamos getter de archivo

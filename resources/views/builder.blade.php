@@ -55,8 +55,9 @@
                 @endif
                 <li><a href="#!"><b>Mapa</b></a></li>
                 <li id="new_map"><a href="#!">Nuevo</a></li>
-                <li id="import_map"><a href="#!">Importar</a></li>
+                <li id="import_map"><a href="#!">Importar JSON</a></li>
                 <li id="export_map"></li>
+                <li id="export_png"><a href="#!">Exportar PNG</a></li>
                 <li class="divider"></li>
                 <li><a href="#!"><b>Interfaz</b></a></li>
                 <li id="light_theme"><a href="#!">Light</a></li>

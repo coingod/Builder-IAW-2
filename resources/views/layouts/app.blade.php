@@ -12,13 +12,13 @@
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen">
     <!--Import main.css-->
-    <link type="text/css" rel="stylesheet" href="css/light.css" id="light-styles">
-    <link type="text/css" rel="stylesheet alternate" href="css/dark.css" id="dark-styles">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/light.css') }}" id="light-styles">
+    <link type="text/css" rel="stylesheet alternate" href="{{ asset('css/dark.css') }}" id="dark-styles">
     <!-- Librerias JQuery -->
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.3.custom.min.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui-1.10.3.custom.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.jscrollpane.css') }}">
 
 </head>
 <body>

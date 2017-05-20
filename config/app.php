@@ -178,6 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Socialite
         Laravel\Socialite\SocialiteServiceProvider::class,
+        // Entrust
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],
 
@@ -228,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 

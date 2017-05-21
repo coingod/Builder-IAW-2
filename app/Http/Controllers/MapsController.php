@@ -82,8 +82,11 @@ class MapsController extends Controller
         $mapa = new Mapa();
 
         //IDS HARDCODEADOS
-        $canvasId = Canvas::first()->canvasId; //Hardcoded. Tomar del json
-        $userId = 1; //Hardcoded. Tomar del json
+        $mapa->canvasId = Canvas::first()->canvasId; //Hardcoded. Tomar del json
+        $mapa->userId = 1; //Hardcoded. Tomar del json
+        $mapa->tilesetId = Tileset::first()->tilesetId; //Hardcoded. Tomar del json
+
+        $mapa->save();
 
         //Cargamos Tiles y Layers!
         for($i=0; $i<count($layersInfo); $i++){

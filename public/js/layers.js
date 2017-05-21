@@ -33,7 +33,6 @@ define([
                 Layers.toggle(event);
             } else if ($(event.target).text() == icon_remove) {
                 //Obtenemos la capa que registro el evento
-                console.log("HOLAA!");
                 layerABorrar = $(event.target).parent();
                 $("#layer_delete").modal("open");
             }

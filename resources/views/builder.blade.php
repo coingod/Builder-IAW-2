@@ -55,10 +55,11 @@
                 @endif
                 <li><a href="#!"><b>Mapa</b></a></li>
                 <li id="new_map"><a href="#!">Nuevo</a></li>
+                <li id="export_png"><a href="#!">Exportar PNG</a></li>
                 <li id="import_map"><a href="#!">Importar JSON</a></li>
                 <li id="export_map"></li>
-                <li id="save_map"><p>Save map in BD</p></li>
-                <li id="export_png"><a href="#!">Exportar PNG</a></li>
+                <li id="save_map"><a>Save map in BD</a></li>
+                <li id="open_maps_library"><a href="#maps_library">Ver Mapas</a></li>
                 <li class="divider"></li>
                 <li><a href="#!"><b>Interfaz</b></a></li>
                 <li id="light_theme"><a href="#!">Light</a></li>
@@ -139,6 +140,48 @@
             <li id="pan_mode"><a class="btn-floating tooltipped" data-position="left" data-delay="50" data-tooltip="Mover Canvas"><i class="material-icons">pan_tool</i></a></li>
         </ul>
     </div>
+
+      <!-- Modal Trigger -->
+      <a class="waves-effect waves-light btn" href="#modal1">Modal</a>
+
+      <!-- Modal Structure -->
+      <div id="maps_library" class="modal bottom-sheet">
+        <div class="modal-content">
+        <div class="modal-footer"><h4>Mapas<i><a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Cerrar</a></i></h4></div>
+            <div class="row">
+            <div class="col s12">
+              <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#default_maps">Precargados</a></li>
+                @if (Auth::user()) <li class="tab col s3"><a href="#user_maps">Mis Mapas</a></li> @endif
+              </ul>
+            </div>
+            <div id="default_maps" class="col s12">
+                <div class="maplist collection">
+                <!--
+                  <a class="collection-item avatar">
+                    <img src="/img/preview/example.png" alt="" class="circle">
+                    <span class="title">Title</span>
+                    <p>First Line <br>
+                       Second Line
+                    </p>
+                    <i class="secondary-content material-icons">delete</i>
+                    <i class="secondary-content material-icons">share</i>
+                    <i class="secondary-content material-icons">file_download</i>
+                    <i class="secondary-content material-icons">file_upload</i>
+                    <i class="secondary-content material-icons">mode_edit</i>
+                  </a>
+                  -->
+                </div>
+            </div>
+            @if (Auth::user()) 
+            <div id="user_maps" class="col s12">
+                <div class="maplist collection">
+                </div>
+            </div> 
+            @endif
+          </div>
+        </div>
+      </div>
 
     <!-- Cuadros de dialogo usados por la aplicacion -->
     <div id="dialog_list">

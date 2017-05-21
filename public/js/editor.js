@@ -3,8 +3,9 @@ define([
     "canvas",
     "tileset",
     "currentState",
-    "layers"
-], function($, Canvas, Tileset, currentState, Layers) {
+    "layers",
+    "maps"
+], function($, Canvas, Tileset, currentState, Layers, Maps) {
     var Editor = {};
 
     Editor.tool = "edit_mode"; //Que es lo que estoy haciendo, dibujando, rellenando, eliminando
@@ -14,6 +15,7 @@ define([
     Editor.Canvas = Canvas.initialize(Editor);
     Editor.Layers = Layers.initialize(Editor);
     Editor.currentState = currentState.initialize(Editor);
+    Editor.Maps = Maps.initialize(Editor);
 
     Editor.initialize = function() {
         /*
@@ -26,6 +28,7 @@ define([
         //Configuramos la estructura de todos los cuadros de dialogo
         Editor.Layers.crearDialog();
         $("#dialog_info").modal();
+        $("#maps_library").modal();
         Editor.currentState.crearDialog();
         Editor.Canvas.crearDialog();
 

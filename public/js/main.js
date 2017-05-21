@@ -26,7 +26,9 @@ require.config({
     paths: {
         "jquery": "libs/jquery",
         "jquery-ui": "libs/jquery-ui",
-        "jquery.mousewheel": "plugins/jquery.mousewheel",
+        //"jquery": ["https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min", "libs/jquery"],
+        //"jquery-ui": ["https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min", "libs/jquery-ui"],
+        "jquery.mousewheel": "plugins/jquery.mousewheel.min",
         "jquery.jscrollpane": "plugins/jquery.jscrollpane",
         "jquery.draggable": "plugins/jquery.draggable",
 

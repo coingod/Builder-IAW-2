@@ -199,7 +199,7 @@ textarea.materialize-textarea:focus.valid {
 
 /* Descripcion asociada al tile */
 
-.collection .collection-item.avatar .title {
+#tile_preview .collection-item.avatar .title {
     position: relative;
     font-size: 16px;
     text-transform: uppercase;
@@ -308,6 +308,42 @@ textarea.materialize-textarea:focus.valid {
 #pan_mode .btn-floating {
     background-color: #ffd700;
 }
+
+/* ====== Libreria de Mapas ====== */
+
+#maps_library {
+    max-height: 75%;
+    min-height: 50%;
+}
+
+/*
+.maptabs .tabs .tab a {
+    padding-top: 5%;
+    font-size: 16px;
+    color: #2196F3;
+}
+*/
+
+.maplist .collection-item.avatar .secondary-content {
+    position: relative;
+    top: -64px;
+}
+
+.maplist .collection-item.avatar {
+    padding-left: 160px;
+    min-height: 150px;
+}
+
+.maplist .collection-item.avatar .circle {
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 
 @media only screen and (max-width: 992px) {
     header,

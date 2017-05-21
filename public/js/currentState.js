@@ -29,7 +29,7 @@ define([
     };
 
     currentState.loadCurrentState = function() {
-        currentState.json = {}; //Esto es lo que vamos a utilizar como objeto 
+        currentState.json = {}; //Esto es lo que vamos a utilizar como objeto
         currentState.json.tilesetInfo = Editor.Tileset.info;
         currentState.json.canvasInfo = {};
 

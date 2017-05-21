@@ -16,7 +16,9 @@ Route::get('/', function () {
 });
 
 //Guardar mapa actual
-Route::get('/save-map','MapsController@save');
+Route::post('/save-map','MapsController@store');
+Route::get('/save-map','MapsController@publish');
+
 
 Route::get('/show-maps/{id}','MapsController@show');
 

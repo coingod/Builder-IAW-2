@@ -58,7 +58,12 @@ define([
         });
 
         //Oyentes para el menu de opciones
-        $("#new_map").on("click", function() {
+        $("#save_map").on("click", function(){
+          Editor.currentState.loadCurrentState();
+          $.ajax({ method: "POST", url: "/save-map", data:{data: JSON.stringify(Editor.currentState.json)}, processData:false });
+        });
+
+       $("#new_map").on("click", function() {
             $("#dialog_map").modal("open");
         });
         $("#import_map").on("click", function() {

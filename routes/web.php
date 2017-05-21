@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::post('/save-map','MapsController@store');
 Route::get('/save-map','MapsController@publish');
 
+Route::post('/load-tileset', 'MapsController@upload');
 
 Route::get('/show-maps/{id}','MapsController@show');
 

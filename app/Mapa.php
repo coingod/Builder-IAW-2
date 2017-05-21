@@ -12,5 +12,4 @@ class Mapa extends Model
     public $timestamps=false;
 
     protected $fillable = ['token', 'userId', 'tilesetId', 'canvasId'];
-
 }

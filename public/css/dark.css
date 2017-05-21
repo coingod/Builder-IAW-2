@@ -173,13 +173,13 @@ textarea.materialize-textarea:focus.valid {
 
 /* Estilo de las vistas previas de los Tiles en el Editor */
 
-.collection .collection-item.avatar {
+.tilelist .collection-item.avatar {
     /*padding-left: 40%;*/
     display: inline-block;
     border: 0px;
 }
 
-.collection .collection-item.avatar .circle {
+.tilelist .collection-item.avatar .circle {
     position: absolute;
     width: 64px;
     height: 64px;

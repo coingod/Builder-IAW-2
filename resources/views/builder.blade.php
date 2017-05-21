@@ -60,6 +60,8 @@
                 <li id="export_map"></li>
                 <li id="save_map"><a>Save map in BD</a></li>
                 <li id="open_maps_library"><a href="#maps_library">Ver Mapas</a></li>
+                <li id="upload_info"><a>Upload data</a></li>
+                <li id="export_png"><a href="#!">Exportar PNG</a></li>
                 <li class="divider"></li>
                 <li><a href="#!"><b>Interfaz</b></a></li>
                 <li id="light_theme"><a href="#!">Light</a></li>

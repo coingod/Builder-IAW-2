@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2017 a las 22:45:40
+-- Tiempo de generación: 21-05-2017 a las 21:42:18
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -39,8 +39,8 @@ CREATE TABLE `canvas` (
 --
 
 INSERT INTO `canvas` (`canvasId`, `tw`, `th`, `width`, `height`) VALUES
-(1, 64, 64, 5, 5),
-(2, 64, 64, 5, 5);
+(4, 64, 64, 13, 10),
+(5, 64, 64, 13, 10);
 
 -- --------------------------------------------------------
 
@@ -59,6 +59,16 @@ CREATE TABLE `categorias` (
   `tilesetId` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `categorias`
+--
+
+INSERT INTO `categorias` (`name`, `path`, `icon`, `width`, `height`, `emptyTiles`, `categoriaId`, `tilesetId`) VALUES
+('Terreno', 'img/tilesets/terrain.png', 'terrain', 256, 192, 0, 43, 2),
+('Naturaleza', 'img/tilesets/nature.png', 'nature', 256, 192, 0, 44, 2),
+('Caminos', 'img/tilesets/roads.png', 'directions', 512, 256, 2, 45, 2),
+('Edificios', 'img/tilesets/buildings.png', 'store', 256, 192, 0, 46, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -72,6 +82,24 @@ CREATE TABLE `layers` (
   `tilesetId` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `layers`
+--
+
+INSERT INTO `layers` (`layerId`, `name`, `visible`, `tilesetId`) VALUES
+(61, 'Background', 'visibility', 2),
+(62, 'Terreno', 'visibility', 2),
+(63, 'Background', 'visibility', 2),
+(64, 'Terreno', 'visibility', 2),
+(65, 'Background', 'visibility', 2),
+(66, 'Terreno', 'visibility', 2),
+(67, 'Background', 'visibility', 2),
+(68, 'Terreno', 'visibility', 2),
+(69, 'Background', 'visibility', 2),
+(70, 'Terreno', 'visibility', 2),
+(71, 'Background', 'visibility', 2),
+(72, 'Terreno', 'visibility', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -83,15 +111,11 @@ CREATE TABLE `mapas` (
   `userId` int(10) UNSIGNED NOT NULL,
   `tilesetId` int(11) UNSIGNED NOT NULL,
   `canvasId` int(11) UNSIGNED NOT NULL,
-  `token` varchar(32) DEFAULT NULL
+  `token` varchar(32) DEFAULT NULL,
+  `link` varchar(70) DEFAULT NULL,
+  `descripcion` varchar(100) DEFAULT NULL,
+  `nombre` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `mapas`
---
-
-INSERT INTO `mapas` (`mapaId`, `userId`, `tilesetId`, `canvasId`, `token`) VALUES
-(2, 1, 1, 2, 'jhjhfjfhj');
 
 -- --------------------------------------------------------
 
@@ -235,8 +259,19 @@ CREATE TABLE `tiles` (
   `layerId` int(11) UNSIGNED NOT NULL,
   `tileId` int(11) UNSIGNED NOT NULL,
   `coordX` int(11) NOT NULL,
-  `coordY` int(11) NOT NULL
+  `coordY` int(11) NOT NULL,
+  `tileInCategoria` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tiles`
+--
+
+INSERT INTO `tiles` (`categoriaId`, `layerId`, `tileId`, `coordX`, `coordY`, `tileInCategoria`) VALUES
+(43, 72, 26, 6, 3, 6),
+(43, 72, 27, 4, 2, 6),
+(43, 72, 28, 3, 3, 6),
+(43, 72, 29, 3, 4, 6);
 
 -- --------------------------------------------------------
 
@@ -255,7 +290,7 @@ CREATE TABLE `tilesets` (
 --
 
 INSERT INTO `tilesets` (`tilesetId`, `tw`, `th`) VALUES
-(1, 64, 64);
+(2, 64, 64);
 
 -- --------------------------------------------------------
 
@@ -383,22 +418,22 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `canvas`
 --
 ALTER TABLE `canvas`
-  MODIFY `canvasId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `canvasId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `categoriaId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `categoriaId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT de la tabla `layers`
 --
 ALTER TABLE `layers`
-  MODIFY `layerId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `layerId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT de la tabla `mapas`
 --
 ALTER TABLE `mapas`
-  MODIFY `mapaId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `mapaId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
@@ -418,12 +453,12 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `tiles`
 --
 ALTER TABLE `tiles`
-  MODIFY `tileId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `tileId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT de la tabla `tilesets`
 --
 ALTER TABLE `tilesets`
-  MODIFY `tilesetId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `tilesetId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --

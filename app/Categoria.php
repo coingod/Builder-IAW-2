@@ -12,5 +12,5 @@ class Categoria extends Model
     protected $primaryKey = 'categoriaId';
     public $timestamps=false;
 
-    protected $fillable = ['name', 'path', 'tilesetId', 'width', 'height', 'emptyTiles'];
+    protected $fillable = ['name', 'path', 'tilesetId', 'width', 'height', 'emptyTiles', 'icon'];
 }

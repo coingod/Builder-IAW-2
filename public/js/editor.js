@@ -63,9 +63,13 @@ define([
         //Oyentes para el menu de opciones
         $("#save_map").on("click", function(){
           Editor.currentState.loadCurrentState();
-          $.ajax({ method: "POST", url: "/save-map", data:{data: JSON.stringify(Editor.currentState.json)}, processData:false });
+          $.ajax({ method: "POST", url: "/save-map", data:Editor.currentState.json });
         });
-
+        $("#upload_info").on("click", function(){
+          Editor.currentState.loadCurrentState();
+          Editor.currentState.json.layersInfo={}; //No necesitamos enviar esto, lo obviamos!
+          $.ajax({ method: "POST", url: "/load-tileset", data:Editor.currentState.json });
+        });
        $("#new_map").on("click", function() {
             $("#dialog_map").modal("open");
         });

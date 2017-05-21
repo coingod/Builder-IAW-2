@@ -140,7 +140,7 @@ define([
                     coords = xAct + "." + yAct;
                     nroit = x + y * celdasX;
                     bufferADibujar.drawImage(img, xAct, yAct, tw, th, 0, 0, tw, th);
-                    tile = $("<azzz href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'></a>");
+                    tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'></a>");
                     $("#tilelist_" + index).append(tile);
                     bufferADibujar.clearRect(0, 0, tw, th); //Limpio el buffer para que al dibujar elementos transparentes no quede basura del tile anterior
                 }

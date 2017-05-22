@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Builder') }}</title>
+    <title>Builder</title>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -19,6 +19,10 @@
     <!-- Librerias JQuery -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui-1.10.3.custom.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.jscrollpane.css') }}">
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/libs/jquery.js') }}"></script>
+    <script src="{{ asset('js/libs/materialize.js') }}"></script>
 
 </head>
 <body>
@@ -59,8 +63,6 @@
 
         @yield('content')
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/libs/jquery.js') }}"></script>
-    <script src="{{ asset('js/libs/materialize.js') }}"></script>
+    
 </body>
 </html>

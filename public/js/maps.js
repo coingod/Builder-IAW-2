@@ -16,10 +16,17 @@ define([
 
     var default_maps = "default_maps";
     var user_maps = "user_maps";
+    var umap, dmap;
 
     Maps.initialize = function(editor) {
 
+        console.log("Maps initiated");
+
         Editor = editor;
+
+        //Obtenemos los templates para la ui de los mapas
+        umap = $("#umap").removeAttr('id');
+        dmap = $("#dmap").removeAttr('id');
 
         //Registramos el oyente de la lista de mapas
         $(".maplist").on("mousedown", "a" ,function(e) {
@@ -87,21 +94,32 @@ define([
         if (!name) name = "Mapa " + currentMap;
 
         var thumbail = "/img/preview/example.png";
-        var delete_span = "<i class='secondary-content "+icon_remove+" material-icons'>" + icon_remove + "</i>";
-        var share_span = "<i class='secondary-content "+icon_share+" material-icons'>" + icon_share +"</i>";
-        var export_span = "<i class='secondary-content "+icon_export+" material-icons'>" + icon_export + "</i>";
-        var edit_span = "<i class='secondary-content "+icon_edit+" material-icons'>" + icon_edit + "</i>";
-        var map_id = "map-id=" + currentMap++;
+        //var delete_span = "<i class='secondary-content "+icon_remove+" material-icons'>" + icon_remove + "</i>";
+        //var share_span = "<i class='secondary-content "+icon_share+" material-icons'>" + icon_share +"</i>";
+        //var export_span = "<i class='secondary-content "+icon_export+" material-icons'>" + icon_export + "</i>";
+        //var edit_span = "<i class='secondary-content "+icon_edit+" material-icons'>" + icon_edit + "</i>";
+        //var map_id = "map-id=" + currentMap++;
 
         //Creamos el item con la ID correspondiente
         //var map = $("<a href='#!' class='collection-item active' data-id=" + currentMap + " > <i class='layer-name'>" + name + "</i> <i class='secondary-content delete material-icons'>delete</i><i class='secondary-content visibility material-icons'>" + icon_visible + "</i></a>");
         var map;
 
-        if(lista == default_maps)
-            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + share_span + export_span + "</a>");
-        else if (lista == user_maps)
-            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + delete_span + share_span + export_span + edit_span + "</a>");
+        if (lista == user_maps)
+            map = umap.clone().attr("map-id", currentMap++);
+        else if(lista == default_maps)
+            map = dmap.clone().attr("map-id", currentMap++);
 
+        //Ponemos el nombre
+        map.children().filter(".title").text(name);
+        //Y el preview
+        map.children().filter("img").attr("src", thumbail);
+
+        /*
+        if (lista == user_maps)
+            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + delete_span + share_span + export_span + edit_span + "</a>");
+        else if(lista == default_maps)
+            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + share_span + export_span + "</a>");
+        */
         //Agregamos el item a la lista de mapas precargados
         $("#"+lista+" .maplist").append(map);
     };

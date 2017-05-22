@@ -182,20 +182,6 @@
             </div>
             <div id="default_maps" class="col s12">
                 <div class="maplist collection">
-                <!--
-                  <a class="collection-item avatar">
-                    <img src="/img/preview/example.png" alt="" class="circle">
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                       Second Line
-                    </p>
-                    <i class="secondary-content material-icons">delete</i>
-                    <i class="secondary-content material-icons">share</i>
-                    <i class="secondary-content material-icons">file_download</i>
-                    <i class="secondary-content material-icons">file_upload</i>
-                    <i class="secondary-content material-icons">mode_edit</i>
-                  </a>
-                  -->
                 </div>
             </div>
             @if (Auth::user()) 
@@ -298,6 +284,36 @@
             </div>
         </div>
 
+    </div>
+
+         <!-- Templates de la info de los mapas -->
+    <div id="map_templates" hidden>
+        <a id="dmap" href='#!' class="collection-item avatar">
+            <img src="" alt="" class="circle">
+            <i class="title"></i>
+            <p>First Line <br>
+               Second Line
+            </p>
+            @if (Auth::user() && Auth::user()->name == "admin") 
+            <i class="secondary-content delete material-icons">delete</i>
+            @endif
+            <i class="secondary-content share material-icons">share</i>
+            <i class="secondary-content file_download material-icons">file_download</i>
+            @if (Auth::user() && Auth::user()->name == "admin") 
+            <i class="secondary-content modo_edit material-icons">mode_edit</i>
+            @endif
+        </a>
+        <a id="umap" href='#!' class="collection-item avatar">
+            <img src="" alt="" class="circle">
+            <i class="title"></i>
+            <p>First Line <br>
+               Second Line
+            </p>
+            <i class="secondary-content delete material-icons">delete</i>
+            <i class="secondary-content share material-icons">share</i>
+            <i class="secondary-content file_download material-icons">file_download</i>
+            <i class="secondary-content modo_edit material-icons">mode_edit</i>
+        </a>
     </div>
     <!-- data-main attribute tells require.js to load js/main.js after require.js loads. -->
     <script type="text/javascript" data-main="js/main" src="js/libs/require.js"></script>

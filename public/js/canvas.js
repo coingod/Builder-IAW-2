@@ -104,10 +104,10 @@ define([
     //Dibuja en la capa actual un elemento especificado
     Canvas.loadElement = function(tileData) {
         //Formato: [id_tile, id_tileset, canvas_fila, canvas_columna]
-        var id_tile = tileData[0];
-        var id_ts = tileData[1];
-        var fila = tileData[2];
-        var col = tileData[3];
+        var id_tile = tileData.tileInCategoria;
+        var id_ts = tileData.idCategoria;
+        var fila = tileData.cx;
+        var col = tileData.cy;
 
         //Consultamos las dimensiones del tileset
         var ts_width = Editor.Tileset.info.categories[id_ts].width; //$("#tileset_" + id_ts).attr("data-size");

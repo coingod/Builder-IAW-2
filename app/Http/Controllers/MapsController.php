@@ -35,7 +35,17 @@ class MapsController extends Controller
       return compact('maps');
     }
 
-    public function upload(Request $request){
+    public function canvas(){
+      return Canvas::all();
+    }
+
+    public function resetDB(Request $request){
+      //Borramos todas las tablas que vamos a afectar con el reset
+      Tileset::getQuery()->delete();
+      Categoria::getQuery()->delete();
+      Canvas::getQuery()->delete();
+
+
       //Upload de la BD inicial.. Establecemos categorias, tilesets, canvas.. cosas que quedan fijas siempre.
       $tilesetInfo=$request->tilesetInfo;
       $canvasInfo=$request->canvasInfo;
@@ -81,10 +91,13 @@ class MapsController extends Controller
         //Creacion de mapa
         $mapa = new Mapa();
 
-        //IDS HARDCODEADOS
-        $mapa->canvasId = Canvas::first()->canvasId; //Hardcoded. Tomar del json
-        $mapa->userId = 1; //Hardcoded. Tomar del json
-        $mapa->tilesetId = Tileset::first()->tilesetId; //Hardcoded. Tomar del json
+        //Buscamos el canvas en la BD que se corresponda con el que viene en el json.. No deberia haber repetidos!
+        $consultaCanvas = Canvas::all()->where("height","=",$canvasInfo["height"])->where("width","=",$canvasInfo["width"])->first();
+        $canvasid=$consultaCanvas->canvasId;
+
+        $mapa->canvasId = $canvasid;
+        $mapa->userId = Auth::user()->id;
+        $mapa->tilesetId = Tileset::first()->tilesetId; //Hardcoded, el tileset no cambia.
 
         $mapa->save();
 

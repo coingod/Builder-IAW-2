@@ -19,7 +19,9 @@ Route::get('/', function () {
 Route::post('/save-map','MapsController@store');
 Route::get('/save-map','MapsController@publish');
 
-Route::post('/load-tileset', 'MapsController@upload');
+Route::get('/canvas-collection', 'MapsController@canvas');
+
+Route::post('/resetDB', 'MapsController@resetDB');
 
 Route::get('/show-maps/{id}','MapsController@show');
 

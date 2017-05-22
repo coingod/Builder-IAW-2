@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Builder IAW</title>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -42,27 +45,48 @@
 
         <!-- Cabecera de la pagina -->
         <header class="col s12 z-depth-5">
-            <!-- Estructura del Menu de Opciones -->
-            <ul id="dropdown_opciones" class="dropdown-content">
+            <!-- Estructura del Menu de Cuenta de usuario -->
+            <ul id="dropdown_account" class="dropdown-content">
                 @if (Route::has('login'))
                 <li><a href="#!"><b>@if (Auth::guest()) Visitante @else {{ Auth::user()->name }} @endif</b></a></li>
                     @if (Auth::check())
                         <li id="user_account"><a href="{{ url('/home') }}">Mi cuenta</a></li>
+                        <li id="user_logout">
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                                Cerrar Sesion
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
                     @else
                         <li id="user_login"><a href="{{ url('/login') }}">Iniciar Sesion</a></li>
                         <li id="user_register"><a href="{{ url('/register') }}">Registrarse</a></li>
                     @endif
                 @endif
+                <li class="divider"></li>
+                <li id="open_maps_library"><a href="#maps_library">Catalogo</a></li>
+            </ul>
+            <!-- Estructura del Menu de Mapa -->
+            <ul id="dropdown_mapas" class="dropdown-content">
                 <li><a href="#!"><b>Mapa</b></a></li>
                 <li id="new_map"><a href="#!">Nuevo</a></li>
-                <li id="export_png"><a href="#!">Exportar PNG</a></li>
-                <li id="import_map"><a href="#!">Importar JSON</a></li>
-                <li id="export_map"></li>
-                <li id="save_map"><a>Save map in BD</a></li>
-                <li id="open_maps_library"><a href="#maps_library">Ver Mapas</a></li>
-                <li id="upload_info"><a>Upload data</a></li>
-                <li id="export_png"><a href="#!">Exportar PNG</a></li>
+                @if (Auth::user())
                 <li class="divider"></li>
+                <li id="save_map"><a>Guardar</a></li>
+                <li id="upload_info"><a>Upload data</a></li>
+                @endif
+                <li class="divider"></li>
+                <li id="export_map"></li>
+                <li id="import_map"><a href="#!">Importar JSON</a></li>
+                <li class="divider"></li>
+                <li id="export_png"><a href="#!">Exportar PNG</a></li>
+            </ul>
+            <!-- Estructura del Menu de Opciones -->
+            <ul id="dropdown_opciones" class="dropdown-content">
                 <li><a href="#!"><b>Interfaz</b></a></li>
                 <li id="light_theme"><a href="#!">Light</a></li>
                 <li id="dark_theme"><a href="#!">Dark</a></li>
@@ -75,7 +99,9 @@
                     <a href="#!" class="brand-logo"><i class="material-icons">account_balance</i>BUILDER</a>
                     <ul class="right hide-on-med-and-down">
                         <!-- Trigger del Menu de Opciones-->
-                        <li><a class="dropdown-button" href="#!" data-activates="dropdown_opciones">@if (Auth::guest()) Visitante @else {{ Auth::user()->name }} @endif<i class="material-icons right">more_vert</i></a></li>
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown_account">@if (Auth::guest()) Visitante @else {{ Auth::user()->name }} @endif<i class="material-icons right">face</i></a></li>
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown_mapas">Mapa <i class="material-icons right">map</i></a></li>
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown_opciones">Opciones <i class="material-icons right">more_vert</i></a></li>
                     </ul>
                 </div>
             </nav>
@@ -143,16 +169,13 @@
         </ul>
     </div>
 
-      <!-- Modal Trigger -->
-      <a class="waves-effect waves-light btn" href="#modal1">Modal</a>
-
       <!-- Modal Structure -->
       <div id="maps_library" class="modal bottom-sheet">
         <div class="modal-content">
-        <div class="modal-footer"><h4>Mapas<i><a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Cerrar</a></i></h4></div>
+        <div class="modal-footer"><h4>Catalogo de Mapas<i><a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Cerrar</a></i></h4></div>
             <div class="row">
             <div class="col s12">
-              <ul class="tabs">
+              <ul class="tabs tabs-fixed-width">
                 <li class="tab col s3"><a class="active" href="#default_maps">Precargados</a></li>
                 @if (Auth::user()) <li class="tab col s3"><a href="#user_maps">Mis Mapas</a></li> @endif
               </ul>
@@ -187,15 +210,25 @@
 
     <!-- Cuadros de dialogo usados por la aplicacion -->
     <div id="dialog_list">
-        <!-- Dialogo generico de informacion -->
-        <div id="layer_delete" class="modal">
+        <div id="map_delete" class="modal">
             <div class="modal-content">
-                <h4>Borrar capa</h4>
-                <p>Está a punto de eliminar una capa, esta accion <b>no se puede deshacer</b>, ¿Desea eliminar esta capa?</p>
+                <h4>Borrar Mapa</h4>
+                <p>Está a punto de eliminar uno de sus mapas, esta accion <b>no se puede deshacer</b>, ¿Desea eliminar este Mapa?</p>
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">No</a>
-                <a id="si" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
+                <a id="si_borrar_mapa" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
+            </div>
+        </div>
+        <!-- Borrar capa -->
+        <div id="layer_delete" class="modal">
+            <div class="modal-content">
+                <h4>Borrar Capa</h4>
+                <p>Está a punto de eliminar una capa, esta accion <b>no se puede deshacer</b>, ¿Desea eliminar esta Capa?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">No</a>
+                <a id="si_borrar_capa" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
             </div>
         </div>
         <!-- Importar JSON -->

@@ -42,15 +42,15 @@ define([
             } else if ($(event.target).hasClass(icon_remove)) {
                 //Obtenemos el mapa que registro el evento
                 mapaAborrar = $(event.target).parent();
-                $("#layer_delete").modal("open");
+                $("#map_delete").modal("open");
             }
         });
-        /*
+        
         //Oyente de confirmacion de borrado
-        $("#si").on("click", function(event) {
-            Maps.deleteLayer(mapaAborrar);
+        $("#si_borrar_mapa").on("click", function(event) {
+            Maps.deleteMap(mapaAborrar);
         });
-        */
+        
 
         Maps.addMap(null, default_maps);
         Maps.addMap(null, default_maps);
@@ -60,8 +60,11 @@ define([
 
         return this;
     };
-    /*
+    
     Maps.crearDialog = function() {
+        $("#maps_library").modal();
+        $('#maps_library modal-content row col tabs').tabs();
+        /*
         $("#dialog_new_layer").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
             complete: function() {
@@ -69,11 +72,12 @@ define([
                     Maps.addLayer(name, true);
                 } // Callback for Modal close
         });
-        $("#layer_delete").modal({
+        */
+        $("#map_delete").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
         });
     };
-    */
+    
     
 
     //Agrega una nueva capa
@@ -113,7 +117,7 @@ define([
     Maps.deleteMap = function(map) {
 
         //Eliminamos la capa de la interfaz
-        layer.remove();
+        map.remove();
     };
 
     return Maps;

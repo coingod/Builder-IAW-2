@@ -38,7 +38,7 @@ define([
             }
         });
         //Oyente de confirmacion de borrado
-        $("#si").on("click", function(event) {
+        $("#si_borrar_capa").on("click", function(event) {
             Layers.deleteLayer(layerABorrar);
         });
         $("#layers_add").on("click", function() {
@@ -119,7 +119,7 @@ define([
 
         //Si antes habia una sola capa ya es posible eliminar
         if ($("#layerlist a").length == 2) {
-            $(".secondary-content").filter(".delete").text(icon_remove);
+            $("#layerlist a .secondary-content").filter(".delete").text(icon_remove);
         }
     };
 
@@ -149,7 +149,7 @@ define([
 
         //Si solo queda una capa desabilitar eliminar
         if ($("#layerlist a").length == 1) {
-            $(".secondary-content").filter(".delete").text(icon_not_remove);
+            $("#layerlist a .secondary-content").filter(".delete").text(icon_not_remove);
         }
     };
 

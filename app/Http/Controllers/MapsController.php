@@ -16,32 +16,46 @@ class MapsController extends Controller
     //
 
     public function showMapsByUserId($id){
-      $maps = Mapa::all()->where('userId','=',$id);
+      $maps = Mapa::where('userId','=',$id)->get()->toArray();
       for($i=0; $i<count($maps) ; $i++){
-        //Buscamos el canvas que fue utilizado en el mapa
-        $maps[$i]->canvas = Canvas::all()->where('canvasId','=',$maps[$i]->canvasId);
-        //Buscamos el tileset que fue utilizado en el mapa
-        $maps[$i]->tilesetInfo = Tileset::all()->where('tilesetId', '=', $maps[$i]->tilesetId);
-        //Buscamos todas las layers que pertenecen al  mapa
-        $maps[$i]->layersInfo = Layer::all()->where('mapaId', '=', $maps[$i]->mapaId);
-        //Buscamos todas las categorias del tileset
-        $maps[$i]->tilesetInfo[0]->categories = Categoria::all()->where('tilesetId', '=', $maps[$i]->tilesetId);
-        //Buscamos todos los tiles que pertenezcan a cada layer utilizada en el mapa
-        for($j=0; $j<count($maps[$i]->layersInfo); $j++){
-          $maps[$i]->layersInfo[$j]->listaTiles=Tile::all()->where('layerId','=', $maps[$i]->layersInfo[$j]->layerId);
+        $maps[$i]["canvas"]=Canvas::where('canvasId','=',$maps[$i]["canvasId"])->first();
+        $maps[$i]["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$maps[$i]["tilesetId"])->first();
+        $maps[$i]["layersInfo"]=Layer::where('mapaId','=',$maps[$i]["mapaId"])->get()->toArray();
+        $maps[$i]["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$maps[$i]["tilesetId"])->get()->toArray();
+        for($j=0; $j<count($maps[$i]["layersInfo"]); $j++){
+          $maps[$i]["layersInfo"][$j]["listaTiles"]=Tile::where('layerId','=',$maps[$i]["layersInfo"][$j]["layerId"])->get()->toArray();
         }
       }
-
       return compact('maps');
     }
 
     public function mapByToken($token){
-      $toReturn=Mapa::all()->where('token','=',$token);
+      $arraycheck=Mapa::where('token','=',$token)->get()->toArray();
+      if(count($arraycheck)>0){
+        $toReturn=$arraycheck[0];
+        $toReturn["canvas"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
+        $toReturn["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$toReturn["tilesetId"])->first();
+        $toReturn["layersInfo"]=Layer::where('mapaId','=',$toReturn["mapaId"])->get()->toArray();
+        $toReturn["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$toReturn["tilesetId"])->get()->toArray();
+        for($j=0; $j<count($toReturn["layersInfo"]); $j++){
+          $toReturn["layersInfo"][$j]["listaTiles"]=Tile::where('layerId','=',$toReturn["layersInfo"][$j]["layerId"])->get()->toArray();
+        }
+      }
       return compact('toReturn');
     }
 
     public function mapById($id){
-      $toReturn=Mapa::all()->where('mapaId','=',$id);
+      $arraycheck=Mapa::where('mapaId','=',$id)->get()->toArray();
+      if(count($arraycheck)>0){
+        $toReturn=$arraycheck[0];
+        $toReturn["canvas"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
+        $toReturn["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$toReturn["tilesetId"])->first();
+        $toReturn["layersInfo"]=Layer::where('mapaId','=',$toReturn["mapaId"])->get()->toArray();
+        $toReturn["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$toReturn["tilesetId"])->get()->toArray();
+        for($j=0; $j<count($toReturn["layersInfo"]); $j++){
+            $toReturn["layersInfo"][$j]["listaTiles"]=Tile::where('layerId','=',$toReturn["layersInfo"][$j]["layerId"])->get()->toArray();
+          }
+      }
       return compact('toReturn');
     }
 
@@ -51,8 +65,6 @@ class MapsController extends Controller
     }
 
     //CANVAS CONTROLLERS
-
-
     public function getCanvas(){
       return Canvas::all();
     }

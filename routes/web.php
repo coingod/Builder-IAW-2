@@ -14,19 +14,31 @@ Route::get('/', function () {
 	return view('builder');
     //return view('welcome');
 });
+//MAPAS
+//Mostrar mapas de un usuario
+Route::get('/maps/{id}','MapsController@showMapsByUserId');
+//Map by token
+Route::get('/share/{token}','MapsController@mapByToken');
+//Map by mapaId
+Route::get('/showmap/{id}','MapsController@mapById');
+//Borrar mapa by mapaId
+Route::get('/deletemap/{id}','MapsController@deleteMap');
+
+//CANVAS
+//Obtener todos los canvas
+Route::get('/canvas', 'MapsController@getCanvas');
+//Agregar nuevo canvas
+Route::post('/addcanvas', 'MapsController@addCanvas');
+//Eliminar canvas
+Route::get('/deletecanvas/{id}', 'MapsController@deleteCanvas');
 
 //Guardar mapa actual
-Route::post('/save-map','MapsController@store');
-Route::get('/save-map','MapsController@publish');
+Route::post('/savemap','MapsController@saveMap');
 
-Route::get('/canvas-collection', 'MapsController@canvas');
-
+//Reset de Database
 Route::post('/resetDB', 'MapsController@resetDB');
 
-Route::get('/mapbytoken/{token}','MapsController@mapByToken');
-Route::get('/show-maps/{id}','MapsController@show');
-Route::get('/delete-map/{id}','MapsController@deleteMap');
-
+//USERS
 //Para crear los roles en la base de datos (Admin/Member/Guest)
 Route::get('/setup-roles', function () {
 

@@ -63,7 +63,7 @@ define([
         //Oyentes para el menu de opciones
         $("#save_map").on("click", function(){
           Editor.currentState.loadCurrentState();
-          $.ajax({ method: "POST", url: "/save-map", data:Editor.currentState.json });
+          $.ajax({ method: "POST", url: "/savemap", data:Editor.currentState.json });
         });
         $("#upload_info").on("click", function(){
           Editor.currentState.loadCurrentState();

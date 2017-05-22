@@ -11,6 +11,6 @@ class Canvas extends Model
     protected $primaryKey = 'canvasId';
     public $timestamps=false;
 
-    protected $fillable = ['tw', 'th', 'width', 'height'];
+    protected $fillable = ['tw', 'th', 'width', 'height', 'descripcion'];
     protected $table = 'canvas';
 }

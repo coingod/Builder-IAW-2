@@ -14,8 +14,8 @@ use App\Auth;
 class MapsController extends Controller
 {
     //
-     public  $datos='';
-    public function show($id){
+
+    public function showMapsByUserId($id){
       $maps = Mapa::all()->where('userId','=',$id);
       for($i=0; $i<count($maps) ; $i++){
         //Buscamos el canvas que fue utilizado en el mapa
@@ -35,12 +35,13 @@ class MapsController extends Controller
       return compact('maps');
     }
 
-    public function canvas(){
-      return Canvas::all();
-    }
-
     public function mapByToken($token){
       $toReturn=Mapa::all()->where('token','=',$token);
+      return compact('toReturn');
+    }
+
+    public function mapById($id){
+      $toReturn=Mapa::all()->where('mapaId','=',$id);
       return compact('toReturn');
     }
 
@@ -49,46 +50,30 @@ class MapsController extends Controller
       return Response('Hello World', 200)->header('Content-Type', 'text/plain');
     }
 
-    public function resetDB(Request $request){
-      //Borramos todas las tablas que vamos a afectar con el reset
-      Tileset::getQuery()->delete();
-      Categoria::getQuery()->delete();
-      Canvas::getQuery()->delete();
+    //CANVAS CONTROLLERS
 
-      //Upload de la BD inicial.. Establecemos categorias, tilesets, canvas.. cosas que quedan fijas siempre.
-      $tilesetInfo=$request->tilesetInfo;
-      $canvasInfo=$request->canvasInfo;
 
-      $tileset=new Tileset();
-      $tileset->tw=$tilesetInfo["tw"];
-      $tileset->th=$tilesetInfo["th"];
-      $tileset->save();
-
-      for($i=0; $i<count($tilesetInfo["categories"]); $i++){
-        $categoria=new Categoria();
-        //    protected $fillable = ['name', 'path', 'tilesetId', 'width', 'height', 'emptyTiles'];
-        $categoria->name=$tilesetInfo["categories"][$i]["name"];
-        $categoria->path=$tilesetInfo["categories"][$i]["path"];
-        $categoria->width=$tilesetInfo["categories"][$i]["width"];
-        $categoria->height=$tilesetInfo["categories"][$i]["height"];
-        $categoria->emptyTiles=$tilesetInfo["categories"][$i]["emptyTiles"];
-        $categoria->icon=$tilesetInfo["categories"][$i]["icon"];
-        $categoria->tilesetId=$tileset->tilesetId;
-        $categoria->save();
-      };
-
-      $canvas= new Canvas();
-      $canvas->tw=$canvasInfo["tw"];
-      $canvas->th=$canvasInfo["th"];
-      $canvas->width=$canvasInfo["width"];
-      $canvas->height=$canvasInfo["height"];
-      $canvas->save();
-
-      return Response('Hello World', 200)->header('Content-Type', 'text/plain');
-
+    public function getCanvas(){
+      return Canvas::all();
+    }
+    public function addCanvas(Request $request){
+      $canvas=new Canvas();
+      $canvas->tw=$request->tw;
+      $canvas->th=$request->th;
+      $canvas->width=$request->width;
+      $canvas->height=$request->height;
+      $canvas->descripcion=$request->descripcion;
+      $canvas->save;
     }
 
-    public function store(Request $request){
+    public function deleteCanvas($id){
+      Canvas::where('canvasId','=',$id)->getQuery()->delete();
+      return Response('Hello World', 200)->header('Content-Type', 'text/plain');
+    }
+
+    //Creacion de nuevo mapa
+
+    public function saveMap(Request $request){
        //Lo separamos para trabajar mejor
         //Es importante cargar las cosas en orden por las llaves foraneas..
         $tilesetInfo=$request->tilesetInfo;
@@ -106,7 +91,7 @@ class MapsController extends Controller
         $mapa->canvasId = $canvasid;
         $mapa->userId = 1; //App\Auth::user()->getKey();
         $mapa->tilesetId = Tileset::first()->tilesetId; //Hardcoded, el tileset no cambia.
-
+        $mapa->token=substr(md5($mapa->mapaId), 0, 32);
         $mapa->save();
 
         //Buscamos ID de la primer categoría
@@ -142,8 +127,62 @@ class MapsController extends Controller
         return Response('Hello World', 200)->header('Content-Type', 'text/plain');
     }
 
-    public function publish(){
-      $toReturn=Tile::all();
-      return compact('toReturn');
-    }
+    //RESET DB. peligroso!!! Limpia toda la base de datos.
+    public function resetDB(Request $request){
+          //Borramos todas las tablas que vamos a afectar con el reset
+          Tileset::getQuery()->delete();
+          Categoria::getQuery()->delete();
+          Canvas::getQuery()->delete();
+
+          //Upload de la BD inicial.. Establecemos categorias, tilesets, canvas.. cosas que quedan fijas siempre.
+          $tilesetInfo=$request->tilesetInfo;
+          $canvasInfo=$request->canvasInfo;
+
+          $tileset=new Tileset();
+          $tileset->tw=$tilesetInfo["tw"];
+          $tileset->th=$tilesetInfo["th"];
+          $tileset->save();
+
+          for($i=0; $i<count($tilesetInfo["categories"]); $i++){
+            $categoria=new Categoria();
+            //    protected $fillable = ['name', 'path', 'tilesetId', 'width', 'height', 'emptyTiles'];
+            $categoria->name=$tilesetInfo["categories"][$i]["name"];
+            $categoria->path=$tilesetInfo["categories"][$i]["path"];
+            $categoria->width=$tilesetInfo["categories"][$i]["width"];
+            $categoria->height=$tilesetInfo["categories"][$i]["height"];
+            $categoria->emptyTiles=$tilesetInfo["categories"][$i]["emptyTiles"];
+            $categoria->icon=$tilesetInfo["categories"][$i]["icon"];
+            $categoria->tilesetId=$tileset->tilesetId;
+            $categoria->save();
+          };
+
+          //Canvas default big
+          $canvas= new Canvas();
+          $canvas->tw=$canvasInfo["tw"];
+          $canvas->th=$canvasInfo["th"];
+          $canvas->width=$canvasInfo["width"];
+          $canvas->height=$canvasInfo["height"];
+          $canvas->descripcion="Big";
+          $canvas->save();
+          //Canvas default medium
+          $canvas= new Canvas();
+          $canvas->tw=$canvasInfo["tw"];
+          $canvas->th=$canvasInfo["th"];
+          $canvas->width=9;
+          $canvas->height=6;
+          $canvas->descripcion="Medium";
+          $canvas->save();
+          //Canvas default small
+          $canvas= new Canvas();
+          $canvas->tw=$canvasInfo["tw"];
+          $canvas->th=$canvasInfo["th"];
+          $canvas->width=4;
+          $canvas->height=4;
+          $canvas->descripcion="Small";
+          $canvas->save();
+
+
+          return Response('Hello World', 200)->header('Content-Type', 'text/plain');
+        }
+
 }

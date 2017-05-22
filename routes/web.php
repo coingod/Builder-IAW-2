@@ -23,7 +23,9 @@ Route::get('/canvas-collection', 'MapsController@canvas');
 
 Route::post('/resetDB', 'MapsController@resetDB');
 
+Route::get('/mapbytoken/{token}','MapsController@mapByToken');
 Route::get('/show-maps/{id}','MapsController@show');
+Route::get('/delete-map/{id}','MapsController@deleteMap');
 
 //Para crear los roles en la base de datos (Admin/Member/Guest)
 Route::get('/setup-roles', function () {

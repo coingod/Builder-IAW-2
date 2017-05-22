@@ -11,5 +11,5 @@ class Mapa extends Model
     protected $primaryKey = 'mapId';
     public $timestamps=false;
 
-    protected $fillable = ['token', 'userId', 'tilesetId', 'canvasId'];
+    protected $fillable = ['token', 'userId', 'tilesetId', 'canvasId', 'link', 'descripcion', 'nombre'];
 }

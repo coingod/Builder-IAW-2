@@ -27,8 +27,8 @@ define([
 
         //Configuramos la estructura de todos los cuadros de dialogo
         Editor.Layers.crearDialog();
+        Editor.Maps.crearDialog();
         $("#dialog_info").modal();
-        $("#maps_library").modal();
         Editor.currentState.crearDialog();
         Editor.Canvas.crearDialog();
 

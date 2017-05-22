@@ -136,9 +136,16 @@ textarea.materialize-textarea:focus.valid {
 /* ====== TILESETS ====== */
 
 .tabs .tab a {
+    /*
     padding-top: 5%;
     font-size: 32px;
+    */
     color: #2196F3;
+}
+
+.tabs .tab .tab-icon {
+    padding-top: 5%;
+    font-size: 32px;
 }
 
 .tabs .tab a:hover,
@@ -306,8 +313,13 @@ textarea.materialize-textarea:focus.valid {
 /* ====== Libreria de Mapas ====== */
 
 #maps_library {
-    max-height: 75%;
-    min-height: 50%;
+    max-height: 70%;
+    /*min-height: 50%;*/
+    min-height: 70%;
+}
+
+.tabs {
+    overflow-x: hidden;
 }
 
 /*
@@ -336,6 +348,21 @@ textarea.materialize-textarea:focus.valid {
     left: 15px;
     display: inline-block;
     vertical-align: middle;
+}
+
+/* ====== Dropdown Menu ====== */
+
+.dropdown-content {
+    min-width: 150px;
+}
+
+.dropdown-content li {
+    min-height: 16px;
+}
+
+.dropdown-content li > a{
+    font-size: 14px;
+    line-height: 16px;
 }
 
 

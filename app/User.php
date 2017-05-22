@@ -9,7 +9,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 class User extends Authenticatable
 {
     use Notifiable;
-    use EntrustUserTrait;   //enable the relation with Role 
+    use EntrustUserTrait;   //enable the relation with Role
     //roles(), hasRole($name), can($permission), and ability($roles, $permissions, $options)
 
     /**

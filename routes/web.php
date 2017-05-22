@@ -19,9 +19,13 @@ Route::get('/', function () {
 Route::post('/save-map','MapsController@store');
 Route::get('/save-map','MapsController@publish');
 
-Route::post('/load-tileset', 'MapsController@upload');
+Route::get('/canvas-collection', 'MapsController@canvas');
 
+Route::post('/resetDB', 'MapsController@resetDB');
+
+Route::get('/mapbytoken/{token}','MapsController@mapByToken');
 Route::get('/show-maps/{id}','MapsController@show');
+Route::get('/delete-map/{id}','MapsController@deleteMap');
 
 //Para crear los roles en la base de datos (Admin/Member/Guest)
 Route::get('/setup-roles', function () {

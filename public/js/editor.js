@@ -68,7 +68,7 @@ define([
         $("#upload_info").on("click", function(){
           Editor.currentState.loadCurrentState();
           Editor.currentState.json.layersInfo={}; //No necesitamos enviar esto, lo obviamos!
-          $.ajax({ method: "POST", url: "/load-tileset", data:Editor.currentState.json });
+          $.ajax({ method: "POST", url: "/resetDB", data:Editor.currentState.json });
         });
        $("#new_map").on("click", function() {
             $("#dialog_map").modal("open");

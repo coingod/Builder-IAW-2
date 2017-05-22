@@ -11,6 +11,6 @@ class Layer extends Model
     protected $primaryKey = 'layerId';
     public $timestamps=false;
 
-    protected $fillable = ['name', 'visible', 'tilesetId'];
+    protected $fillable = ['name', 'visible', 'tilesetId', 'mapaId'];
 
 }

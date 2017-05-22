@@ -93,7 +93,12 @@ define([
         //Si pasamos un nombre lo usamos, sino asignamos uno por defecto
         if (!name) name = "Mapa " + currentMap;
 
-        var thumbail = "/img/preview/example.png";
+        //console.log(Editor.Canvas.createPNG());
+
+        //Almacenamos una vista previa del mapa en el servidor
+        $.ajax({ method: "POST", url: "/thumbnail", data:Editor.Canvas.createPNG() });
+
+        var thumbnail = "/img/preview/example.png";
         //var delete_span = "<i class='secondary-content "+icon_remove+" material-icons'>" + icon_remove + "</i>";
         //var share_span = "<i class='secondary-content "+icon_share+" material-icons'>" + icon_share +"</i>";
         //var export_span = "<i class='secondary-content "+icon_export+" material-icons'>" + icon_export + "</i>";
@@ -112,13 +117,13 @@ define([
         //Ponemos el nombre
         map.children().filter(".title").text(name);
         //Y el preview
-        map.children().filter("img").attr("src", thumbail);
+        map.children().filter("img").attr("src", thumbnail);
 
         /*
         if (lista == user_maps)
-            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + delete_span + share_span + export_span + edit_span + "</a>");
+            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbnail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + delete_span + share_span + export_span + edit_span + "</a>");
         else if(lista == default_maps)
-            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + share_span + export_span + "</a>");
+            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbnail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + share_span + export_span + "</a>");
         */
         //Agregamos el item a la lista de mapas precargados
         $("#"+lista+" .maplist").append(map);

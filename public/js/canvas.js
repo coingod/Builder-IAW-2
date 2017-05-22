@@ -265,7 +265,7 @@ define([
             //Recorremos todas las capas
             $(".layer").each(function(index) {
                 //console.log( index + ": " + $( this ) );
-                console.log( "Layer " + index );
+                //console.log( "Layer " + index );
                 //Recorremos todos los tiles de la capa
                 $(this).children().each(function(index2) {
                     //console.log( "  -" + index2 + ": " + $( this ) );
@@ -286,8 +286,10 @@ define([
             });
 
             //Abrimos una ventana nueva y mostramos la imagen completa
-            window.open(buffer.canvas.toDataURL());
+            //window.open(buffer.canvas.toDataURL());
         });
+        //console.log(buffer.canvas.toDataURL());
+        return buffer.canvas.toDataURL();
     };
 
     function loadImages(sources, callback) {

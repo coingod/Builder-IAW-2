@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,6 +102,9 @@ Route::get('/users', function () {
 	//return view('welcome');
     return view('users', compact('users', 'roles'));
 });
+
+//Vista previa de los mapas
+Route::post('/thumbnail', 'ThumbnailController@save');
 
 Auth::routes();
 

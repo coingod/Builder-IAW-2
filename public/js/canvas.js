@@ -115,9 +115,12 @@ define([
                     var item;
                     //console.log(maps);
                     for (i = 0; i < canvasList.length; i++) { 
+                        //console.log("A ver si pasa");
+                        //console.log(canvasList[i]);
                         //Los canvas que el Admin marco como desabilitados no se toman en cuenta
                         if(canvasList[i].habilitado == 0) 
-                            return;
+                            continue;
+                        //console.log("paso");
                         //Armamos el item dela listita
                         canvas_id = canvasList[i].canvasId;
                         canvas_name = canvasList[i].descripcion;

@@ -201,7 +201,7 @@ define([
                     //console.log("Layers: "+maps[i].layersInfo.length);
                     for (j = 0; j < maps[i].layersInfo.length; j++) { 
                         //layer_info.push(maps[i].layersInfo[j].nombre);
-                        layer_names += maps[i].layersInfo[j].nombre;
+                        layer_names += maps[i].layersInfo[j].nombre + " ";
                     }
                     //console.log(map_id + " " + map_name + " " + map_img_path + " " + map_token);
                     Maps.addMap(map_id, map_name, map_info, map_img_path, map_token, user_maps, layer_names);

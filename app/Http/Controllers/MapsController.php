@@ -18,7 +18,7 @@ class MapsController extends Controller
     public function showMapsByUserId($id){
       $maps = Mapa::where('userId','=',$id)->get()->toArray();
       for($i=0; $i<count($maps) ; $i++){
-        $maps[$i]["canvas"]=Canvas::where('canvasId','=',$maps[$i]["canvasId"])->first();
+        $maps[$i]["canvasInfo"]=Canvas::where('canvasId','=',$maps[$i]["canvasId"])->first();
         $maps[$i]["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$maps[$i]["tilesetId"])->first();
         $maps[$i]["layersInfo"]=Layer::where('mapaId','=',$maps[$i]["mapaId"])->get()->toArray();
         $maps[$i]["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$maps[$i]["tilesetId"])->get()->toArray();
@@ -107,7 +107,7 @@ class MapsController extends Controller
         $mapa->save();
 
         //Buscamos ID de la primer categoría
-        $primerCategoria=Categoria::first()->categoriaId;
+        //$primerCategoria=Categoria::first()->categoriaId;
         //Cargamos Tiles y Layers!
         for($i=0; $i<count($layersInfo); $i++){
           $layer=new Layer();
@@ -124,7 +124,7 @@ class MapsController extends Controller
             $tile=new Tile();
             //el campo idCategoria en el json tiene el offset dentro de las categorias.
             //Sumamos a la primera y obtenemos el id real en la DB!
-            $tile->idCategoria=$layersInfo[$i]["listaTiles"][$j]["idCategoria"]+$primerCategoria;
+            $tile->idCategoria=$layersInfo[$i]["listaTiles"][$j]["idCategoria"];
             $tile->tileInCategoria=$layersInfo[$i]["listaTiles"][$j]["tileInCategoria"];
             $tile->cx=$layersInfo[$i]["listaTiles"][$j]["cx"];
             $tile->cy=$layersInfo[$i]["listaTiles"][$j]["cy"];

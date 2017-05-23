@@ -94,8 +94,8 @@ define([
 
         img.addEventListener("load", function() {
             var buffer = document.createElement("canvas").getContext("2d");
-            buffer.canvas.width = Tileset.info.categories.width = this.width;
-            buffer.canvas.height = Tileset.info.categories.height = this.height;
+            buffer.canvas.width = Tileset.info.categories[index].width = this.width;
+            buffer.canvas.height = Tileset.info.categories[index].height = this.height;
             buffer.drawImage(this, 0, 0);
             //Dibujamos la lista de tiles de la categoria
             Tileset.draw(this, index);

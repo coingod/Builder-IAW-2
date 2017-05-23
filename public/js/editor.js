@@ -70,6 +70,14 @@ define([
           Editor.currentState.json.layersInfo={}; //No necesitamos enviar esto, lo obviamos!
           $.ajax({ method: "POST", url: "/resetDB", data:Editor.currentState.json });
         });
+        $("#test").on("click", function(){
+          $.ajax({ method: "GET", url: "/maps/1", success: function(response){
+            Editor.currentState.json={};
+            Editor.currentState.json=response.maps[0];
+            console.log(Editor.currentState.json);
+            Editor.loadExternal();
+          }});
+        });
        $("#new_map").on("click", function() {
             $("#dialog_map").modal("open");
         });
@@ -113,6 +121,7 @@ define([
 
         //Cargamos las categorias nuevas (Tilesets)
         Editor.Tileset.info = json.tilesetInfo;
+        console.log(Editor.Tileset.info);
         Editor.Tileset.load();
 
         //Configuramos las dimensiones del canvas

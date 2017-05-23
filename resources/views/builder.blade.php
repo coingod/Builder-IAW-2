@@ -78,6 +78,8 @@
                 <li class="divider"></li>
                 <li id="save_map"><a>Guardar</a></li>
                 <li id="upload_info"><a>Upload data</a></li>
+                <li id="test"><a>testtt</a></li>
+
                 @endif
                 <li class="divider"></li>
                 <li id="export_map"></li>
@@ -184,11 +186,11 @@
                 <div class="maplist collection">
                 </div>
             </div>
-            @if (Auth::user()) 
+            @if (Auth::user())
             <div id="user_maps" class="col s12">
                 <div class="maplist collection">
                 </div>
-            </div> 
+            </div>
             @endif
           </div>
         </div>
@@ -294,12 +296,12 @@
             <p>First Line <br>
                Second Line
             </p>
-            @if (Auth::user() && Auth::user()->name == "admin") 
+            @if (Auth::user() && Auth::user()->name == "admin")
             <i class="secondary-content delete material-icons">delete</i>
             @endif
             <i class="secondary-content share material-icons">share</i>
             <i class="secondary-content file_download material-icons">file_download</i>
-            @if (Auth::user() && Auth::user()->name == "admin") 
+            @if (Auth::user() && Auth::user()->name == "admin")
             <i class="secondary-content modo_edit material-icons">mode_edit</i>
             @endif
         </a>

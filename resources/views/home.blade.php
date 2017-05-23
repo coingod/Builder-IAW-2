@@ -91,13 +91,10 @@
                             <span class="card-title">Hola {{Auth::user()->name}}</span>
                             <p>Has iniciado sesion! Bienvenido al panel de control de Builder.</p>
                         </div>
-                        <div class="card-action">
-                          <a href="#">This is a link</a>
-                          <a href="#">This is a link</a>
-                        </div>
                     </div>
                 </div>
             </div>
+            <!--
             @if (Auth::user()->name == "admin") 
             <div class="row">
                 <div class="col s12">
@@ -116,6 +113,7 @@
               </div>
             </div>
             @endif
+            -->
             @if (Auth::user()) 
             <div class="row">
                 <div class="col s12">
@@ -161,13 +159,13 @@
             <p>First Line <br>
                Second Line
             </p>
-            @if (Auth::user() && Auth::user()->name == "admin") 
+            @if (Auth::user() && Auth::user()->hasRole('admin')) 
             <i class="secondary-content delete material-icons">delete</i>
             @endif
             <i class="secondary-content share material-icons">share</i>
-            <i class="secondary-content file_download material-icons">file_download</i>
-            @if (Auth::user() && Auth::user()->name == "admin") 
-            <i class="secondary-content modo_edit material-icons">mode_edit</i>
+            <!--<i class="secondary-content file_download material-icons">file_download</i>-->
+            @if (Auth::user() && Auth::user()->hasRole('admin')) 
+            <!--<i class="secondary-content modo_edit material-icons">mode_edit</i>-->
             @endif
         </a>
         <a id="umap" href='#!' class="collection-item avatar">
@@ -178,8 +176,8 @@
             </p>
             <i class="secondary-content delete material-icons">delete</i>
             <i class="secondary-content share material-icons">share</i>
-            <i class="secondary-content file_download material-icons">file_download</i>
-            <i class="secondary-content modo_edit material-icons">mode_edit</i>
+            <!--<i class="secondary-content file_download material-icons">file_download</i>
+            <i class="secondary-content modo_edit material-icons">mode_edit</i>-->
         </a>
     </div>
 

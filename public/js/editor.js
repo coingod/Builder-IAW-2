@@ -61,15 +61,12 @@ define([
         });
 
         //Oyentes para el menu de opciones
-        $("#save_map").on("click", function(){
-          Editor.currentState.loadCurrentState();
-          $.ajax({ method: "POST", url: "/savemap", data:Editor.currentState.json });
-        });
         $("#upload_info").on("click", function(){
           Editor.currentState.loadCurrentState();
           Editor.currentState.json.layersInfo={}; //No necesitamos enviar esto, lo obviamos!
           $.ajax({ method: "POST", url: "/resetDB", data:Editor.currentState.json });
         });
+        
         $("#test").on("click", function(){
           $.ajax({ method: "GET", url: "/maps/1", success: function(response){
             Editor.currentState.json={};
@@ -78,6 +75,7 @@ define([
             Editor.loadExternal();
           }});
         });
+        
        $("#new_map").on("click", function() {
             $("#dialog_map").modal("open");
         });

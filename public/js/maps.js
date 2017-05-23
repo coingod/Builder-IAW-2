@@ -32,7 +32,16 @@ define([
             //console.log(e.currentTarget);
             //Si hicimos click en el icono de visibilidad o eliminar, retornamos
             if ($(e.target).hasClass("secondary-content")) return;
-            //Marcamos la capa como la actual
+            //Cargamos el mapa seleccionado
+            if(editor) {
+                var map_id = $(e.currentTarget).attr("map-id");
+                $.ajax({ method: "GET", url: "/showmap/" + map_id, success: function(response){
+                    Editor.currentState.json = {};
+                    Editor.currentState.json = response.toReturn;
+                    console.log(Editor.currentState.json);
+                    Editor.loadExternal();
+                }});            
+            }
             //console.log("MapID: " + $(e.currentTarget).attr("map-id"));
         });
 
@@ -41,21 +50,47 @@ define([
             if ($(event.target).hasClass(icon_edit)) {
                 //Maps.edit(event);
             } else if ($(event.target).hasClass(icon_export)) {
+                /*
                 //Maps.export(event);
+                var map_id = $(event.target).parent().attr("map-id");
+                $.ajax({ method: "GET", url: "/showmap/" + map_id, success: function(response){
+                    //Editor.currentState.json = {};
+                    //Editor.currentState.json = response.toReturn;
+                    console.log(response);
+                    //Editor.loadExternal();
+                }}); 
+                */
+
             } else if ($(event.target).hasClass(icon_share)) {
+
                 //Maps.share(event);
                 var mapa = $(event.target).parent();
                 console.log("http://localhost:8000/share/" + $(mapa).attr("token"));
+
             } else if ($(event.target).hasClass(icon_remove)) {
+
                 //Obtenemos el mapa que registro el evento
                 mapaAborrar = $(event.target).parent();
                 $("#map_delete").modal("open");
+
             }
+        });
+
+        /*
+        $("#save_map").on("click", function(){
+          Editor.currentState.loadCurrentState();
+          $.ajax({ method: "POST", url: "/savemap", data:Editor.currentState.json });
+        });
+        */
+
+        $("#save_map").on("click", function() {
+            $("#dialog_save_map").modal("open");
         });
         
         //Oyente de confirmacion de borrado
         $("#si_borrar_mapa").on("click", function(event) {
             Maps.deleteMap(mapaAborrar);
+            Maps.resetLists();
         });
 
         //Cargamos la lista de mapas predefinidos
@@ -70,18 +105,39 @@ define([
     Maps.crearDialog = function() {
         $("#maps_library").modal();
         $('#maps_library modal-content row col tabs').tabs();
-        /*
-        $("#dialog_new_layer").modal({
+        
+        $("#dialog_save_map").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
             complete: function() {
-                    var name = $("#layer_name").val();
-                    Maps.addLayer(name, true);
+                    var name = $("#map_name").val();
+                    var descripcion = $("#map_info").val();
+                    //Enviamos la informacion al servidor para almacenar el mapa
+                    Editor.currentState.loadCurrentState();
+                    //Agregamos el nombre
+                    Editor.currentState.json.nombre = name;
+                    //Agregamos la descripcion
+                    Editor.currentState.json.descripcion = descripcion;
+                    //console.log(Editor.currentState.json);
+                    $.ajax({ method: "POST", url: "/savemap", data:Editor.currentState.json, success: function(response){
+                        //console.log(response);
+                        Maps.resetLists();
+                    }});
                 } // Callback for Modal close
         });
-        */
+        
         $("#map_delete").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
         });
+    };
+
+    //Borra el contenido de la interfaz grafica
+    Maps.resetLists = function() {
+        //Recargamos la lista de mapas para mostrar el nuevo mapa
+        $(".maplist a").remove();
+        //Cargamos la lista de mapas predefinidos
+        Maps.loadDefaultMaps();
+        //Cargamos la lista de mapas del usuario
+        Maps.loadUserMaps();
     };
 
     Maps.loadDefaultMaps = function() {
@@ -156,19 +212,25 @@ define([
         //Agregamos el item a la lista de mapas precargados
         $("#"+lista+" .maplist").append(map);
     };
-
+    /*
+    //Elimina TODOS los mapas del User y Predefinidos de la base de datos!
     Maps.removeAll = function() {
         //Borramos TODAS las capas
         $(".maplist").each(function() {
             Maps.deleteMap($(this));
         });
     };
+    */
 
-    //Elimina la capa actualmente seleccioanda junto con su contenido
+    //Elimina el mapa especificado de la base de datos!
     Maps.deleteMap = function(map) {
-
-        //Eliminamos la capa de la interfaz
-        map.remove();
+        //Obtenemos el id del mapa y enviamos una solicitud al servidor para eliminarlo de la BD
+        var map_id = $(map).attr("map-id");
+        $.ajax({ method: "GET", url: "/deletemap/" + map_id, success: function(response){
+            console.log(response);
+            //Eliminamos la capa de la interfaz
+            map.remove();
+        }});  
     };
 
     return Maps;

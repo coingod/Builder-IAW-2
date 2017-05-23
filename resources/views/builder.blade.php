@@ -62,27 +62,25 @@
                                 {{ csrf_field() }}
                             </form>
                         </li>
-                        @if (Auth::user()->name == "admin")
+                        @if (Auth::user()->hasRole('admin'))
                         <li class="divider"></li> 
                         <li id="upload_info"><a>LIMPIAR BD</a></li>
-                        <li id="test"><a>testtt</a></li>
                         @endif
                     @else
                         <li id="user_login"><a href="{{ url('/login') }}">Iniciar Sesion</a></li>
                         <li id="user_register"><a href="{{ url('/register') }}">Registrarse</a></li>
                     @endif
                 @endif
-                <li class="divider"></li>
-                <li id="open_maps_library"><a href="#maps_library">Catalogo</a></li>
             </ul>
             <!-- Estructura del Menu de Mapa -->
             <ul id="dropdown_mapas" class="dropdown-content">
                 <li><a href="#!"><b>Mapa</b></a></li>
                 <li id="new_map"><a href="#!">Nuevo</a></li>
-                @if (Auth::user())
                 <li class="divider"></li>
+                @if (Auth::user())
                 <li id="save_map"><a>Guardar</a></li>
                 @endif
+                <li id="open_maps_library"><a href="#maps_library">Catalogo</a></li>
                 <li class="divider"></li>
                 <li id="export_map"></li>
                 <li id="import_map"><a href="#!">Importar JSON</a></li>
@@ -200,6 +198,29 @@
 
     <!-- Cuadros de dialogo usados por la aplicacion -->
     <div id="dialog_list">
+        <!-- Guardar Mapa -->
+        <div id="dialog_save_map" class="modal">
+            <div class="modal-content">
+                <h4>Guardar Mapa</h4>
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="map_name" type="text" class="validate">
+                            <label for="map_name">Nombre del Mapa</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="map_info" type="text" class="validate">
+                            <label for="map_info">Descripcion del Mapa</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            </div>
+        </div>
         <div id="map_delete" class="modal">
             <div class="modal-content">
                 <h4>Borrar Mapa</h4>
@@ -298,13 +319,13 @@
             <p>First Line <br>
                Second Line
             </p>
-            @if (Auth::user() && Auth::user()->name == "admin")
+            @if (Auth::user() && Auth::user()->hasRole('admin'))
             <i class="secondary-content delete material-icons">delete</i>
             @endif
             <i class="secondary-content share material-icons">share</i>
-            <i class="secondary-content file_download material-icons">file_download</i>
-            @if (Auth::user() && Auth::user()->name == "admin")
-            <i class="secondary-content modo_edit material-icons">mode_edit</i>
+            <!--<i class="secondary-content file_download material-icons">file_download</i>-->
+            @if (Auth::user() && Auth::user()->hasRole('admin'))
+            <!--<i class="secondary-content modo_edit material-icons">mode_edit</i>-->
             @endif
         </a>
         <a id="umap" href='#!' class="collection-item avatar">
@@ -315,8 +336,8 @@
             </p>
             <i class="secondary-content delete material-icons">delete</i>
             <i class="secondary-content share material-icons">share</i>
-            <i class="secondary-content file_download material-icons">file_download</i>
-            <i class="secondary-content modo_edit material-icons">mode_edit</i>
+            <!--<i class="secondary-content file_download material-icons">file_download</i>-->
+            <!--<i class="secondary-content modo_edit material-icons">mode_edit</i>-->
         </a>
     </div>
     <!-- data-main attribute tells require.js to load js/main.js after require.js loads. -->

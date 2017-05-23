@@ -63,7 +63,7 @@
                             </form>
                         </li>
                         @if (Auth::user()->name == "admin")
-                        <li class="divider"></li> 
+                        <li class="divider"></li>
                         <li id="upload_info"><a>LIMPIAR BD</a></li>
                         <li id="test"><a>testtt</a></li>
                         @endif
@@ -82,6 +82,10 @@
                 @if (Auth::user())
                 <li class="divider"></li>
                 <li id="save_map"><a>Guardar</a></li>
+                @else
+                <li class="divider"></li>
+                <li id="save_in_local_storage"><a>Almacenar localmente</a></li>
+                <li id="load_from_local_storage"><a>Levantar ultimo mapa</a></li>
                 @endif
                 <li class="divider"></li>
                 <li id="export_map"></li>

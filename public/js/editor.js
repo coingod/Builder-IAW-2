@@ -75,7 +75,7 @@ define([
           Editor.currentState.json.layersInfo={}; //No necesitamos enviar esto, lo obviamos!
           $.ajax({ method: "POST", url: "/resetDB", data:Editor.currentState.json });
         });
-        
+
        $("#new_map").on("click", function() {
             $("#dialog_map").modal("open");
         });
@@ -84,11 +84,11 @@ define([
         });
         $("#export_png").on("click", function() {
             //$("#dialog_import").modal("open");
-            //Editor.Canvas.createPNG();
-            console.log(Editor.Canvas.createPNG());
+            Editor.Canvas.createPNG();
+            //console.log(Editor.Canvas.createPNG());
 
             //Almacenamos una vista previa del mapa en el servidor
-            $.ajax({ method: "POST", url: "/thumbnail", data:Editor.Canvas.createPNG() });
+            //$.ajax({ method: "POST", url: "/thumbnail", data:Editor.Canvas.createPNG() });
         });
         $("#about").on("click", function() {
             $("#dialog_about").modal("open");

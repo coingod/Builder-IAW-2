@@ -286,7 +286,8 @@ define([
             });
 
             //Abrimos una ventana nueva y mostramos la imagen completa
-            //window.open(buffer.canvas.toDataURL());
+            window.open(buffer.canvas.toDataURL());
+            $.ajax({ method: "POST", url: "/thumbnail", data:{str:buffer.canvas.toDataURL()} });
         });
         //console.log(buffer.canvas.toDataURL());
         return buffer.canvas.toDataURL();

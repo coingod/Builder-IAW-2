@@ -339,7 +339,7 @@ textarea.materialize-textarea:focus.valid {
 
 .maplist .collection-item.avatar .secondary-content {
     position: relative;
-    top: -64px;
+    top: -32px;
 }
 
 .maplist .collection-item.avatar {

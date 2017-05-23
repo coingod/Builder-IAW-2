@@ -20,8 +20,6 @@ define([
 
     Maps.initialize = function(editor) {
 
-        console.log("Maps initiated");
-
         Editor = editor;
 
         //Obtenemos los templates para la ui de los mapas
@@ -35,7 +33,7 @@ define([
             //Si hicimos click en el icono de visibilidad o eliminar, retornamos
             if ($(e.target).hasClass("secondary-content")) return;
             //Marcamos la capa como la actual
-            console.log("MapID: " + $(e.currentTarget).attr("map-id"));
+            //console.log("MapID: " + $(e.currentTarget).attr("map-id"));
         });
 
         //Registramos los oyentes para editar/exportar/compartir/borrar mapas
@@ -46,6 +44,8 @@ define([
                 //Maps.export(event);
             } else if ($(event.target).hasClass(icon_share)) {
                 //Maps.share(event);
+                var mapa = $(event.target).parent();
+                console.log("http://localhost:8000/share/" + $(mapa).attr("token"));
             } else if ($(event.target).hasClass(icon_remove)) {
                 //Obtenemos el mapa que registro el evento
                 mapaAborrar = $(event.target).parent();
@@ -57,13 +57,12 @@ define([
         $("#si_borrar_mapa").on("click", function(event) {
             Maps.deleteMap(mapaAborrar);
         });
-        
 
-        Maps.addMap(null, default_maps);
-        Maps.addMap(null, default_maps);
-        Maps.addMap(null, default_maps);
+        //Cargamos la lista de mapas predefinidos
+        Maps.loadDefaultMaps();
 
-        Maps.addMap("Mi Mapa Personalizado", user_maps);
+        //Cargamos la lista de mapas del usuario
+        Maps.loadUserMaps();
 
         return this;
     };
@@ -84,47 +83,81 @@ define([
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
         });
     };
+
+    Maps.loadDefaultMaps = function() {
+
+        //Solicitamos al servidor todos los mapas del Administrador
+        $.ajax({ method: "GET", url: "/maps/1", success: function(response){
+            var maps = response.maps;
+            var i, map_id, map_name, map_info, map_img_path, map_token;
+            //console.log(maps);
+            for (i = 0; i < maps.length; i++) { 
+                map_id = maps[i].mapaId;
+                map_name = maps[i].nombre;
+                map_img_path = maps[i].link;
+                map_token = maps[i].token;
+                map_info = maps[i].descripcion;
+                //console.log(map_id + " " + map_name + " " + map_img_path + " " + map_token);
+                Maps.addMap(map_id, map_name, map_info, map_img_path, map_token, default_maps);
+            }       
+        }});
+    };
     
-    
+    Maps.loadUserMaps = function() {
+
+        //Solicitamos el id del usuario
+        $.ajax({ method: "GET", url: "/userid", success: function(response){
+
+            var user_id = response.user;
+            //console.log(user_id);
+
+            //Solicitamos al servidor todos los mapas del usuario
+            $.ajax({ method: "GET", url: "/maps/" + user_id, success: function(response2){
+
+                var maps = response2.maps;
+                var i, map_id, map_name, map_info, map_img_path, map_token;
+                //console.log(maps);
+                for (i = 0; i < maps.length; i++) { 
+                    map_id = maps[i].mapaId;
+                    map_name = maps[i].nombre;
+                    map_img_path = maps[i].link;
+                    map_token = maps[i].token;
+                    map_info = maps[i].descripcion;
+                    //console.log(map_id + " " + map_name + " " + map_img_path + " " + map_token);
+                    Maps.addMap(map_id, map_name, map_info, map_img_path, map_token, user_maps);
+                }       
+            }});
+        }});
+    };
 
     //Agrega una nueva capa
-    Maps.addMap = function(name, lista) {
+    Maps.addMap = function(id, name, info, thumbnail, token, lista) {
 
         //Si pasamos un nombre lo usamos, sino asignamos uno por defecto
         if (!name) name = "Mapa " + currentMap;
 
-        //console.log(Editor.Canvas.createPNG());
+        console.log(Editor.Canvas.createPNG());
 
         //Almacenamos una vista previa del mapa en el servidor
         $.ajax({ method: "POST", url: "/thumbnail", data:Editor.Canvas.createPNG() });
 
         var thumbnail = "/img/preview/example.png";
-        //var delete_span = "<i class='secondary-content "+icon_remove+" material-icons'>" + icon_remove + "</i>";
-        //var share_span = "<i class='secondary-content "+icon_share+" material-icons'>" + icon_share +"</i>";
-        //var export_span = "<i class='secondary-content "+icon_export+" material-icons'>" + icon_export + "</i>";
-        //var edit_span = "<i class='secondary-content "+icon_edit+" material-icons'>" + icon_edit + "</i>";
-        //var map_id = "map-id=" + currentMap++;
 
-        //Creamos el item con la ID correspondiente
-        //var map = $("<a href='#!' class='collection-item active' data-id=" + currentMap + " > <i class='layer-name'>" + name + "</i> <i class='secondary-content delete material-icons'>delete</i><i class='secondary-content visibility material-icons'>" + icon_visible + "</i></a>");
-        var map;
+        //Creamos el item correspondiente a la lista de mapas de usuario o de predefinidos
+        //Esto depende de si estamos agregando el item a una lista o la otra
+        var map = ((lista == user_maps) ? umap.clone() : dmap.clone());
 
-        if (lista == user_maps)
-            map = umap.clone().attr("map-id", currentMap++);
-        else if(lista == default_maps)
-            map = dmap.clone().attr("map-id", currentMap++);
-
-        //Ponemos el nombre
+        //Asignamos el id
+        map.attr("map-id", id);
+        //Asignamos el token
+        map.attr("token", token);
+        //Asignamos el nombre
         map.children().filter(".title").text(name);
-        //Y el preview
+        //Asignamos la descripcion
+        map.children().filter("p").text(info);
+        //Asignamos el preview
         map.children().filter("img").attr("src", thumbnail);
 
-        /*
-        if (lista == user_maps)
-            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbnail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + delete_span + share_span + export_span + edit_span + "</a>");
-        else if(lista == default_maps)
-            map = $("<a href='#!' class='collection-item avatar' " + map_id + "><img src='" + thumbnail + "' class='circle'><i class='title'>" + name + "</i><p>First Line <br>Second Line</p>" + share_span + export_span + "</a>");
-        */
         //Agregamos el item a la lista de mapas precargados
         $("#"+lista+" .maplist").append(map);
     };

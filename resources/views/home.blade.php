@@ -106,20 +106,6 @@
                         <span class="card-title">Mapas Precargados</span>
                         <p>Aqui se pueden editar los mapas precargados en el catalogo.</p>
                         <div class="maplist collection">
-                        <!--
-                            <a class="collection-item avatar">
-                                <img src="/img/preview/example.png" alt="" class="circle">
-                                <span class="title">Title</span>
-                                <p>First Line <br>
-                                   Second Line
-                                </p>
-                                <i class="secondary-content material-icons">delete</i>
-                                <i class="secondary-content material-icons">share</i>
-                                <i class="secondary-content material-icons">file_download</i>
-                                <i class="secondary-content material-icons">file_upload</i>
-                                <i class="secondary-content material-icons">mode_edit</i>
-                            </a>
-                        -->
                         </div>
                     </div>
                     <div class="card-action">
@@ -138,20 +124,6 @@
                         <span class="card-title">Mis Mapas</span>
                         <p>Aqui se pueden editar sus mapas personalizados.</p>
                         <div class="maplist collection">
-                        <!--
-                            <a class="collection-item avatar">
-                                <img src="/img/preview/example.png" alt="" class="circle">
-                                <span class="title">Title</span>
-                                <p>First Line <br>
-                                   Second Line
-                                </p>
-                                <i class="secondary-content material-icons">delete</i>
-                                <i class="secondary-content material-icons">share</i>
-                                <i class="secondary-content material-icons">file_download</i>
-                                <i class="secondary-content material-icons">file_upload</i>
-                                <i class="secondary-content material-icons">mode_edit</i>
-                            </a>
-                        -->
                         </div>
                     </div>
                     <div class="card-action">

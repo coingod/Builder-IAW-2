@@ -51,6 +51,7 @@
                 <li><a href="#!"><b>@if (Auth::guest()) Visitante @else {{ Auth::user()->name }} @endif</b></a></li>
                     @if (Auth::check())
                         <li id="user_account"><a href="{{ url('/home') }}">Mi cuenta</a></li>
+                        @if (Auth::user()->name == "admin") <li id="upload_info"><a>LIMPIAR BD</a></li>@endif
                         <li id="user_logout">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -77,7 +78,6 @@
                 @if (Auth::user())
                 <li class="divider"></li>
                 <li id="save_map"><a>Guardar</a></li>
-                <li id="upload_info"><a>Upload data</a></li>
                 @endif
                 <li class="divider"></li>
                 <li id="export_map"></li>

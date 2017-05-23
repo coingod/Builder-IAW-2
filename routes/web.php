@@ -103,6 +103,17 @@ Route::get('/users', function () {
     return view('users', compact('users', 'roles'));
 });
 
+//Retorna la id del usuario actual
+Route::get('/userid', function () {
+	//Obtenemos la id del usuario actual
+	$user = -1;
+	if(Auth::user())
+		$user = Auth::user()->id;
+
+	//return view('welcome');
+    return compact('user');
+});
+
 //Vista previa de los mapas
 Route::post('/thumbnail', 'ThumbnailController@save');
 

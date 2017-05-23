@@ -282,10 +282,28 @@
             -->
         </div>
         <!-- Crear mapa -->
-        <div id="dialog_map" class="modal">
+        <div id="dialog_map" class="modal" style="overflow-y: visible;">
             <div class="modal-content">
                 <h4>Crear nuevo Mapa</h4>
+                <p>Seleccione el tipo de Canvas. Cada tipo difiere en la cantidad de Filas x Columnas</p>
+                <div class="row">
+                          <!-- Dropdown Trigger -->
+                          <a id="canvas_dropdown_button" class='dropdown-button btn' href='#' data-activates='canvas_dropdown'>Seleccionar</a>
+
+                          <!-- Dropdown Structure -->
+                          <ul id='canvas_dropdown' class='dropdown-content'>
+                          <!--
+                            <li><a href="#!">one</a></li>
+                            <li><a href="#!">two</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#!">three</a></li>
+                            <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+                            <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+                            -->
+                          </ul>
+                    </div>
                 <form>
+                <!--
                     <div class="row">
                         <div class="input-field col s6">
                             <input id="cantFilas" type="text" class="validate">
@@ -298,6 +316,7 @@
                             <label for="cantColumnas">Ingrese cantidad de columnas</label>
                         </div>
                     </div>
+                -->
                 </form>
                 <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Ok</a>
             </div>

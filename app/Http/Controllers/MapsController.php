@@ -76,6 +76,7 @@ class MapsController extends Controller
       $canvas->width=$request->width;
       $canvas->height=$request->height;
       $canvas->descripcion=$request->descripcion;
+      $canvas->habilitado=1;
       $canvas->save();
     }
 

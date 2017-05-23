@@ -186,6 +186,7 @@ class MapsController extends Controller
           $canvas->width=$canvasInfo["width"];
           $canvas->height=$canvasInfo["height"];
           $canvas->descripcion="Big";
+          $canvas->habilitado=1;
           $canvas->save();
           //Canvas default medium
           $canvas= new Canvas();
@@ -194,6 +195,7 @@ class MapsController extends Controller
           $canvas->width=9;
           $canvas->height=6;
           $canvas->descripcion="Medium";
+          $canvas->habilitado=1;
           $canvas->save();
           //Canvas default small
           $canvas= new Canvas();
@@ -202,6 +204,7 @@ class MapsController extends Controller
           $canvas->width=4;
           $canvas->height=4;
           $canvas->descripcion="Small";
+          $canvas->habilitado=1;
           $canvas->save();
 
 

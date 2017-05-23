@@ -32,7 +32,7 @@
             <!-- Estructura del Menu de Opciones -->
             <ul id="dropdown_opciones" class="dropdown-content">
                     @if (Auth::check())
-                        <li id="user_name"><a href="#">{{ Auth::user()->name }}</a></li>
+                        <li id="user_name"><a href="/home">{{ Auth::user()->name }}</a></li>
                         <li id="user_logout">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

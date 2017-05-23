@@ -62,10 +62,6 @@
                                 {{ csrf_field() }}
                             </form>
                         </li>
-                        @if (Auth::user()->hasRole('admin'))
-                        <li class="divider"></li> 
-                        <li id="upload_info"><a>LIMPIAR BD</a></li>
-                        @endif
                     @else
                         <li id="user_login"><a href="{{ url('/login') }}">Iniciar Sesion</a></li>
                         <li id="user_register"><a href="{{ url('/register') }}">Registrarse</a></li>
@@ -97,6 +93,7 @@
                 <li id="light_theme"><a href="#!">Light</a></li>
                 <li id="dark_theme"><a href="#!">Dark</a></li>
                 <li class="divider"></li>
+                <li id="about"><a href="#!"><b><u>Autores</u></b></a></li>
                 <li><a href="./readme.html" target="_blank"><b><u>Readme</u></b></a></li>
             </ul>
             <!-- Barra de titulo/navegacion -->
@@ -202,6 +199,17 @@
 
     <!-- Cuadros de dialogo usados por la aplicacion -->
     <div id="dialog_list">
+        <!-- About -->
+        <div id="dialog_about" class="modal">
+            <div class="modal-content">
+                <h4>Acerca de Builder 2</h4>
+                <h5>Proyecto 2 - Ingenieria de Aplicaciones Web 2017</h5>
+                <p>Desarrollado por Ignacio del Barrio y Lucas Menchi.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Cerrar</a>
+            </div>
+        </div>
         <!-- Guardar Mapa -->
         <div id="dialog_save_map" class="modal">
             <div class="modal-content">

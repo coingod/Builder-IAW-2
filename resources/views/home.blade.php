@@ -32,6 +32,10 @@
             <ul id="dropdown_opciones" class="dropdown-content">
                     @if (Auth::check())
                         <li id="user_name"><a href="#">{{ Auth::user()->name }}</a></li>
+                        <li id="user_list"><a href="/users">Ver Usuarios</a></li>
+                        <li class="divider"></li> 
+                        <li id="upload_info"><a>Resetear BD</a></li>
+                        <li class="divider"></li> 
                         <li id="user_logout">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -62,12 +66,12 @@
 
 
 <div class="row">
+    <!--
     <div id="navigation_panel" class="col s3 z-depth-5">
     <ul id="slide-out" class="side-nav fixed">
         <li>
             <div class="userView">
               <div class="background" style="background-color: #2196F3">
-                <!--<img src="images/office.jpg">-->
               </div>
               <a href="#!user"><img class="circle" src="http://www.androidpolice.com/wp-content/uploads/2014/10/nexus2cee_Admin-Thumb.png"></a>
               <a href="#!name"><span class="white-text name">{{ Auth::user()->name }}</span></a>
@@ -81,8 +85,9 @@
         <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
     </ul>
     </div>
+    -->
 
-    <div id="content_panel" class="col s9">
+    <div id="content_panel" class="col s12">
         <div class="container">
             <div class="row">
                 <div class="col s12">
@@ -94,26 +99,6 @@
                     </div>
                 </div>
             </div>
-            <!--
-            @if (Auth::user()->name == "admin") 
-            <div class="row">
-                <div class="col s12">
-                <div class="card white-grey">
-                    <div id="default_maps" class="card-content">
-                        <span class="card-title">Mapas Precargados</span>
-                        <p>Aqui se pueden editar los mapas precargados en el catalogo.</p>
-                        <div class="maplist collection">
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">This is a link</a>
-                        <a href="#">This is a link</a>
-                    </div>
-                </div>
-              </div>
-            </div>
-            @endif
-            -->
             @if (Auth::user()) 
             <div class="row">
                 <div class="col s12">
@@ -124,13 +109,28 @@
                         <div class="maplist collection">
                         </div>
                     </div>
-                    <div class="card-action">
-                        <a href="#">This is a link</a>
-                        <a href="#">This is a link</a>
-                    </div>
                 </div>
               </div>
             </div>
+            @if (Auth::user()->hasRole('admin')) 
+            <div class="row">
+                <div class="col s12">
+                    <div class="card white-grey">
+                        <div class="card-content">
+                            <span class="card-title">Caracteristicas</span>
+                            <p>Aque se pueden agregar o quitar tipos de canvas para los mapas.</p>
+                            <div class="canvaslist collection">
+                            
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
             @endif
         </div>
     </div>

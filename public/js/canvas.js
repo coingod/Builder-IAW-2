@@ -72,6 +72,20 @@ define([
             disabled: true,
             cursor: "move",
         });
+        /*
+        $(".canvas_item").on("mousedown", "a", function(event) {
+            $(".canvas_item").removeClass("active");
+            console.log($(event.target));
+            $(event.target).addClass("active");
+            $("canvas_dropdown_button").text() = $(this).text();
+        });
+        */
+        $("#canvas_dropdown").on("mousedown", "a", function(event) {
+            $("#canvas_dropdown a").removeClass("active");
+            console.log($(event.target).text());
+            $(event.target).addClass("active");
+            $("#canvas_dropdown_button").text($(event.target).text());
+        });
 
         return this;
     };
@@ -91,12 +105,45 @@ define([
     Canvas.crearDialog = function() {
         $("#dialog_map").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
+            ready: function(){
+                //Solicitamos al servidor todos los tipos de canvas
+                $.ajax({ method: "GET", url: "/canvas", success: function(canvasList){
+                    var i, map_id, map_name, map_info, map_img_path, map_token;
+                    var item;
+                    //console.log(maps);
+                    for (i = 0; i < canvasList.length; i++) { 
+                        canvas_id = canvasList[i].canvasId;
+                        canvas_name = canvasList[i].descripcion;
+                        canvas_row = canvasList[i].height;
+                        canvas_col = canvasList[i].width;
+                        item = "<li class='canvas_item' ><a href='#!'canvas-id='"+canvas_id+"' row='"+canvas_row+"' col='"+canvas_col+"'>"+canvas_name+": "+canvas_row+"x"+canvas_col+ "</a></li>";
+                        $("#canvas_dropdown").append(item);
+                    }   
+                    //Seteamos uno por defecto
+                    var first = $("#canvas_dropdown a").first().addClass("active");   
+                    $("#canvas_dropdown_button").text($(first).text()); 
+                }});
+            },
             complete: function() {
+                Editor.Layers.removeAll();
+                var tipo_canvas = $("#canvas_dropdown a .active");
+                var canvas_id = (tipo_canvas).attr("canvas-id");
+                var canvas_row = $(tipo_canvas).attr("row");
+                var canvas_col = $(tipo_canvas).attr("col");
+                //Seteamos la id del canvas
+                $("canvas").attr("canvas-id", canvas_id);
+                //console.log();
+                Canvas.setSize(canvas_col, canvas_row);
+                Editor.Layers.createDefaultLayers();
+                /*
                     Editor.Layers.removeAll();
+                    
                     var filas = $("#cantFilas").val();
                     var col = $("#cantColumnas").val();
-                    Canvas.setSize(col, filas);
+                    
+                    Canvas.setSize(canvas_col, canvas_row);
                     Editor.Layers.createDefaultLayers();
+                    */
                 } // Callback for Modal close
         });
     };

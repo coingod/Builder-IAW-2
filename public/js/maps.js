@@ -7,6 +7,7 @@ define([
 
     var currentMap = 0;
     var mapaAborrar;
+    var recentlySaved = false;
 
     //Iconos
     var icon_share = "share";
@@ -103,7 +104,13 @@ define([
     };
     
     Maps.crearDialog = function() {
-        $("#maps_library").modal();
+        $("#maps_library").modal({
+            ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                if(recentlySaved)
+                    Maps.resetLists();
+                recentlySaved = false;
+              },
+        });
         $('#maps_library modal-content row col tabs').tabs();
         
         $("#dialog_save_map").modal({
@@ -122,7 +129,7 @@ define([
                         //Generamos una imagen PNG para vista previa y la enviamos al servidor (NewWindow: false)
                         Editor.Canvas.createPNG(false, response.mapa_id);
                         //console.log(response);
-                        Maps.resetLists();
+                        recentlySaved = true;
                     }});
                 } // Callback for Modal close
         });
@@ -194,7 +201,7 @@ define([
         //Si pasamos un nombre lo usamos, sino asignamos uno por defecto
         if (!name) name = "Mapa " + currentMap;
 
-        var thumbnail = "/img/preview/image.png";
+        //var thumbnail = "/img/preview/id.png";
 
         //Creamos el item correspondiente a la lista de mapas de usuario o de predefinidos
         //Esto depende de si estamos agregando el item a una lista o la otra

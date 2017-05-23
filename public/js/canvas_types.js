@@ -53,17 +53,10 @@ define([
         scrollPaneApi = $(".canvaslist").jScrollPane().data('jsp');
 
         //Agregamos las capas por defecto
-        //this.createDefaultLayers();
         this.loadCanvasTypes();
 
         return this;
     };
-
-    CanvasTypes.createDefaultLayers = function() {
-        //Agregamos 2 capas por defecto
-        CanvasTypes.addType("Small: 10x20", true);
-        CanvasTypes.addType("Big: 20x40", true);
-    }
 
     CanvasTypes.loadCanvasTypes= function() {
 
@@ -145,7 +138,7 @@ define([
         //Obtenemos la id del canvas
         var canvas_id = $(item).attr("canvas-id");
         //console.log(canvas_id);
-        $.ajax({ method: "GET", url: "/deletecanvas/" + canvas_id, success: function(response){
+        $.ajax({ method: "GET", url: "/deactivatecanvas/" + canvas_id, success: function(response){
             console.log(response);
             //Eliminamos de la interfaz
             //Chequeamos si es la capa actual

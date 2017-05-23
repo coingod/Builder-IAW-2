@@ -19,9 +19,18 @@
 	<p>
 	Los visitantes de la aplicacion podran crear cuentas de usuario utilizando
 	un email y una contraseña. Alternativamente puede usar su cuenta de Facebook para logearse.
+	Los usuarios registrados cuentan con una pagina especial de usuarios para ver su contenido personalizado.
+	<br>Para crear el usuario administrador automaticamente se debe ingresar a /setupadmin
 	<br>Las credenciales del usuario Administrador son las siguientes:
 	<br>email: admin@builder.com
 	<br>pass: root
+	</p>
+
+	<h3> Guardado de Mapas </h3>
+	<p>
+	Los visitantes de la aplicacion podran guardar sus mapas en localStorage. Los usuarios 
+	registrados podran guardarlos en la Base de Datos, y ver sus mapas desde
+	el catalogo en la interfaz de la aplicacion. Desde el catalogo podran cargarlos.
 	</p>
 
 	<h2> Funcionalidad </h2>

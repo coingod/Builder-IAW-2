@@ -17,19 +17,12 @@ class ThumbnailController extends Controller
     public function save(Request $request)
     {
       //$data = $request->input('data');//Input::all();//'data:image/png;base64,AAAFBfj42Pj4';
-      $data = 'data:image/png;base64,AAAFBfj42Pj4';
-
-      list($type, $data) = explode(';', $data);
-      error_log("explode1");
-      list(, $data)      = explode(',', $data);
-      error_log("explode2");
-      $data = base64_decode($data);
-      error_log("base");
+      $data = $request->str;
+      $data = substr($data,22);
+      $data = str_replace(' ', '+', $data);
+      //$data = base64_decode($data);
       $path = public_path() . '/img/preview/image.png';
-
-      file_put_contents($path, $data);
-
+      file_put_contents( $path,$data);
       return Response('Hello World', 200)->header('Content-Type', 'text/plain');
     }
-
 }

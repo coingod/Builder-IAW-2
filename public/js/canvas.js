@@ -91,6 +91,7 @@ define([
     };
 
     Canvas.setSize = function(w, h) {
+        //console.log(w+" "+ h);
         //Modificamos el tamaño del mapa en funcion del tamaño de los tiles
         $("#canvas").css({
             width: w * tw, //13
@@ -106,12 +107,18 @@ define([
         $("#dialog_map").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
             ready: function(){
+                //LImpiamos el contenido
+                $(".canvas_item").remove();
                 //Solicitamos al servidor todos los tipos de canvas
                 $.ajax({ method: "GET", url: "/canvas", success: function(canvasList){
                     var i, map_id, map_name, map_info, map_img_path, map_token;
                     var item;
                     //console.log(maps);
                     for (i = 0; i < canvasList.length; i++) { 
+                        //Los canvas que el Admin marco como desabilitados no se toman en cuenta
+                        if(canvasList[i].habilitado == 0) 
+                            return;
+                        //Armamos el item dela listita
                         canvas_id = canvasList[i].canvasId;
                         canvas_name = canvasList[i].descripcion;
                         canvas_row = canvasList[i].height;
@@ -126,7 +133,8 @@ define([
             },
             complete: function() {
                 Editor.Layers.removeAll();
-                var tipo_canvas = $("#canvas_dropdown a .active");
+                var tipo_canvas = $("#canvas_dropdown a").filter(".active");//$("#canvas_dropdown a .active");
+                //console.log($(tipo_canvas));
                 var canvas_id = (tipo_canvas).attr("canvas-id");
                 var canvas_row = $(tipo_canvas).attr("row");
                 var canvas_col = $(tipo_canvas).attr("col");

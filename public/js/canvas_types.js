@@ -65,6 +65,10 @@ define([
             var i, map_id, map_name, map_info, map_img_path, map_token;
             //console.log(maps);
             for (i = 0; i < canvasList.length; i++) { 
+                //Los canvas que el Admin marco como desabilitados no se toman en cuenta
+                if(canvasList[i].habilitado == 0) 
+                    return;
+                //Obtenemos los datos
                 canvas_id = canvasList[i].canvasId;
                 canvas_name = canvasList[i].descripcion;
                 canvas_row = canvasList[i].height;

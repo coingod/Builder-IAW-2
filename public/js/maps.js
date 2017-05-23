@@ -155,15 +155,22 @@ define([
         $.ajax({ method: "GET", url: "/maps/1", success: function(response){
             var maps = response.maps;
             var i, map_id, map_name, map_info, map_img_path, map_token;
+            var j;
+                var layer_names
             //console.log(maps);
             for (i = 0; i < maps.length; i++) { 
+                layer_names = "Capas: ";
                 map_id = maps[i].mapaId;
                 map_name = maps[i].nombre;
                 map_img_path = maps[i].link;
                 map_token = maps[i].token;
                 map_info = maps[i].descripcion;
+                for (j = 0; j < maps[i].layersInfo.length; j++) { 
+                        //layer_info.push(maps[i].layersInfo[j].nombre);
+                        layer_names += maps[i].layersInfo[j].nombre + " ";
+                    }
                 //console.log(map_id + " " + map_name + " " + map_img_path + " " + map_token);
-                Maps.addMap(map_id, map_name, map_info, map_img_path, map_token, default_maps);
+                Maps.addMap(map_id, map_name, map_info, map_img_path, map_token, default_maps, layer_names);
             }       
         }});
     };
@@ -181,22 +188,30 @@ define([
 
                 var maps = response2.maps;
                 var i, map_id, map_name, map_info, map_img_path, map_token;
+                var j;
+                var layer_names;
                 //console.log(maps);
                 for (i = 0; i < maps.length; i++) { 
+                    layer_names = "Capas: ";
                     map_id = maps[i].mapaId;
                     map_name = maps[i].nombre;
                     map_img_path = maps[i].link;
                     map_token = maps[i].token;
                     map_info = maps[i].descripcion;
+                    //console.log("Layers: "+maps[i].layersInfo.length);
+                    for (j = 0; j < maps[i].layersInfo.length; j++) { 
+                        //layer_info.push(maps[i].layersInfo[j].nombre);
+                        layer_names += maps[i].layersInfo[j].nombre;
+                    }
                     //console.log(map_id + " " + map_name + " " + map_img_path + " " + map_token);
-                    Maps.addMap(map_id, map_name, map_info, map_img_path, map_token, user_maps);
+                    Maps.addMap(map_id, map_name, map_info, map_img_path, map_token, user_maps, layer_names);
                 }       
             }});
         }});
     };
 
     //Agrega una nueva capa
-    Maps.addMap = function(id, name, info, thumbnail, token, lista) {
+    Maps.addMap = function(id, name, info, thumbnail, token, lista, capas) {
 
         //Si pasamos un nombre lo usamos, sino asignamos uno por defecto
         if (!name) name = "Mapa " + currentMap;
@@ -214,7 +229,7 @@ define([
         //Asignamos el nombre
         map.children().filter(".title").text(name);
         //Asignamos la descripcion
-        map.children().filter("p").text(info);
+        map.children().filter("p").html(info+" <br> "+capas);
         //Asignamos el preview
         map.children().filter("img").attr("src", thumbnail);
 

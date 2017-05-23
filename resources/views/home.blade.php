@@ -32,9 +32,11 @@
             <ul id="dropdown_opciones" class="dropdown-content">
                     @if (Auth::check())
                         <li id="user_name"><a href="#">{{ Auth::user()->name }}</a></li>
+                        @if (Auth::user()->hasRole('admin')) 
                         <li id="user_list"><a href="/users">Ver Usuarios</a></li>
                         <li class="divider"></li> 
                         <li id="upload_info"><a>Resetear BD</a></li>
+                        @endif
                         <li class="divider"></li> 
                         <li id="user_logout">
                             <a href="{{ route('logout') }}"
@@ -66,27 +68,6 @@
 
 
 <div class="row">
-    <!--
-    <div id="navigation_panel" class="col s3 z-depth-5">
-    <ul id="slide-out" class="side-nav fixed">
-        <li>
-            <div class="userView">
-              <div class="background" style="background-color: #2196F3">
-              </div>
-              <a href="#!user"><img class="circle" src="http://www.androidpolice.com/wp-content/uploads/2014/10/nexus2cee_Admin-Thumb.png"></a>
-              <a href="#!name"><span class="white-text name">{{ Auth::user()->name }}</span></a>
-              <a href="#!email"><span class="white-text email">{{ Auth::user()->email }}</span></a>
-            </div>
-        </li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li><div class="divider"></div></li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-    </ul>
-    </div>
-    -->
-
     <div id="content_panel" class="col s12">
         <div class="container">
             <div class="row">
@@ -124,8 +105,7 @@
                             </div>
                         </div>
                         <div class="card-action">
-                            <a href="#">This is a link</a>
-                            <a href="#">This is a link</a>
+                            <a id="canvas_add" href="#">Agregar Caracteristica</a>
                         </div>
                     </div>
                 </div>
@@ -150,6 +130,48 @@
             </div>
         </div>
     </div>
+    @if (Auth::user()->hasRole('admin')) 
+    <!-- Borrar capa -->
+    <div id="canvas_delete" class="modal">
+        <div class="modal-content">
+            <h4>Borrar Caracteristica</h4>
+            <p>Está a punto de eliminar una caracteristica personalizable, esta accion <b>no se puede deshacer</b>, ¿Desea eliminar esta caracteristica?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">No</a>
+            <a id="si_borrar_canvas" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
+        </div>
+    </div>
+    <!-- Nuevo tipo de canvas -->
+    <div id="dialog_add_canvas" class="modal">
+        <div class="modal-content">
+            <h4>Nuevo tipo de Canvas</h4>
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="canvas_name" type="text" class="validate">
+                        <label for="canvas_name">Nombre del Tipo</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="canvas_row" type="number" class="validate">
+                        <label for="canvas_row">Cantidad de Filas</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="canvas_col" type="number" class="validate">
+                        <label for="canvas_col">Cantidad de Columnas</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+        </div>
+    </div>
+    @endif
     
     <!-- Templates de la info de los mapas -->
     <div id="map_templates" hidden>

@@ -121,7 +121,6 @@ define([
 
         //Cargamos las categorias nuevas (Tilesets)
         Editor.Tileset.info = json.tilesetInfo;
-        console.log(Editor.Tileset.info);
         Editor.Tileset.load();
 
         //Configuramos las dimensiones del canvas

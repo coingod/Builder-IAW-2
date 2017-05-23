@@ -39,9 +39,8 @@ define([
                 $.ajax({ method: "GET", url: "/showmap/" + map_id, success: function(response){
                     Editor.currentState.json = {};
                     Editor.currentState.json = response.toReturn;
-                    console.log(Editor.currentState.json);
                     Editor.loadExternal();
-                }});            
+                }});
             }
             //console.log("MapID: " + $(e.currentTarget).attr("map-id"));
         });
@@ -59,7 +58,7 @@ define([
                     //Editor.currentState.json = response.toReturn;
                     console.log(response);
                     //Editor.loadExternal();
-                }}); 
+                }});
                 */
 
             } else if ($(event.target).hasClass(icon_share)) {
@@ -87,7 +86,7 @@ define([
         $("#save_map").on("click", function() {
             $("#dialog_save_map").modal("open");
         });
-        
+
         //Oyente de confirmacion de borrado
         $("#si_borrar_mapa").on("click", function(event) {
             Maps.deleteMap(mapaAborrar);
@@ -102,7 +101,7 @@ define([
 
         return this;
     };
-    
+
     Maps.crearDialog = function() {
         $("#maps_library").modal({
             ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
@@ -112,7 +111,7 @@ define([
               },
         });
         $('#maps_library modal-content row col tabs').tabs();
-        
+
         $("#dialog_save_map").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
             complete: function() {
@@ -133,7 +132,7 @@ define([
                     }});
                 } // Callback for Modal close
         });
-        
+
         $("#map_delete").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
         });
@@ -158,23 +157,23 @@ define([
             var j;
                 var layer_names
             //console.log(maps);
-            for (i = 0; i < maps.length; i++) { 
+            for (i = 0; i < maps.length; i++) {
                 layer_names = "Capas: ";
                 map_id = maps[i].mapaId;
                 map_name = maps[i].nombre;
                 map_img_path = maps[i].link;
                 map_token = maps[i].token;
                 map_info = maps[i].descripcion;
-                for (j = 0; j < maps[i].layersInfo.length; j++) { 
+                for (j = 0; j < maps[i].layersInfo.length; j++) {
                         //layer_info.push(maps[i].layersInfo[j].nombre);
                         layer_names += maps[i].layersInfo[j].nombre + " ";
                     }
                 //console.log(map_id + " " + map_name + " " + map_img_path + " " + map_token);
                 Maps.addMap(map_id, map_name, map_info, map_img_path, map_token, default_maps, layer_names);
-            }       
+            }
         }});
     };
-    
+
     Maps.loadUserMaps = function() {
 
         //Solicitamos el id del usuario
@@ -191,7 +190,7 @@ define([
                 var j;
                 var layer_names;
                 //console.log(maps);
-                for (i = 0; i < maps.length; i++) { 
+                for (i = 0; i < maps.length; i++) {
                     layer_names = "Capas: ";
                     map_id = maps[i].mapaId;
                     map_name = maps[i].nombre;
@@ -199,13 +198,13 @@ define([
                     map_token = maps[i].token;
                     map_info = maps[i].descripcion;
                     //console.log("Layers: "+maps[i].layersInfo.length);
-                    for (j = 0; j < maps[i].layersInfo.length; j++) { 
+                    for (j = 0; j < maps[i].layersInfo.length; j++) {
                         //layer_info.push(maps[i].layersInfo[j].nombre);
                         layer_names += maps[i].layersInfo[j].nombre + " ";
                     }
                     //console.log(map_id + " " + map_name + " " + map_img_path + " " + map_token);
                     Maps.addMap(map_id, map_name, map_info, map_img_path, map_token, user_maps, layer_names);
-                }       
+                }
             }});
         }});
     };
@@ -254,7 +253,7 @@ define([
             console.log(response);
             //Eliminamos la capa de la interfaz
             map.remove();
-        }});  
+        }});
     };
 
     return Maps;

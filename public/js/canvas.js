@@ -82,7 +82,6 @@ define([
         */
         $("#canvas_dropdown").on("mousedown", "a", function(event) {
             $("#canvas_dropdown a").removeClass("active");
-            console.log($(event.target).text());
             $(event.target).addClass("active");
             $("#canvas_dropdown_button").text($(event.target).text());
         });
@@ -114,11 +113,11 @@ define([
                     var i, map_id, map_name, map_info, map_img_path, map_token;
                     var item;
                     //console.log(maps);
-                    for (i = 0; i < canvasList.length; i++) { 
+                    for (i = 0; i < canvasList.length; i++) {
                         //console.log("A ver si pasa");
                         //console.log(canvasList[i]);
                         //Los canvas que el Admin marco como desabilitados no se toman en cuenta
-                        if(canvasList[i].habilitado == 0) 
+                        if(canvasList[i].habilitado == 0)
                             continue;
                         //console.log("paso");
                         //Armamos el item dela listita
@@ -128,10 +127,10 @@ define([
                         canvas_col = canvasList[i].width;
                         item = "<li class='canvas_item' ><a href='#!'canvas-id='"+canvas_id+"' row='"+canvas_row+"' col='"+canvas_col+"'>"+canvas_name+": "+canvas_row+"x"+canvas_col+ "</a></li>";
                         $("#canvas_dropdown").append(item);
-                    }   
+                    }
                     //Seteamos uno por defecto
-                    var first = $("#canvas_dropdown a").first().addClass("active");   
-                    $("#canvas_dropdown_button").text($(first).text()); 
+                    var first = $("#canvas_dropdown a").first().addClass("active");
+                    $("#canvas_dropdown_button").text($(first).text());
                 }});
             },
             complete: function() {
@@ -148,10 +147,10 @@ define([
                 Editor.Layers.createDefaultLayers();
                 /*
                     Editor.Layers.removeAll();
-                    
+
                     var filas = $("#cantFilas").val();
                     var col = $("#cantColumnas").val();
-                    
+
                     Canvas.setSize(canvas_col, canvas_row);
                     Editor.Layers.createDefaultLayers();
                     */
@@ -299,7 +298,7 @@ define([
         $("#canvas").css({ top: top, left: left });
     };
 
-    //Genera una imagen PNG del mapa actual. El parametro es un booleano que indica si el resultado 
+    //Genera una imagen PNG del mapa actual. El parametro es un booleano que indica si el resultado
     //se abre en una ventana nueva o si se envia al servidor para su almacenaje (vistas previas)
     Canvas.createPNG = function(newWindow, map_id) {
         var buffer = document.createElement("canvas").getContext("2d");
@@ -351,7 +350,7 @@ define([
             }else{
                 //Almacenamos la imagen en el servidor para las vistas previas
                 $.ajax({ method: "POST", url: "/thumbnail", data:{str:buffer.canvas.toDataURL(), id:map_id} });
-            }            
+            }
         });
         //console.log(buffer.canvas.toDataURL());
         //return buffer.canvas.toDataURL();

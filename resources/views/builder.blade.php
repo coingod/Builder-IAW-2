@@ -79,6 +79,10 @@
                 <li class="divider"></li>
                 @if (Auth::user())
                 <li id="save_map"><a>Guardar</a></li>
+                @else
+                <li class="divider"></li>
+                <li id="save_in_local_storage"><a>Guardar Local</a></li>
+                <li id="load_from_local_storage"><a>Cargar Local</a></li>
                 @endif
                 <li id="open_maps_library"><a href="#maps_library">Catalogo</a></li>
                 <li class="divider"></li>

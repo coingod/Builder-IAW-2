@@ -61,6 +61,14 @@ define([
         });
 
         //Oyentes para el menu de opciones
+        $("#save_in_local_storage").on("click", function(){
+          Editor.currentState.loadCurrentState();
+          localStorage.json=JSON.stringify(Editor.currentState.json);
+        });
+        $("#load_from_local_storage").on("click", function(){
+          Editor.currentState.json=JSON.parse(localStorage.json);
+          Editor.loadExternal();
+        });
         $("#upload_info").on("click", function(){
           Editor.currentState.loadCurrentState();
           Editor.currentState.json.layersInfo={}; //No necesitamos enviar esto, lo obviamos!
@@ -71,7 +79,6 @@ define([
           $.ajax({ method: "GET", url: "/maps/1", success: function(response){
             Editor.currentState.json={};
             Editor.currentState.json=response.maps[0];
-            console.log(Editor.currentState.json);
             Editor.loadExternal();
           }});
         });
@@ -109,7 +116,6 @@ define([
             //Desplegamos las herramientas al terminar de cargar
             $('.fixed-action-btn').openFAB();
         });
-
     };
 
     //Procesa un archivo JSON y genera un nuevo Mapa con los datos del archivo

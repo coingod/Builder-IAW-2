@@ -79,9 +79,11 @@ class MapsController extends Controller
       $canvas->save();
     }
 
-    public function deleteCanvas($id){
-      Canvas::where('canvasId','=',$id)->getQuery()->delete();
-      return Response('Hello World', 200)->header('Content-Type', 'text/plain');
+    public function deactivateCanvas($id){
+      $canvas= Canvas::where('canvasId','=',$id)->first();
+      $canvas->habilitado=0;
+      $canvas->save();
+      return Response($canvas, 200)->header('Content-Type', 'text/plain');
     }
 
     //Creacion de nuevo mapa
@@ -106,13 +108,13 @@ class MapsController extends Controller
         $mapa->canvasId = $canvasid;
         $mapa->userId = Auth::id();//Auth::user()->id;
         $mapa->tilesetId = Tileset::first()->tilesetId; //Hardcoded, el tileset no cambia.
-        $mapa_id = $mapa->mapaId; //Esta variable se retorna, para que al generar el preview sepa la id del mapa!
-        $mapa->token = substr(md5($mapa_id), 0, 32);
         $mapa->nombre = $nombre;
         $mapa->descripcion = $descripcion;
+        $mapa->save();
+        $mapa_id = $mapa->getKey(); //Esta variable se retorna, para que al generar el preview sepa la id del mapa!
+        $mapa->token = substr(md5($mapa_id), 0, 32);
         $mapa->link = '/img/preview/' . $mapa_id . '.png';
         $mapa->save();
-
         //Buscamos ID de la primer categoría
         //$primerCategoria=Categoria::first()->categoriaId;
         //Cargamos Tiles y Layers!
@@ -121,7 +123,7 @@ class MapsController extends Controller
           $layer->nombre=$layersInfo[$i]["nombre"];
           $layer->visible=$layersInfo[$i]["visible"];
           $layer->tilesetId=$mapa->tilesetId;
-          $layer->mapaId=$mapa->getKey();
+          $layer->mapaId=$mapa_id;
           $cantTiles=$layersInfo[$i]["cantTiles"];
           $layer->save();
 
@@ -173,7 +175,7 @@ class MapsController extends Controller
             $categoria->height=$tilesetInfo["categories"][$i]["height"];
             $categoria->emptyTiles=$tilesetInfo["categories"][$i]["emptyTiles"];
             $categoria->icon=$tilesetInfo["categories"][$i]["icon"];
-            $categoria->tilesetId=$tileset->tilesetId;
+            $categoria->tilesetId=$tileset->getKey();
             $categoria->save();
           };
 

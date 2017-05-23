@@ -9,7 +9,8 @@ use App\Categoria;
 use App\Layer;
 use App\Tile;
 use App\Tileset;
-use App\Auth;
+//use App\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class MapsController extends Controller
 {
@@ -91,6 +92,8 @@ class MapsController extends Controller
         $tilesetInfo=$request->tilesetInfo;
         $canvasInfo=$request->canvasInfo;
         $layersInfo=$request->layersInfo;
+        $nombre=$request->nombre;
+        $descripcion=$request->descripcion;
         //estas variables declaradas antes deben accederse como arreglo asociativo
 
         //Creacion de mapa
@@ -101,9 +104,11 @@ class MapsController extends Controller
         $canvasid=$consultaCanvas->canvasId;
 
         $mapa->canvasId = $canvasid;
-        $mapa->userId = 1; //App\Auth::user()->getKey();
+        $mapa->userId = Auth::id();//Auth::user()->id;
         $mapa->tilesetId = Tileset::first()->tilesetId; //Hardcoded, el tileset no cambia.
-        $mapa->token=substr(md5($mapa->mapaId), 0, 32);
+        $mapa->token = substr(md5($mapa->mapaId), 0, 32);
+        $mapa->nombre = $nombre;
+        $mapa->descripcion = $descripcion;
         $mapa->save();
 
         //Buscamos ID de la primer categoría

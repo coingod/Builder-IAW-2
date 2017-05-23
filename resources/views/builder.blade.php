@@ -62,31 +62,25 @@
                                 {{ csrf_field() }}
                             </form>
                         </li>
-                        @if (Auth::user()->name == "admin")
-                        <li class="divider"></li>
-                        <li id="upload_info"><a>LIMPIAR BD</a></li>
-                        <li id="test"><a>testtt</a></li>
-                        @endif
                     @else
                         <li id="user_login"><a href="{{ url('/login') }}">Iniciar Sesion</a></li>
                         <li id="user_register"><a href="{{ url('/register') }}">Registrarse</a></li>
                     @endif
                 @endif
-                <li class="divider"></li>
-                <li id="open_maps_library"><a href="#maps_library">Catalogo</a></li>
             </ul>
             <!-- Estructura del Menu de Mapa -->
             <ul id="dropdown_mapas" class="dropdown-content">
                 <li><a href="#!"><b>Mapa</b></a></li>
                 <li id="new_map"><a href="#!">Nuevo</a></li>
-                @if (Auth::user())
                 <li class="divider"></li>
+                @if (Auth::user())
                 <li id="save_map"><a>Guardar</a></li>
                 @else
                 <li class="divider"></li>
-                <li id="save_in_local_storage"><a>Almacenar localmente</a></li>
-                <li id="load_from_local_storage"><a>Levantar ultimo mapa</a></li>
+                <li id="save_in_local_storage"><a>Guardar Local</a></li>
+                <li id="load_from_local_storage"><a>Cargar Local</a></li>
                 @endif
+                <li id="open_maps_library"><a href="#maps_library">Catalogo</a></li>
                 <li class="divider"></li>
                 <li id="export_map"></li>
                 <li id="import_map"><a href="#!">Importar JSON</a></li>
@@ -99,6 +93,7 @@
                 <li id="light_theme"><a href="#!">Light</a></li>
                 <li id="dark_theme"><a href="#!">Dark</a></li>
                 <li class="divider"></li>
+                <li id="about"><a href="#!"><b><u>Autores</u></b></a></li>
                 <li><a href="./readme.html" target="_blank"><b><u>Readme</u></b></a></li>
             </ul>
             <!-- Barra de titulo/navegacion -->
@@ -204,6 +199,40 @@
 
     <!-- Cuadros de dialogo usados por la aplicacion -->
     <div id="dialog_list">
+        <!-- About -->
+        <div id="dialog_about" class="modal">
+            <div class="modal-content">
+                <h4>Acerca de Builder 2</h4>
+                <h5>Proyecto 2 - Ingenieria de Aplicaciones Web 2017</h5>
+                <p>Desarrollado por Ignacio del Barrio y Lucas Menchi.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Cerrar</a>
+            </div>
+        </div>
+        <!-- Guardar Mapa -->
+        <div id="dialog_save_map" class="modal">
+            <div class="modal-content">
+                <h4>Guardar Mapa</h4>
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="map_name" type="text" class="validate">
+                            <label for="map_name">Nombre del Mapa</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="map_info" type="text" class="validate">
+                            <label for="map_info">Descripcion del Mapa</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            </div>
+        </div>
         <div id="map_delete" class="modal">
             <div class="modal-content">
                 <h4>Borrar Mapa</h4>
@@ -302,13 +331,13 @@
             <p>First Line <br>
                Second Line
             </p>
-            @if (Auth::user() && Auth::user()->name == "admin")
+            @if (Auth::user() && Auth::user()->hasRole('admin'))
             <i class="secondary-content delete material-icons">delete</i>
             @endif
             <i class="secondary-content share material-icons">share</i>
-            <i class="secondary-content file_download material-icons">file_download</i>
-            @if (Auth::user() && Auth::user()->name == "admin")
-            <i class="secondary-content modo_edit material-icons">mode_edit</i>
+            <!--<i class="secondary-content file_download material-icons">file_download</i>-->
+            @if (Auth::user() && Auth::user()->hasRole('admin'))
+            <!--<i class="secondary-content modo_edit material-icons">mode_edit</i>-->
             @endif
         </a>
         <a id="umap" href='#!' class="collection-item avatar">
@@ -319,8 +348,8 @@
             </p>
             <i class="secondary-content delete material-icons">delete</i>
             <i class="secondary-content share material-icons">share</i>
-            <i class="secondary-content file_download material-icons">file_download</i>
-            <i class="secondary-content modo_edit material-icons">mode_edit</i>
+            <!--<i class="secondary-content file_download material-icons">file_download</i>-->
+            <!--<i class="secondary-content modo_edit material-icons">mode_edit</i>-->
         </a>
     </div>
     <!-- data-main attribute tells require.js to load js/main.js after require.js loads. -->

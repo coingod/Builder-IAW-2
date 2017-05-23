@@ -28,6 +28,7 @@ define([
         //Configuramos la estructura de todos los cuadros de dialogo
         Editor.Layers.crearDialog();
         Editor.Maps.crearDialog();
+        $("#dialog_about").modal();
         $("#dialog_info").modal();
         Editor.currentState.crearDialog();
         Editor.Canvas.crearDialog();
@@ -61,10 +62,6 @@ define([
         });
 
         //Oyentes para el menu de opciones
-        $("#save_map").on("click", function(){
-          Editor.currentState.loadCurrentState();
-          $.ajax({ method: "POST", url: "/savemap", data:Editor.currentState.json });
-        });
         $("#save_in_local_storage").on("click", function(){
           Editor.currentState.loadCurrentState();
           localStorage.json=JSON.stringify(Editor.currentState.json);
@@ -78,13 +75,7 @@ define([
           Editor.currentState.json.layersInfo={}; //No necesitamos enviar esto, lo obviamos!
           $.ajax({ method: "POST", url: "/resetDB", data:Editor.currentState.json });
         });
-        $("#test").on("click", function(){
-          $.ajax({ method: "GET", url: "/maps/1", success: function(response){
-            Editor.currentState.json={};
-            Editor.currentState.json=response.maps[0];
-            Editor.loadExternal();
-          }});
-        });
+        
        $("#new_map").on("click", function() {
             $("#dialog_map").modal("open");
         });
@@ -99,7 +90,9 @@ define([
             //Almacenamos una vista previa del mapa en el servidor
             $.ajax({ method: "POST", url: "/thumbnail", data:Editor.Canvas.createPNG() });
         });
-
+        $("#about").on("click", function() {
+            $("#dialog_about").modal("open");
+        });
 
         //Seteamos Modo de edicion por defecto
         $("#edit_mode").click();

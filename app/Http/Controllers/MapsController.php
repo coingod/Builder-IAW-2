@@ -76,7 +76,7 @@ class MapsController extends Controller
       $canvas->width=$request->width;
       $canvas->height=$request->height;
       $canvas->descripcion=$request->descripcion;
-      $canvas->save;
+      $canvas->save();
     }
 
     public function deactivateCanvas($id){

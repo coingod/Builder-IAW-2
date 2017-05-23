@@ -38,12 +38,14 @@ require.config({
     }
 });
 
-require(["jquery", "maps", "materialize"], function($, Maps) {
+require(["jquery", "maps", "canvas_types", "materialize"], function($, Maps, CanvasTypes) {
     //Levantamos el ultimo skin usado.
     //$(localStorage.oldSkin).attr('href', localStorage.skin);
     $(document).ready(function() {
-        console.log("admin.js");
+        //console.log("admin.js");
         Maps.initialize(null);
+        CanvasTypes.initialize(null);
+        CanvasTypes.crearDialog();
         Maps.crearDialog();
     });
 });

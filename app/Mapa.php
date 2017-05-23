@@ -8,7 +8,7 @@ class Mapa extends Model
 {
     //
     protected $connection = 'mysql';
-    protected $primaryKey = 'mapId';
+    protected $primaryKey = 'mapaId';
     public $timestamps=false;
 
     protected $fillable = ['token', 'userId', 'tilesetId', 'canvasId', 'link', 'descripcion', 'nombre'];

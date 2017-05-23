@@ -63,7 +63,7 @@
                             </form>
                         </li>
                         @if (Auth::user()->hasRole('admin'))
-                        <li class="divider"></li> 
+                        <li class="divider"></li>
                         <li id="upload_info"><a>Resetear BD</a></li>
                         @endif
                     @else
@@ -98,7 +98,7 @@
                 <li id="dark_theme"><a href="#!">Dark</a></li>
                 <li class="divider"></li>
                 <li id="about"><a href="#!"><b><u>Autores</u></b></a></li>
-                <li><a href="./readme.html" target="_blank"><b><u>Readme</u></b></a></li>
+                <li><a href="/readme" target="_blank"><b><u>Readme</u></b></a></li>
             </ul>
             <!-- Barra de titulo/navegacion -->
             <nav>

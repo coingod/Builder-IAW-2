@@ -11,5 +11,5 @@ class Tile extends Model
     protected $primaryKey = 'tileId';
     public $timestamps=false;
 
-    protected $fillable = ['categoriaId', 'layerId', 'coordX', 'coordY', 'tileInCategoria'];
+    protected $fillable = ['idCategoria', 'layerId', 'cx', 'cy', 'tileInCategoria'];
 }

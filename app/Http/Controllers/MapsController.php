@@ -18,7 +18,7 @@ class MapsController extends Controller
     public function showMapsByUserId($id){
       $maps = Mapa::where('userId','=',$id)->get()->toArray();
       for($i=0; $i<count($maps) ; $i++){
-        $maps[$i]["canvas"]=Canvas::where('canvasId','=',$maps[$i]["canvasId"])->first();
+        $maps[$i]["canvasInfo"]=Canvas::where('canvasId','=',$maps[$i]["canvasId"])->first();
         $maps[$i]["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$maps[$i]["tilesetId"])->first();
         $maps[$i]["layersInfo"]=Layer::where('mapaId','=',$maps[$i]["mapaId"])->get()->toArray();
         $maps[$i]["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$maps[$i]["tilesetId"])->get()->toArray();
@@ -33,7 +33,7 @@ class MapsController extends Controller
       $arraycheck=Mapa::where('token','=',$token)->get()->toArray();
       if(count($arraycheck)>0){
         $toReturn=$arraycheck[0];
-        $toReturn["canvas"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
+        $toReturn["canvasInfo"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
         $toReturn["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$toReturn["tilesetId"])->first();
         $toReturn["layersInfo"]=Layer::where('mapaId','=',$toReturn["mapaId"])->get()->toArray();
         $toReturn["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$toReturn["tilesetId"])->get()->toArray();
@@ -48,7 +48,7 @@ class MapsController extends Controller
       $arraycheck=Mapa::where('mapaId','=',$id)->get()->toArray();
       if(count($arraycheck)>0){
         $toReturn=$arraycheck[0];
-        $toReturn["canvas"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
+        $toReturn["canvasInfo"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
         $toReturn["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$toReturn["tilesetId"])->first();
         $toReturn["layersInfo"]=Layer::where('mapaId','=',$toReturn["mapaId"])->get()->toArray();
         $toReturn["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$toReturn["tilesetId"])->get()->toArray();
@@ -107,11 +107,11 @@ class MapsController extends Controller
         $mapa->save();
 
         //Buscamos ID de la primer categoría
-        $primerCategoria=Categoria::first()->categoriaId;
+        //$primerCategoria=Categoria::first()->categoriaId;
         //Cargamos Tiles y Layers!
         for($i=0; $i<count($layersInfo); $i++){
           $layer=new Layer();
-          $layer->name=$layersInfo[$i]["nombre"];
+          $layer->nombre=$layersInfo[$i]["nombre"];
           $layer->visible=$layersInfo[$i]["visible"];
           $layer->tilesetId=$mapa->tilesetId;
           $layer->mapaId=$mapa->getKey();
@@ -124,10 +124,10 @@ class MapsController extends Controller
             $tile=new Tile();
             //el campo idCategoria en el json tiene el offset dentro de las categorias.
             //Sumamos a la primera y obtenemos el id real en la DB!
-            $tile->categoriaId=$layersInfo[$i]["listaTiles"][$j]["idCategoria"]+$primerCategoria;
+            $tile->idCategoria=$layersInfo[$i]["listaTiles"][$j]["idCategoria"];
             $tile->tileInCategoria=$layersInfo[$i]["listaTiles"][$j]["tileInCategoria"];
-            $tile->coordX=$layersInfo[$i]["listaTiles"][$j]["cx"];
-            $tile->coordY=$layersInfo[$i]["listaTiles"][$j]["cy"];
+            $tile->cx=$layersInfo[$i]["listaTiles"][$j]["cx"];
+            $tile->cy=$layersInfo[$i]["listaTiles"][$j]["cy"];
             $tile->layerId=$layer->layerId;
 
             $tile->save();

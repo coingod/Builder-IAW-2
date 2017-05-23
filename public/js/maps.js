@@ -136,11 +136,6 @@ define([
         //Si pasamos un nombre lo usamos, sino asignamos uno por defecto
         if (!name) name = "Mapa " + currentMap;
 
-        console.log(Editor.Canvas.createPNG());
-
-        //Almacenamos una vista previa del mapa en el servidor
-        $.ajax({ method: "POST", url: "/thumbnail", data:Editor.Canvas.createPNG() });
-
         var thumbnail = "/img/preview/example.png";
 
         //Creamos el item correspondiente a la lista de mapas de usuario o de predefinidos

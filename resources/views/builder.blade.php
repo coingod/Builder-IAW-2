@@ -51,7 +51,6 @@
                 <li><a href="#!"><b>@if (Auth::guest()) Visitante @else {{ Auth::user()->name }} @endif</b></a></li>
                     @if (Auth::check())
                         <li id="user_account"><a href="{{ url('/home') }}">Mi cuenta</a></li>
-                        @if (Auth::user()->name == "admin") <li id="upload_info"><a>LIMPIAR BD</a></li>@endif
                         <li id="user_logout">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -63,6 +62,11 @@
                                 {{ csrf_field() }}
                             </form>
                         </li>
+                        @if (Auth::user()->name == "admin")
+                        <li class="divider"></li> 
+                        <li id="upload_info"><a>LIMPIAR BD</a></li>
+                        <li id="test"><a>testtt</a></li>
+                        @endif
                     @else
                         <li id="user_login"><a href="{{ url('/login') }}">Iniciar Sesion</a></li>
                         <li id="user_register"><a href="{{ url('/register') }}">Registrarse</a></li>
@@ -184,11 +188,11 @@
                 <div class="maplist collection">
                 </div>
             </div>
-            @if (Auth::user()) 
+            @if (Auth::user())
             <div id="user_maps" class="col s12">
                 <div class="maplist collection">
                 </div>
-            </div> 
+            </div>
             @endif
           </div>
         </div>
@@ -294,12 +298,12 @@
             <p>First Line <br>
                Second Line
             </p>
-            @if (Auth::user() && Auth::user()->name == "admin") 
+            @if (Auth::user() && Auth::user()->name == "admin")
             <i class="secondary-content delete material-icons">delete</i>
             @endif
             <i class="secondary-content share material-icons">share</i>
             <i class="secondary-content file_download material-icons">file_download</i>
-            @if (Auth::user() && Auth::user()->name == "admin") 
+            @if (Auth::user() && Auth::user()->name == "admin")
             <i class="secondary-content modo_edit material-icons">mode_edit</i>
             @endif
         </a>

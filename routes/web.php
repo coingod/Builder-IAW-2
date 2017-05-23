@@ -119,6 +119,9 @@ Route::post('/thumbnail', 'ThumbnailController@save');
 
 Auth::routes();
 
+Route::get('/readme', function(){
+	return view('readme');
+});
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/redirect', 'SocialAuthController@redirect');

@@ -106,16 +106,18 @@ class MapsController extends Controller
         $consultaCanvas = Canvas::all()->where("height","=",$canvasInfo["height"])->where("width","=",$canvasInfo["width"])->first();
         $canvasid=$consultaCanvas->canvasId;
 
-        $mapa->canvasId = $canvasid;
-        $mapa->userId = Auth::id();//Auth::user()->id;
-        $mapa->tilesetId = Tileset::first()->tilesetId; //Hardcoded, el tileset no cambia.
+        $mapa->canvasId =  $canvasid;
+        $mapa->userId =Auth::id();//Auth::user()->id;
+        $mapa->tilesetId = Tileset::first()->getKey(); //Hardcoded, el tileset no cambia.
         $mapa->nombre = $nombre;
         $mapa->descripcion = $descripcion;
         $mapa->save();
+
         $mapa_id = $mapa->getKey(); //Esta variable se retorna, para que al generar el preview sepa la id del mapa!
         $mapa->token = substr(md5($mapa_id), 0, 32);
         $mapa->link = '/img/preview/' . $mapa_id . '.png';
         $mapa->save();
+
         //Buscamos ID de la primer categoría
         //$primerCategoria=Categoria::first()->categoriaId;
         //Cargamos Tiles y Layers!
@@ -187,6 +189,7 @@ class MapsController extends Controller
           $canvas->width=$canvasInfo["width"];
           $canvas->height=$canvasInfo["height"];
           $canvas->descripcion="Big";
+          $canvas->habilitado=1;
           $canvas->save();
           //Canvas default medium
           $canvas= new Canvas();
@@ -195,6 +198,7 @@ class MapsController extends Controller
           $canvas->width=9;
           $canvas->height=6;
           $canvas->descripcion="Medium";
+          $canvas->habilitado=1;
           $canvas->save();
           //Canvas default small
           $canvas= new Canvas();
@@ -203,6 +207,7 @@ class MapsController extends Controller
           $canvas->width=4;
           $canvas->height=4;
           $canvas->descripcion="Small";
+          $canvas->habilitado=1;
           $canvas->save();
 
 

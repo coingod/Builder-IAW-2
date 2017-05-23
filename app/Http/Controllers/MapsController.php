@@ -106,18 +106,18 @@ class MapsController extends Controller
         $consultaCanvas = Canvas::all()->where("height","=",$canvasInfo["height"])->where("width","=",$canvasInfo["width"])->first();
         $canvasid=$consultaCanvas->canvasId;
 
-        $mapa->canvasId = $canvasid;
+        $mapa->canvasId =  $canvasid;
         $mapa->userId =Auth::id();//Auth::user()->id;
         $mapa->tilesetId = Tileset::first()->getKey(); //Hardcoded, el tileset no cambia.
         $mapa->nombre = $nombre;
         $mapa->descripcion = $descripcion;
         $mapa->save();
-/*
+
         $mapa_id = $mapa->getKey(); //Esta variable se retorna, para que al generar el preview sepa la id del mapa!
         $mapa->token = substr(md5($mapa_id), 0, 32);
         $mapa->link = '/img/preview/' . $mapa_id . '.png';
         $mapa->save();
-        */
+
         //Buscamos ID de la primer categoría
         //$primerCategoria=Categoria::first()->categoriaId;
         //Cargamos Tiles y Layers!

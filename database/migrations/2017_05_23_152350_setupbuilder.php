@@ -23,7 +23,7 @@ class Setupbuilder extends Migration
       //Canvas
       Schema::create('canvas', function (Blueprint $table) {
         $table->increments('canvasId');
-        $table->string('descripcion');
+        $table->string('descripcion')->nullable();
         $table->integer('tw');
         $table->integer('th');
         $table->integer('width');
@@ -41,7 +41,7 @@ class Setupbuilder extends Migration
       //categorias
       Schema::create('categorias', function (Blueprint $table) {
           $table->increments('categoriaId');
-          $table->string('name');
+          $table->string('name')->nullable();
           $table->string('path');
           $table->string('icon');
           $table->integer('width');
@@ -57,10 +57,10 @@ class Setupbuilder extends Migration
       //Mapa
       Schema::create('mapas', function (Blueprint $table) {
           $table->increments('mapaId');
-          $table->string('token');
-          $table->string('link');
-          $table->string('descripcion');
-          $table->string('nombre');
+          $table->string('token')->nullable();
+          $table->string('link')->nullable();
+          $table->string('descripcion')->nullable();
+          $table->string('nombre')->nullable();
           $table->integer('userId')->unsigned();
           $table->integer('tilesetId')->unsigned();
           $table->integer('canvasId')->unsigned();
@@ -73,8 +73,8 @@ class Setupbuilder extends Migration
       //layers
       Schema::create('layers', function (Blueprint $table) {
           $table->increments('layerId');
-          $table->string('nombre');
-          $table->string('visible');
+          $table->string('nombre')->nullable();
+          $table->string('visible')->nullable();
           $table->integer('tilesetId')->unsigned();
           $table->integer('mapaId')->unsigned();
           $table->foreign('tilesetId')->references('tilesetId')->on('tilesets')->onDelete('cascade');

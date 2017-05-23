@@ -119,6 +119,8 @@ define([
                     Editor.currentState.json.descripcion = descripcion;
                     //console.log(Editor.currentState.json);
                     $.ajax({ method: "POST", url: "/savemap", data:Editor.currentState.json, success: function(response){
+                        //Generamos una imagen PNG para vista previa y la enviamos al servidor (NewWindow: false)
+                        Editor.Canvas.createPNG(false, response.mapa_id);
                         //console.log(response);
                         Maps.resetLists();
                     }});
@@ -192,7 +194,7 @@ define([
         //Si pasamos un nombre lo usamos, sino asignamos uno por defecto
         if (!name) name = "Mapa " + currentMap;
 
-        var thumbnail = "/img/preview/example.png";
+        var thumbnail = "/img/preview/image.png";
 
         //Creamos el item correspondiente a la lista de mapas de usuario o de predefinidos
         //Esto depende de si estamos agregando el item a una lista o la otra

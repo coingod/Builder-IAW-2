@@ -241,7 +241,9 @@ define([
         $("#canvas").css({ top: top, left: left });
     };
 
-    Canvas.createPNG = function() {
+    //Genera una imagen PNG del mapa actual. El parametro es un booleano que indica si el resultado 
+    //se abre en una ventana nueva o si se envia al servidor para su almacenaje (vistas previas)
+    Canvas.createPNG = function(newWindow, map_id) {
         var buffer = document.createElement("canvas").getContext("2d");
         buffer.canvas.width = parseInt($("#canvas").css("width"));
         buffer.canvas.height = parseInt($("#canvas").css("height"));
@@ -285,12 +287,16 @@ define([
                 });
             });
 
-            //Abrimos una ventana nueva y mostramos la imagen completa
-            window.open(buffer.canvas.toDataURL());
-            $.ajax({ method: "POST", url: "/thumbnail", data:{str:buffer.canvas.toDataURL()} });
+            if(newWindow){
+                //Abrimos una ventana nueva y mostramos la imagen completa
+                window.open(buffer.canvas.toDataURL());
+            }else{
+                //Almacenamos la imagen en el servidor para las vistas previas
+                $.ajax({ method: "POST", url: "/thumbnail", data:{str:buffer.canvas.toDataURL(), id:map_id} });
+            }            
         });
         //console.log(buffer.canvas.toDataURL());
-        return buffer.canvas.toDataURL();
+        //return buffer.canvas.toDataURL();
     };
 
     function loadImages(sources, callback) {

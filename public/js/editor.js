@@ -84,11 +84,8 @@ define([
         });
         $("#export_png").on("click", function() {
             //$("#dialog_import").modal("open");
-            Editor.Canvas.createPNG();
-            //console.log(Editor.Canvas.createPNG());
-
-            //Almacenamos una vista previa del mapa en el servidor
-            //$.ajax({ method: "POST", url: "/thumbnail", data:Editor.Canvas.createPNG() });
+            //Generamos la imagen PNG y la abrimos en ventana nueva (NewWindow: true)
+            Editor.Canvas.createPNG(true, 0);
         });
         $("#about").on("click", function() {
             $("#dialog_about").modal("open");

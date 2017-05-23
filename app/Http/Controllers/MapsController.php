@@ -106,9 +106,11 @@ class MapsController extends Controller
         $mapa->canvasId = $canvasid;
         $mapa->userId = Auth::id();//Auth::user()->id;
         $mapa->tilesetId = Tileset::first()->tilesetId; //Hardcoded, el tileset no cambia.
-        $mapa->token = substr(md5($mapa->mapaId), 0, 32);
+        $mapa_id = $mapa->mapaId; //Esta variable se retorna, para que al generar el preview sepa la id del mapa!
+        $mapa->token = substr(md5($mapa_id), 0, 32);
         $mapa->nombre = $nombre;
         $mapa->descripcion = $descripcion;
+        $mapa->link = '/img/preview/' . $mapa_id . '.png';
         $mapa->save();
 
         //Buscamos ID de la primer categoría
@@ -141,7 +143,9 @@ class MapsController extends Controller
 
 
         };
-        return Response('Hello World', 200)->header('Content-Type', 'text/plain');
+        //return Response('Hello World', 200)->header('Content-Type', 'text/plain');
+        //REtornamos la ID del mapa!
+        return compact('mapa_id');
     }
 
     //RESET DB. peligroso!!! Limpia toda la base de datos.

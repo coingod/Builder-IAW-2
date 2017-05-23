@@ -60,6 +60,9 @@ define([
             */
             Tileset.add(Tileset.info.categories[i], i, Tileset.info.tw, Tileset.info.th);
         }
+        //Reinicializamos las tabs
+        //$(".tabs").tabs();
+
 
         //Configuramos el alto de la lista de tiles en funcion del alto de la pagina
         $("#tileset_container").css({

@@ -14,6 +14,16 @@
 	exportar el mapa en el que está trabajando para poder importarlo en otra
 	sesión y continuar su trabajo.
 	</p>
+
+	<h3> Usuarios </h3>
+	<p>
+	Los visitantes de la aplicacion podran crear cuentas de usuario utilizando
+	un email y una contraseña. Alternativamente puede usar su cuenta de Facebook para logearse.
+	<br>Las credenciales del usuario Administrador son las siguientes:
+	<br>email: admin@builder.com
+	<br>pass: root
+	</p>
+
 	<h2> Funcionalidad </h2>
 
 	<h3> Dibujado </h3>

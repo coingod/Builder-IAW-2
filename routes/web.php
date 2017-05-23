@@ -43,7 +43,7 @@ Route::post('/resetDB', 'MapsController@resetDB');
 
 //USERS
 //Para crear los roles en la base de datos (Admin/Member/Guest)
-Route::get('/setup-roles', function () {
+Route::get('/setupadmin', function () {
 
 	//Creamos al usuario admin
 	//$user = App\User::where('name', '=', 'admin')->first();

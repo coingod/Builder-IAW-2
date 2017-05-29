@@ -47,6 +47,7 @@ class Setupbuilder extends Migration
           $table->integer('width');
           $table->integer('height');
           $table->integer('emptyTiles');
+          $table->integer('habilitado');
           $table->integer('tilesetId')->unsigned();
           $table->foreign('tilesetId')->references('tilesetId')->on('tilesets')->onDelete('cascade');
       });
@@ -102,12 +103,14 @@ class Setupbuilder extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('tiles');
+        Schema::dropIfExists('layers');
+        Schema::dropIfExists('categorias');
         Schema::dropIfExists('mapas');
+
         Schema::dropIfExists('canvas');
         Schema::dropIfExists('tilesets');
-        Schema::dropIfExists('categorias');
-        Schema::dropIfExists('layers');
-        Schema::dropIfExists('tiles');
+
 
     }
 }

@@ -87,6 +87,30 @@ class MapsController extends Controller
       return Response($canvas, 200)->header('Content-Type', 'text/plain');
     }
 
+    //CATEGORIAS Controllers
+    public function getCategories(){
+      return Categoria::all();
+    }
+    public function addCategory(Request $request){
+      $categoria=new Categoria();
+      $categoria->name=$request->name;
+      $categoria->path=$request->path;
+      $categoria->icon=$request->icon;
+      $categoria->height=$request->height;
+      $categoria->width=$request->width;
+      $categoria->habilitado=1; //Por default activamos la categoría.
+      $categoria->emptyTiles=$request->emptyTiles;
+      $categoria->tilesetId=Tileset::first()->getKey(); //Hardcoded porque solo tenemos un tileset.
+      $categoria->save();
+    }
+
+    public function deactivateCategory($id){
+      $categoria= Categoria::where('categoriaId','=',$id)->first();
+      $categoria->habilitado=0;
+      $categoria->save();
+      return Response($categoria, 200)->header('Content-Type', 'text/plain');
+    }
+
     //Creacion de nuevo mapa
 
     public function saveMap(Request $request){
@@ -179,6 +203,7 @@ class MapsController extends Controller
             $categoria->emptyTiles=$tilesetInfo["categories"][$i]["emptyTiles"];
             $categoria->icon=$tilesetInfo["categories"][$i]["icon"];
             $categoria->tilesetId=$tileset->getKey();
+            $categoria->habilitado=1; //Por default activamos la categoría.
             $categoria->save();
           };
 

@@ -35,6 +35,14 @@ Route::post('/addcanvas', 'MapsController@addCanvas');
 //Eliminar canvas
 Route::get('/deactivatecanvas/{id}', 'MapsController@deactivateCanvas');
 
+//CATEGORIAS
+//get all
+Route::get('/categories', 'MapsController@getCategories');
+//Agregar nuevo canvas
+Route::post('/addcategory', 'MapsController@addCategory');
+//Eliminar canvas
+Route::get('/deactivatecategory/{id}', 'MapsController@deactivateCategory');
+
 //Guardar mapa actual
 Route::post('/savemap','MapsController@saveMap');
 

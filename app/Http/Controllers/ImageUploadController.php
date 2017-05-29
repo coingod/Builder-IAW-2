@@ -11,18 +11,18 @@ use App\Tile;
 use App\Tileset;
 use App\Auth;
 
-class ThumbnailController extends Controller
+class ImageUploadController extends Controller
 {
     //
-    public function save(Request $request)
+    public function save(Request $request, $folder)
     {
       //$data = $request->input('data');//Input::all();//'data:image/png;base64,AAAFBfj42Pj4';
-      $map_id = $request->id;
+      $name = $request->id;
       $data = $request->str;
       $data = substr($data,22);
       $data = str_replace(' ', '+', $data);
       $data = base64_decode($data);
-      $path = public_path() . '/img/preview/' . $map_id . '.png';
+      $path = public_path() . '/img/' . $folder . '/' . $name . '.png';
       file_put_contents( $path,$data);
       return Response('Hello World', 200)->header('Content-Type', 'text/plain');
     }

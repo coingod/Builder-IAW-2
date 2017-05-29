@@ -123,7 +123,8 @@ Route::get('/userid', function () {
 });
 
 //Vista previa de los mapas
-Route::post('/thumbnail', 'ThumbnailController@save');
+//Route::post('/thumbnail', 'ThumbnailController@save');
+Route::post('/upload/img/{folder}', 'ImageUploadController@save');
 
 Auth::routes();
 

@@ -204,7 +204,7 @@ textarea.materialize-textarea:focus.valid {
     color: #2196F3;
 }
 
-.collection .collection-item.active .layer-name {
+.collection .collection-item.active i {
     color: #fff;
 }
 

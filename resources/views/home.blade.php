@@ -98,14 +98,17 @@
                 <div class="col s12">
                     <div class="card white-grey">
                         <div class="card-content">
-                            <span class="card-title">Caracteristicas</span>
-                            <p>Aque se pueden agregar o quitar tipos de canvas para los mapas.</p>
-                            <div class="canvaslist collection">
+                            <span class="card-title">Categorias</span>
+                            <p>Aqui se listan todas las categorias disponibles para personalizar los mapas</p>
+                            <div class="preview center-align">
+                                <img class="card-panel hoverable" src="">
+                            </div>
+                            <div class="categories collection">
                             
                             </div>
                         </div>
                         <div class="card-action">
-                            <a id="canvas_add" href="#">Agregar Caracteristica</a>
+                            <a id="category_add" href="#">Agregar Categoria</a>
                         </div>
                     </div>
                 </div>
@@ -131,44 +134,60 @@
         </div>
     </div>
     @if (Auth::user()->hasRole('admin')) 
-    <!-- Borrar capa -->
-    <div id="canvas_delete" class="modal">
+    <!-- Borrar categoria -->
+    <div id="category_delete" class="modal">
         <div class="modal-content">
             <h4>Borrar Caracteristica</h4>
             <p>Está a punto de eliminar una caracteristica personalizable, esta accion <b>no se puede deshacer</b>, ¿Desea eliminar esta caracteristica?</p>
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">No</a>
-            <a id="si_borrar_canvas" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
+            <a id="si_borrar_categoria" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
         </div>
     </div>
-    <!-- Nuevo tipo de canvas -->
-    <div id="dialog_add_canvas" class="modal">
+    <div id="dialog_add_category" class="modal">
         <div class="modal-content">
-            <h4>Nuevo tipo de Canvas</h4>
-            <form class="col s12">
+            <h4>Nueva Categoria</h4>
+            <form class="col s12" action="#">
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input id="canvas_name" type="text" class="validate">
-                        <label for="canvas_name">Nombre del Tipo</label>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Tileset</span>
+                            <input id="file_input" type="file" accept="image/*">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file_path validate" type="text" placeholder="Seleccione una imagen">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row center-align">
+                    <img style="max-width: 512px;" id="img_preview" class="card-panel hoverable" src="/img/icons/upload.png">
+                </div>
+                
+                <div class="row">
+                    <div class="input-field">
+                        <input id="category_name" type="text" class="validate">
+                        <label for="category_name">Nombre de la Categoria</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input id="canvas_row" type="number" class="validate">
-                        <label for="canvas_row">Cantidad de Filas</label>
+                    <div class="input-field">
+                        <!--<i id="icon_preview" class="material-icons prefix">textsms</i>-->
+                        <input id="category_icon" type="text" class="autocomplete">
+                        <label for="category_icon">Material Icon</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input id="canvas_col" type="number" class="validate">
-                        <label for="canvas_col">Cantidad de Columnas</label>
+                    <div class="input-field">
+                        <input id="category_empty_tiles" type="number" class="validate">
+                        <label for="category_empty_tiles">Tiles vacios</label>
                     </div>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            <a id="confirm_new_category" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
         </div>
     </div>
     @endif

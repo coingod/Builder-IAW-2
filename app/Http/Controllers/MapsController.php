@@ -19,7 +19,7 @@ class MapsController extends Controller
     public function showMapsByUserId($id){
       $maps = Mapa::where('userId','=',$id)->get()->toArray();
       for($i=0; $i<count($maps) ; $i++){
-        $maps[$i]["canvasInfo"]=Canvas::where('canvasId','=',$maps[$i]["canvasId"])->first();
+        //$maps[$i]["canvasInfo"]=Canvas::where('canvasId','=',$maps[$i]["canvasId"])->first();
         $maps[$i]["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$maps[$i]["tilesetId"])->first();
         $maps[$i]["layersInfo"]=Layer::where('mapaId','=',$maps[$i]["mapaId"])->get()->toArray();
         $maps[$i]["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$maps[$i]["tilesetId"])->get()->toArray();
@@ -34,7 +34,7 @@ class MapsController extends Controller
       $arraycheck=Mapa::where('token','=',$token)->get()->toArray();
       if(count($arraycheck)>0){
         $toReturn=$arraycheck[0];
-        $toReturn["canvasInfo"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
+        //$toReturn["canvasInfo"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
         $toReturn["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$toReturn["tilesetId"])->first();
         $toReturn["layersInfo"]=Layer::where('mapaId','=',$toReturn["mapaId"])->get()->toArray();
         $toReturn["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$toReturn["tilesetId"])->get()->toArray();
@@ -49,7 +49,7 @@ class MapsController extends Controller
       $arraycheck=Mapa::where('mapaId','=',$id)->get()->toArray();
       if(count($arraycheck)>0){
         $toReturn=$arraycheck[0];
-        $toReturn["canvasInfo"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
+        //$toReturn["canvasInfo"]=Canvas::where('canvasId','=',$toReturn["canvasId"])->first();
         $toReturn["tilesetInfo"]=Tileset::all()->where('tilesetId','=',$toReturn["tilesetId"])->first();
         $toReturn["layersInfo"]=Layer::where('mapaId','=',$toReturn["mapaId"])->get()->toArray();
         $toReturn["tilesetInfo"]["categories"]=Categoria::where('tilesetId','=',$toReturn["tilesetId"])->get()->toArray();

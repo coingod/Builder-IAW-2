@@ -38,14 +38,14 @@ require.config({
     }
 });
 
-require(["jquery", "maps", "canvas_types", "materialize"], function($, Maps, CanvasTypes) {
+require(["jquery", "maps", "tilesetManager", "materialize"], function($, Maps, TilesetManager) {
     //Levantamos el ultimo skin usado.
     //$(localStorage.oldSkin).attr('href', localStorage.skin);
     $(document).ready(function() {
         //console.log("admin.js");
         Maps.initialize(null);
-        CanvasTypes.initialize(null);
-        CanvasTypes.crearDialog();
+        TilesetManager.initialize(null);
+        TilesetManager.crearDialog();
         Maps.crearDialog();
     });
 });

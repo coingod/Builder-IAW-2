@@ -72,25 +72,11 @@ define([
             disabled: true,
             cursor: "move",
         });
-        /*
-        $(".canvas_item").on("mousedown", "a", function(event) {
-            $(".canvas_item").removeClass("active");
-            console.log($(event.target));
-            $(event.target).addClass("active");
-            $("canvas_dropdown_button").text() = $(this).text();
-        });
-        */
-        $("#canvas_dropdown").on("mousedown", "a", function(event) {
-            $("#canvas_dropdown a").removeClass("active");
-            $(event.target).addClass("active");
-            $("#canvas_dropdown_button").text($(event.target).text());
-        });
 
         return this;
     };
 
     Canvas.setSize = function(w, h) {
-        //console.log(w+" "+ h);
         //Modificamos el tamaño del mapa en funcion del tamaño de los tiles
         $("#canvas").css({
             width: w * tw, //13
@@ -105,58 +91,15 @@ define([
     Canvas.crearDialog = function() {
         $("#dialog_map").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
-            ready: function(){
-                //LImpiamos el contenido
-                $(".canvas_item").remove();
-                //Solicitamos al servidor todos los tipos de canvas
-                $.ajax({ method: "GET", url: "/canvas", success: function(canvasList){
-                    var i, map_id, map_name, map_info, map_img_path, map_token;
-                    var item;
-                    //console.log(maps);
-                    for (i = 0; i < canvasList.length; i++) {
-                        //console.log("A ver si pasa");
-                        //console.log(canvasList[i]);
-                        //Los canvas que el Admin marco como desabilitados no se toman en cuenta
-                        if(canvasList[i].habilitado == 0)
-                            continue;
-                        //console.log("paso");
-                        //Armamos el item dela listita
-                        canvas_id = canvasList[i].canvasId;
-                        canvas_name = canvasList[i].descripcion;
-                        canvas_row = canvasList[i].height;
-                        canvas_col = canvasList[i].width;
-                        item = "<li class='canvas_item' ><a href='#!'canvas-id='"+canvas_id+"' row='"+canvas_row+"' col='"+canvas_col+"'>"+canvas_name+": "+canvas_row+"x"+canvas_col+ "</a></li>";
-                        $("#canvas_dropdown").append(item);
-                    }
-                    //Seteamos uno por defecto
-                    var first = $("#canvas_dropdown a").first().addClass("active");
-                    $("#canvas_dropdown_button").text($(first).text());
-                }});
-            },
             complete: function() {
-                Editor.Layers.removeAll();
-                var tipo_canvas = $("#canvas_dropdown a").filter(".active");//$("#canvas_dropdown a .active");
-                //console.log($(tipo_canvas));
-                var canvas_id = (tipo_canvas).attr("canvas-id");
-                var canvas_row = $(tipo_canvas).attr("row");
-                var canvas_col = $(tipo_canvas).attr("col");
-                //Seteamos la id del canvas
-                $("canvas").attr("canvas-id", canvas_id);
-                //console.log();
-                Canvas.setSize(canvas_col, canvas_row);
-                Editor.Layers.createDefaultLayers();
-                /*
                     Editor.Layers.removeAll();
-
                     var filas = $("#cantFilas").val();
                     var col = $("#cantColumnas").val();
-
-                    Canvas.setSize(canvas_col, canvas_row);
+                    Canvas.setSize(col, filas);
                     Editor.Layers.createDefaultLayers();
-                    */
                 } // Callback for Modal close
         });
-    };
+};
 
     //Dibuja en la capa actual un elemento especificado
     Canvas.loadElement = function(tileData) {
@@ -349,7 +292,7 @@ define([
                 window.open(buffer.canvas.toDataURL());
             }else{
                 //Almacenamos la imagen en el servidor para las vistas previas
-                $.ajax({ method: "POST", url: "/thumbnail", data:{str:buffer.canvas.toDataURL(), id:map_id} });
+                $.ajax({ method: "POST", url: "/upload/img/preview", data:{str:buffer.canvas.toDataURL(), id:map_id} });
             }
         });
         //console.log(buffer.canvas.toDataURL());

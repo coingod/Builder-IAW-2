@@ -18,7 +18,7 @@ class Setupbuilder extends Migration
    */
   public function up()
   {
-
+/*
 
       //Canvas
       Schema::create('canvas', function (Blueprint $table) {
@@ -30,7 +30,7 @@ class Setupbuilder extends Migration
         $table->integer('height');
         $table->integer('habilitado');
 });
-
+*/
       //Tileset
       Schema::create('tilesets', function (Blueprint $table) {
           $table->increments('tilesetId');
@@ -62,12 +62,12 @@ class Setupbuilder extends Migration
           $table->string('link')->nullable();
           $table->string('descripcion')->nullable();
           $table->string('nombre')->nullable();
+          $table->integer('width')->unsigned();
+          $table->integer('height')->unsigned();
           $table->integer('userId')->unsigned();
           $table->integer('tilesetId')->unsigned();
-          $table->integer('canvasId')->unsigned();
           $table->foreign('userId')->references('id')->on('users');
           $table->foreign('tilesetId')->references('tilesetId')->on('tilesets')->onDelete('cascade');
-          $table->foreign('canvasId')->references('canvasId')->on('canvas')->onDelete('cascade');
       });
 
 

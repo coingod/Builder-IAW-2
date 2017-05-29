@@ -26,7 +26,7 @@ Route::get('/share/{token}','MapsController@mapByToken');
 Route::get('/showmap/{id}','MapsController@mapById');
 //Borrar mapa by mapaId
 Route::get('/deletemap/{id}','MapsController@deleteMap');
-
+/*
 //CANVAS
 //Obtener todos los canvas
 Route::get('/canvas', 'MapsController@getCanvas');
@@ -34,7 +34,7 @@ Route::get('/canvas', 'MapsController@getCanvas');
 Route::post('/addcanvas', 'MapsController@addCanvas');
 //Eliminar canvas
 Route::get('/deactivatecanvas/{id}', 'MapsController@deactivateCanvas');
-
+*/
 //CATEGORIAS
 //get all
 Route::get('/categories', 'MapsController@getCategories');

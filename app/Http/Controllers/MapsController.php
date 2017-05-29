@@ -66,6 +66,7 @@ class MapsController extends Controller
     }
 
     //CANVAS CONTROLLERS
+    /*
     public function getCanvas(){
       return Canvas::all();
     }
@@ -86,6 +87,7 @@ class MapsController extends Controller
       $canvas->save();
       return Response($canvas, 200)->header('Content-Type', 'text/plain');
     }
+    */
 
     //CATEGORIAS Controllers
     public function getCategories(){
@@ -126,11 +128,8 @@ class MapsController extends Controller
         //Creacion de mapa
         $mapa = new Mapa();
 
-        //Buscamos el canvas en la BD que se corresponda con el que viene en el json.. No deberia haber repetidos!
-        $consultaCanvas = Canvas::all()->where("height","=",$canvasInfo["height"])->where("width","=",$canvasInfo["width"])->first();
-        $canvasid=$consultaCanvas->canvasId;
-
-        $mapa->canvasId =  $canvasid;
+        $mapa->width =  $canvasInfo["width"];
+        $mapa->height =  $canvasInfo["height"];
         $mapa->userId =Auth::id();//Auth::user()->id;
         $mapa->tilesetId = Tileset::first()->getKey(); //Hardcoded, el tileset no cambia.
         $mapa->nombre = $nombre;
@@ -182,7 +181,7 @@ class MapsController extends Controller
           //Borramos todas las tablas que vamos a afectar con el reset
           Tileset::getQuery()->delete();
           Categoria::getQuery()->delete();
-          Canvas::getQuery()->delete();
+          //Canvas::getQuery()->delete();
 
           //Upload de la BD inicial.. Establecemos categorias, tilesets, canvas.. cosas que quedan fijas siempre.
           $tilesetInfo=$request->tilesetInfo;
@@ -206,7 +205,7 @@ class MapsController extends Controller
             $categoria->habilitado=1; //Por default activamos la categoría.
             $categoria->save();
           };
-
+          /*
           //Canvas default big
           $canvas= new Canvas();
           $canvas->tw=$canvasInfo["tw"];
@@ -234,7 +233,7 @@ class MapsController extends Controller
           $canvas->descripcion="Small";
           $canvas->habilitado=1;
           $canvas->save();
-
+          */
 
           return Response('Hello World', 200)->header('Content-Type', 'text/plain');
         }

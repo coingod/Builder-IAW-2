@@ -14,14 +14,19 @@ use Illuminate\Http\Response;
 |
 */
 Route::get('/', function () {
-	return view('builder');
+	return view('builder',['map'=>'new']);
     //return view('welcome');
 });
 //MAPAS
 //Mostrar mapas de un usuario
 Route::get('/maps/{id}','MapsController@showMapsByUserId');
 //Map by token
-Route::get('/share/{token}','MapsController@mapByToken');
+Route::get('/getmap/{token}','MapsController@mapByToken');
+//Esto es lo que se comparte
+Route::get('/share/{token}', function($token){
+	return view('builder',['map'=>$token]);
+});
+
 //Map by mapaId
 Route::get('/showmap/{id}','MapsController@mapById');
 //Borrar mapa by mapaId

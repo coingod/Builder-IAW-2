@@ -42,7 +42,9 @@ class MapsController extends Controller
           $toReturn["layersInfo"][$j]["listaTiles"]=Tile::where('layerId','=',$toReturn["layersInfo"][$j]["layerId"])->get()->toArray();
         }
       }
-      return compact('toReturn');
+
+      return view('builder', ["map" => $toReturn]);
+      //return compact('toReturn');
     }
 
     public function mapById($id){

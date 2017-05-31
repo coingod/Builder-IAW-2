@@ -147,7 +147,7 @@
         </div>
 
         <!-- Panel del Canvas/Mapa -->
-        <div id="canvas_wrapper" class="col s9">
+        <div id="canvas_wrapper" class="col s9" data-map={{$map}}>
             <!-- El Canvas es en donde el usuario coloca los elementos/tiles -->
             <div id="canvas" class="z-depth-3">
                 <!-- Dentro de tiles habra una entrada por cada capa, cada capa almacena los tiles que el usuario le asigno -->

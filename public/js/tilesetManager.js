@@ -157,9 +157,6 @@ define([
             var i;
             //console.log(maps);
             for (i = 0; i < categorias.length; i++) {
-                //Las categorias que el Admin marco como desabilitados no se toman en cuenta
-                if(!categorias[i].habilitado) 
-                    continue;
                 var id = categorias[i].categoriaId;
                 var name = categorias[i].name; 
                 var path = categorias[i].path; 

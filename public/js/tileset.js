@@ -61,10 +61,6 @@ define([
         //Iteramos sobre la informacion del JSON creando una categoria para cada tileset
         var cantidad = Tileset.info.categories.length;
         for (i = 0; i < cantidad; i++) {
-            //Si no esta habilitada no la consideramos
-            if(!Tileset.info.categories[i].habilitado)
-                continue;
-
             //Generamos la pestaña de la categoria para el panel del editor
             var category = $("<li class='tab col s3'><a href='#tilelist_" + i + "' data-id=" + i + " data-delay='50' data-position='top' data-tooltip='" + Tileset.info.categories[i].name + "' class='tab-icon material-icons tooltipped'> " + Tileset.info.categories[i].icon + "</a></li>");
             $("#categorieslist").append(category);

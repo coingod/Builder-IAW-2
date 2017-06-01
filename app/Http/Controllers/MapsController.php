@@ -9,8 +9,12 @@ use App\Categoria;
 use App\Layer;
 use App\Tile;
 use App\Tileset;
-//use App\Auth;
-use Illuminate\Support\Facades\Auth;
+
+use App\Auth;
+use App\User;
+use App\Role;
+use App\Permission;
+//use Illuminate\Support\Facades\Auth;
 
 class MapsController extends Controller
 {
@@ -67,29 +71,6 @@ class MapsController extends Controller
       return Response('Hello World', 200)->header('Content-Type', 'text/plain');
     }
 
-    //CANVAS CONTROLLERS
-    /*
-    public function getCanvas(){
-      return Canvas::all();
-    }
-    public function addCanvas(Request $request){
-      $canvas=new Canvas();
-      $canvas->tw=$request->tw;
-      $canvas->th=$request->th;
-      $canvas->width=$request->width;
-      $canvas->height=$request->height;
-      $canvas->descripcion=$request->descripcion;
-      $canvas->habilitado=1;
-      $canvas->save();
-    }
-
-    public function deactivateCanvas($id){
-      $canvas= Canvas::where('canvasId','=',$id)->first();
-      $canvas->habilitado=0;
-      $canvas->save();
-      return Response($canvas, 200)->header('Content-Type', 'text/plain');
-    }
-    */
 
     //CATEGORIAS Controllers
     public function getCategories(){
@@ -102,7 +83,6 @@ class MapsController extends Controller
       $categoria->icon=$request->icon;
       $categoria->height=$request->height;
       $categoria->width=$request->width;
-      $categoria->habilitado=1; //Por default activamos la categoría.
       $categoria->emptyTiles=$request->emptyTiles;
       $categoria->tilesetId=Tileset::first()->getKey(); //Hardcoded porque solo tenemos un tileset.
       $categoria->save();
@@ -182,66 +162,65 @@ class MapsController extends Controller
         return compact('mapa_id');
     }
 
-    //RESET DB. peligroso!!! Limpia toda la base de datos.
-    public function resetDB(Request $request){
-          //Borramos todas las tablas que vamos a afectar con el reset
-          Tileset::getQuery()->delete();
-          Categoria::getQuery()->delete();
-          //Canvas::getQuery()->delete();
+    //SetupDB solo debe ejecutarse cuando estamos con la BD vacía.
+    public function setupDB(Request $request){
 
-          //Upload de la BD inicial.. Establecemos categorias, tilesets, canvas.. cosas que quedan fijas siempre.
+          //Setup Tileset
           $tilesetInfo=$request->tilesetInfo;
-          $canvasInfo=$request->canvasInfo;
 
           $tileset=new Tileset();
-          $tileset->tw=$tilesetInfo["tw"];
-          $tileset->th=$tilesetInfo["th"];
+          $tileset->tw=64;
+          $tileset->th=64;
           $tileset->save();
 
-          for($i=0; $i<count($tilesetInfo["categories"]); $i++){
-            $categoria=new Categoria();
-            //    protected $fillable = ['name', 'path', 'tilesetId', 'width', 'height', 'emptyTiles'];
-            $categoria->name=$tilesetInfo["categories"][$i]["name"];
-            $categoria->path=$tilesetInfo["categories"][$i]["path"];
-            $categoria->width=$tilesetInfo["categories"][$i]["width"];
-            $categoria->height=$tilesetInfo["categories"][$i]["height"];
-            $categoria->emptyTiles=$tilesetInfo["categories"][$i]["emptyTiles"];
-            $categoria->icon=$tilesetInfo["categories"][$i]["icon"];
-            $categoria->tilesetId=$tileset->getKey();
-            $categoria->habilitado=1; //Por default activamos la categoría.
-            $categoria->save();
-          };
-          /*
-          //Canvas default big
-          $canvas= new Canvas();
-          $canvas->tw=$canvasInfo["tw"];
-          $canvas->th=$canvasInfo["th"];
-          $canvas->width=$canvasInfo["width"];
-          $canvas->height=$canvasInfo["height"];
-          $canvas->descripcion="Big";
-          $canvas->habilitado=1;
-          $canvas->save();
-          //Canvas default medium
-          $canvas= new Canvas();
-          $canvas->tw=$canvasInfo["tw"];
-          $canvas->th=$canvasInfo["th"];
-          $canvas->width=9;
-          $canvas->height=6;
-          $canvas->descripcion="Medium";
-          $canvas->habilitado=1;
-          $canvas->save();
-          //Canvas default small
-          $canvas= new Canvas();
-          $canvas->tw=$canvasInfo["tw"];
-          $canvas->th=$canvasInfo["th"];
-          $canvas->width=4;
-          $canvas->height=4;
-          $canvas->descripcion="Small";
-          $canvas->habilitado=1;
-          $canvas->save();
-          */
+          //Setup admin
 
-          return Response('Hello World', 200)->header('Content-Type', 'text/plain');
+          $user = new User();
+        	$user->id = 1;
+        	$user->name = 'admin';
+        	$user->email = 'admin@builder.com';
+        	$user->password = bcrypt('root');
+        	$user->save();
+
+        	//Creamos el perfil de Administrador
+        	$admin = new Role();
+        	$admin->name         = 'admin';
+        	$admin->display_name = 'Administrator'; // optional
+        	$admin->description  = 'El usuario puede administrar y editar mapas modelo'; // optional
+        	$admin->save();
+
+        	//Creamos el perfil de Usuario Registrado
+        	$member = new Role();
+        	$member->name         = 'member';
+        	$member->display_name = 'Miembro'; // optional
+        	$member->description  = 'El usuario puede guardar y recuperar sus mapas personalizados'; // optional
+        	$member->save();
+
+        	//Creamos los permisos para cada Rol
+        	$crearMapaModelo = new Permission();
+        	$crearMapaModelo->name         = 'create-map-model';
+        	$crearMapaModelo->display_name = 'Crear Mapa Modelo'; // optional
+        	$crearMapaModelo->description  = 'Crea un nuevo Mapa Modelo para todos los usuarios'; // optional
+        	$crearMapaModelo->save();
+
+        	$eliminarMapaModelo = new Permission();
+        	$eliminarMapaModelo->name         = 'delete-map-model';
+        	$eliminarMapaModelo->display_name = 'Eliminar Mapa Modelo'; // optional
+        	$eliminarMapaModelo->description  = 'Elimina un Mapa Modelo existente'; // optional
+        	$eliminarMapaModelo->save();
+
+        	//Adjuntamos los permisos a los Roles
+        	$admin->attachPermission(array($crearMapaModelo, $eliminarMapaModelo));
+
+        	//Adjuntamos el rol de Administrador
+        	$user->attachRole($admin); // parameter can be an Role object, array, or id
+
+        	//Obtenemos todos los Usuarios para listarlos
+        	$users = User::all();
+
+        	//return view('welcome');
+          return view('users', compact('users'));
+
         }
 
 }

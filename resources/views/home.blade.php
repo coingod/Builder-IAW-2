@@ -32,12 +32,12 @@
             <ul id="dropdown_opciones" class="dropdown-content">
                     @if (Auth::check())
                         <li id="user_name"><a href="#">{{ Auth::user()->name }}</a></li>
-                        @if (Auth::user()->hasRole('admin')) 
+                        @if (Auth::user()->hasRole('admin'))
                         <li id="user_list"><a href="/users">Ver Usuarios</a></li>
-                        <li class="divider"></li> 
+                        <li class="divider"></li>
                         <li id="upload_info"><a>Resetear BD</a></li>
                         @endif
-                        <li class="divider"></li> 
+                        <li class="divider"></li>
                         <li id="user_logout">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            @if (Auth::user()) 
+            @if (Auth::user())
             <div class="row">
                 <div class="col s12">
                 <div class="card white-grey">
@@ -93,7 +93,7 @@
                 </div>
               </div>
             </div>
-            @if (Auth::user()->hasRole('admin')) 
+            @if (Auth::user()->hasRole('admin'))
             <div class="row">
                 <div class="col s12">
                     <div class="card white-grey">
@@ -104,7 +104,7 @@
                                 <img class="card-panel hoverable" src="">
                             </div>
                             <div class="categories collection">
-                            
+
                             </div>
                         </div>
                         <div class="card-action">
@@ -133,7 +133,7 @@
             </div>
         </div>
     </div>
-    @if (Auth::user()->hasRole('admin')) 
+    @if (Auth::user()->hasRole('admin'))
     <!-- Borrar categoria -->
     <div id="category_delete" class="modal">
         <div class="modal-content">
@@ -143,6 +143,15 @@
         <div class="modal-footer">
             <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">No</a>
             <a id="si_borrar_categoria" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
+        </div>
+    </div>
+    <div id="imposible_eliminar" class="modal">
+        <div class="modal-content">
+            <h4>Error al borrar</h4>
+            <p>Intentó eliminar una categoría que está en uso, no lo tiene permitido.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Ok</a>
         </div>
     </div>
     <div id="dialog_add_category" class="modal">
@@ -160,11 +169,11 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row center-align">
                     <img style="max-width: 512px;" id="img_preview" class="card-panel hoverable" src="/img/icons/upload.png">
                 </div>
-                
+
                 <div class="row">
                     <div class="input-field">
                         <input id="category_name" type="text" class="validate">
@@ -191,7 +200,7 @@
         </div>
     </div>
     @endif
-    
+
     <!-- Templates de la info de los mapas -->
     <div id="map_templates" hidden>
         <a id="dmap" href='#!' class="collection-item avatar">
@@ -200,12 +209,12 @@
             <p>First Line <br>
                Second Line
             </p>
-            @if (Auth::user() && Auth::user()->hasRole('admin')) 
+            @if (Auth::user() && Auth::user()->hasRole('admin'))
             <i class="secondary-content delete material-icons">delete</i>
             @endif
             <i class="secondary-content share material-icons">share</i>
             <!--<i class="secondary-content file_download material-icons">file_download</i>-->
-            @if (Auth::user() && Auth::user()->hasRole('admin')) 
+            @if (Auth::user() && Auth::user()->hasRole('admin'))
             <!--<i class="secondary-content modo_edit material-icons">mode_edit</i>-->
             @endif
         </a>
@@ -224,4 +233,3 @@
 
 </body>
 </html>
-

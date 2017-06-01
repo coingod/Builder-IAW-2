@@ -68,7 +68,7 @@ class MapsController extends Controller
 
     public function deleteMap($id){
       Mapa::where('mapaId','=',$id)->getQuery()->delete();
-      return Response('Hello World', 200)->header('Content-Type', 'text/plain');
+      return Response('Mapa eliminado correctamente', 200)->header('Content-Type', 'text/plain');
     }
 
 
@@ -92,7 +92,7 @@ class MapsController extends Controller
       $tiles=Tile::where('idCategoria', '=', $id)->get()->toArray();
       if(count($tiles)==0){
         Categoria::where('categoriaId','=',$id)->getQuery()->delete();
-        return Response("eliminado", 200)->header('Content-Type', 'text/plain');
+        return Response("Categoria eliminada", 200)->header('Content-Type', 'text/plain');
       }
       else
       {

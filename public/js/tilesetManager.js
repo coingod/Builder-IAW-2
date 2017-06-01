@@ -68,7 +68,7 @@ define([
 
         //Cargamos la lista de categorias
         TilesetManager.loadCategories();
-        $(".preview img").attr("src", "/img/noimage.png");
+        $(".preview img").attr("src", "/img/preview/noimage.png");
 
         return this;
     };
@@ -127,9 +127,9 @@ define([
                     //Armamos el JSON con la informacion
                     var json = { name:name, path:"img/tilesets/"+name+".png", icon:icon, height:height, width:width, emptyTiles:emptyTiles };
                     //Enviamos la informacion al servidor
-                    $.ajax({ method: "POST", url: "/addcategory", data:json, success: function(response){
+                    $.ajax({ method: "POST", url: "/addcategory", data:json, async:false,  success: function(response){
                             //Almacenamos la imagen del tileset en el servidor
-                            $.ajax({ method: "POST", url: "/upload/img/tilesets", data:{str:img, id:name} });
+                            $.ajax({ method: "POST", url: "/upload/img/tilesets", async:false,  data:{str:img, id:name} });
                     }});
 
                     //Limpiamos los inputs
@@ -179,6 +179,7 @@ define([
                 var emptyTiles = categorias[i].emptyTiles;
                 TilesetManager.addCategory(id, name, path, icon, width, height, emptyTiles);
             }
+
         }});
         /*
         TilesetManager.addCategory(1, "Terreno", "img/tilesets/terrain.png", "terrain", 256, 192, 0);
@@ -224,7 +225,7 @@ define([
             //Eliminamos la capa de la interfaz
             if(response!="fail"){
               category.remove();
-              $(".preview img").attr("src", "/img/noimage.png");
+              $(".preview img").attr("src", "/img/preview/noimage.png");
             }
             else {
               $("#imposible_eliminar").modal("open");

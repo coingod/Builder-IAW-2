@@ -10,11 +10,11 @@ use App\Layer;
 use App\Tile;
 use App\Tileset;
 
-use App\Auth;
+//use App\Auth;
 use App\User;
 use App\Role;
 use App\Permission;
-//use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class MapsController extends Controller
 {
@@ -107,7 +107,6 @@ class MapsController extends Controller
        //Lo separamos para trabajar mejor
         //Es importante cargar las cosas en orden por las llaves foraneas..
         $tilesetInfo=$request->tilesetInfo;
-        $canvasInfo=$request->canvasInfo;
         $layersInfo=$request->layersInfo;
         $nombre=$request->nombre;
         $descripcion=$request->descripcion;
@@ -116,8 +115,8 @@ class MapsController extends Controller
         //Creacion de mapa
         $mapa = new Mapa();
 
-        $mapa->width =  $canvasInfo["width"];
-        $mapa->height =  $canvasInfo["height"];
+        $mapa->width =  $request->width;
+        $mapa->height =  $request->height;
         $mapa->userId =Auth::id();//Auth::user()->id;
         $mapa->tilesetId = Tileset::first()->getKey(); //Hardcoded, el tileset no cambia.
         $mapa->nombre = $nombre;

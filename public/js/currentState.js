@@ -31,13 +31,9 @@ define([
     currentState.loadCurrentState = function() {
         currentState.json = {}; //Esto es lo que vamos a utilizar como objeto
         currentState.json.tilesetInfo = Editor.Tileset.info;
-        currentState.json.canvasInfo = {};
-        currentState.json.canvasInfo.tw = Editor.Tileset.info.tw;
-        currentState.json.canvasInfo.th = Editor.Tileset.info.th;
-        var wCanvas = parseInt($("#canvas").css("width")) / currentState.json.canvasInfo.tw;
-        var hCanvas = parseInt($("#canvas").css("height")) / currentState.json.canvasInfo.th;
-        currentState.json.canvasInfo.width = wCanvas;
-        currentState.json.canvasInfo.height = hCanvas;
+        
+        var wCanvas = parseInt($("#canvas").css("width")) / Editor.Tileset.info.tw;
+        var hCanvas = parseInt($("#canvas").css("height")) / Editor.Tileset.info.th;
         currentState.json.width = wCanvas;
         currentState.json.height = hCanvas;
 
@@ -72,8 +68,8 @@ define([
                 infoTile = $(tileAct).css("background-position");
                 idCategoria = parseInt($(tileAct).attr("class").split("_")[1]);
                 idTile = currentState.getId(infoTile, idCategoria);
-                cxTile = parseInt($(tileAct).css("left")) / currentState.json.canvasInfo.tw;
-                cyTile = parseInt($(tileAct).css("top")) / currentState.json.canvasInfo.th;
+                cxTile = parseInt($(tileAct).css("left")) / Editor.Tileset.info.tw;
+                cyTile = parseInt($(tileAct).css("top")) / Editor.Tileset.info.th;
                 jsonCapas[i].listaTiles[j]={};
                 jsonCapas[i].listaTiles[j].tileInCategoria=idTile;
                 jsonCapas[i].listaTiles[j].idCategoria=idCategoria;

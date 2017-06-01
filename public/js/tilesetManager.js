@@ -132,6 +132,12 @@ define([
                             $.ajax({ method: "POST", url: "/upload/img/tilesets", data:{str:img, id:name} });
                     }});
 
+                    //Limpiamos los inputs
+                    $("#category_name").val("");
+                    $("#category_icon").val("");
+                    $("#category_empty_tiles").val("");
+                    $("#img_preview").attr("src", "/img/icons/upload.png")
+
                     //Recargamos las categorias
                     TilesetManager.resetLists();
                 };

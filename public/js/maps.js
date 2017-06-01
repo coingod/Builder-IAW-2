@@ -134,6 +134,10 @@ define([
                         Editor.Canvas.createPNG(false, response.mapa_id);
                         //console.log(response);
                         recentlySaved = true;
+
+                        //Limpiar inputs
+                        $("#map_name").val("");
+                        $("#map_info").val("");
                     }});
                 } // Callback for Modal close
         });
@@ -148,6 +152,7 @@ define([
 
     //Borra el contenido de la interfaz grafica
     Maps.resetLists = function() {
+        //$('#library_tabs').tabs();
         //Recargamos la lista de mapas para mostrar el nuevo mapa
         $(".maplist a").remove();
         //Cargamos la lista de mapas predefinidos

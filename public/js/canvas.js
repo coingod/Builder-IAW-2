@@ -97,6 +97,10 @@ define([
                     var col = $("#cantColumnas").val();
                     Canvas.setSize(col, filas);
                     Editor.Layers.createDefaultLayers();
+                    
+                    //Limpiar inputs
+                    $("#cantFilas").val("");
+                    $("#cantColumnas").val("");
                 } // Callback for Modal close
         });
 };
@@ -275,7 +279,7 @@ define([
         loadImages(sources, function(tilesets) {
             var x, y, offset, ofx, ofy, ts_id;
 
-            console.log(tilesets);
+            //console.log(tilesets);
 
             //Recorremos todas las capas
             $(".layer").each(function(index) {

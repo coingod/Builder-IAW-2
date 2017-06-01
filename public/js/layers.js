@@ -71,6 +71,9 @@ define([
             complete: function() {
                     var name = $("#layer_name").val();
                     Layers.addLayer(name, true);
+
+                    //Limpiar input
+                    $("#layer_name").val("");
                 } // Callback for Modal close
         });
         $("#layer_delete").modal({

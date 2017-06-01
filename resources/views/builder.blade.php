@@ -178,7 +178,7 @@
         <div class="modal-footer"><h4>Catalogo de Mapas<i><a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Cerrar</a></i></h4></div>
             <div class="row">
             <div class="col s12">
-              <ul class="tabs tabs-fixed-width">
+              <ul id="library_tabs" class="tabs tabs-fixed-width">
                 <li class="tab col s3"><a class="active" href="#default_maps">Precargados</a></li>
                 @if (Auth::user()) <li class="tab col s3"><a href="#user_maps">Mis Mapas</a></li> @endif
               </ul>

@@ -18,32 +18,12 @@ define([
     Editor.Maps = Maps.initialize(Editor);
 
     Editor.initialize = function() {
-        /*
-        //Estado del mouse
-        $(document).on("mousedown mouseup", function(e) {
-            Editor.mousedown = (e.type == "mousedown") && (e.which == 1);
-        });
-        */
 
-        //Share
-        var token=$("#canvas_wrapper").attr("data-map");
-        //console.log("Hellouu "+token);
-        if(token!="new"){
-          //Es un token compartido
-          $.ajax({ method: "GET", url: "/getmap/" + token, success: function(response){
-              //console.log(response);
-              if(!response.length)
-                return;
-              //Eliminamos la capa de la interfaz
-              Editor.currentState.json=response.toReturn;
-              Editor.loadExternal();
-          }});
-        };
         //Configuramos la estructura de todos los cuadros de dialogo
         Editor.Layers.crearDialog();
         Editor.Maps.crearDialog();
         $("#dialog_about").modal();
-        $("#dialog_info").modal();
+        $("#dialog_mapinfo").modal();
         Editor.currentState.crearDialog();
         Editor.Canvas.crearDialog();
 
@@ -85,6 +65,11 @@ define([
           Editor.loadExternal();
         });
 
+        $("#upload_info").on("click", function(){
+          Editor.currentState.loadCurrentState();
+          Editor.currentState.json.layersInfo={}; //No necesitamos enviar esto, lo obviamos!
+          $.ajax({ method: "POST", url: "/resetDB", data:Editor.currentState.json });
+        });
 
        $("#new_map").on("click", function() {
             $("#dialog_map").modal("open");
@@ -118,6 +103,32 @@ define([
             //Desplegamos las herramientas al terminar de cargar
             $('.fixed-action-btn').openFAB();
         });
+
+        //Share
+        var token=$("#canvas_wrapper").attr("data-map");
+        //console.log("Hellouu "+token);
+        if(token!="new"){
+          //Es un token compartido
+          $.ajax({ method: "GET", url: "/getmap/" + token, success: function(response){
+              //console.log(response);
+              //Si la respuesta es vacia, no es un token valido
+              if(response.length == 0){
+                $("#info_map_name").text("Error al cargar el mapa");
+                $("#info_map_author").html("El token del enlace ("+token+") no corresponde a un mapa valido. <br>Si el enlace lo obtuvo de otra persona, solicitele uno nuevo.");
+                $("#dialog_mapinfo").modal("open");
+                //console.log("Token invalido");
+                return;
+              }
+              Editor.currentState.json=response.toReturn;
+              $.ajax({ method: "GET", url: "/user/" + Editor.currentState.json.userId, success: function(response){
+                $("#info_map_name").text(Editor.currentState.json.nombre);
+                $("#info_map_author").html("<b>Autor:</b> " + response.user.name + "<br>" + response.user.email );
+                $("#dialog_mapinfo").modal("open");
+              }});
+
+              Editor.loadExternal();
+          }});
+        };
     };
 
     //Procesa un archivo JSON y genera un nuevo Mapa con los datos del archivo
@@ -125,7 +136,7 @@ define([
 
         //Obtenemos el JSON que se importo
         var json = Editor.currentState.json;
-        console.log(json);
+        //console.log(json);
 
         //Elimina todas las capas actuales
         Editor.Layers.removeAll();

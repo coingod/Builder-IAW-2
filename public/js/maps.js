@@ -65,7 +65,12 @@ define([
 
                 //Maps.share(event);
                 var mapa = $(event.target).parent();
-                console.log("http://localhost:8000/share/" + $(mapa).attr("token"));
+                console.log(window.location.protocol + "//" + window.location.host + "/" + $(mapa).attr("token"));
+
+                //var $toastContent = $("<span>http://localhost:8000/" + $(mapa).attr('token') + "</span>");
+                $("#share_token").text(window.location.protocol + "//" + window.location.host + "/" + $(mapa).attr("token"));
+                //Materialize.toast($toastContent, 5000);
+                $("#dialog_share").modal("open");
 
             } else if ($(event.target).hasClass(icon_remove)) {
 
@@ -110,7 +115,7 @@ define([
                 recentlySaved = false;
               },
         });
-        $('#maps_library modal-content row col tabs').tabs();
+        //$('#maps_library modal-content row col tabs').tabs();
 
         $("#dialog_save_map").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
@@ -131,6 +136,9 @@ define([
                         recentlySaved = true;
                     }});
                 } // Callback for Modal close
+        });
+        $("#dialog_share").modal({
+            dismissible: false, // Modal can be dismissed by clicking outside of the modal
         });
 
         $("#map_delete").modal({

@@ -76,6 +76,8 @@ define([
         }
         //Reinicializamos las tabs
         $("#categorieslist").tabs();
+        //Y los tooltips
+        $('.tooltipped').tooltip({delay: 50});
 
         //Configuramos el alto de la lista de tiles en funcion del alto de la pagina
         $("#tileset_container").css({

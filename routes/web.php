@@ -72,6 +72,15 @@ Route::get('/userid', function () {
     return compact('user');
 });
 
+//Retorna el nombre del usuario
+Route::get('/user/{id}', function ($id) {
+	//Obtenemos la id del usuario actual
+	$user = App\User::where('id','=',$id)->get()->first();
+
+	//return view('welcome');
+    return compact('user');
+});
+
 //Vista previa de los mapas
 //Route::post('/thumbnail', 'ThumbnailController@save');
 Route::post('/upload/img/{folder}', 'ImageUploadController@save');

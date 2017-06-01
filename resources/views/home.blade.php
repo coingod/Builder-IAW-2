@@ -132,8 +132,22 @@
                 <a id="si_borrar_mapa" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
             </div>
         </div>
-    </div>
-    @if (Auth::user()->hasRole('admin'))
+        <div id="dialog_share" class="modal">
+            <div class="modal-content">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field">
+                            <h4>Enlace para compartir</h4>
+                            <p id="share_token"> </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            </div>
+        </div>
+        @if (Auth::user()->hasRole('admin'))
     <!-- Borrar categoria -->
     <div id="category_delete" class="modal">
         <div class="modal-content">
@@ -200,6 +214,7 @@
         </div>
     </div>
     @endif
+    </div>
 
     <!-- Templates de la info de los mapas -->
     <div id="map_templates" hidden>

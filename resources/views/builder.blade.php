@@ -199,6 +199,17 @@
 
     <!-- Cuadros de dialogo usados por la aplicacion -->
     <div id="dialog_list">
+        <!-- Informacion del mapa actualmente cargado -->
+        <div id="dialog_mapinfo" class="modal">
+            <div class="modal-content">
+                <h4 id="info_map_name"></h4>
+                <p id="info_map_author"></p>
+                <p id="info_map_description"></p>
+            </div>
+            <div class="modal-footer">
+                <a id="confirm_new_category" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            </div>
+        </div>
         <!-- About -->
         <div id="dialog_about" class="modal">
             <div class="modal-content">
@@ -312,6 +323,22 @@
                         <div class="input-field col s6">
                             <input id="layer_name" type="text" class="validate">
                             <label for="layer_name">Nombre de la capa</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            </div>
+        </div>
+
+        <div id="dialog_share" class="modal">
+            <div class="modal-content">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field">
+                            <h4>Enlace para compartir</h4>
+                            <p id="share_token"> </p>
                         </div>
                     </div>
                 </form>

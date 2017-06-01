@@ -189,7 +189,7 @@ define([
         $(".categories a").removeClass("active");
 
         //Creamos el item correspondiente
-        var category = $("<a href='#!' class='collection-item active'> <i class='material-icons left'>" + icon + "</i> <i class='category-name'></i> <i class='tileset-size'></i> <i class='secondary-content delete material-icons'>delete</i><i class='secondary-content edit material-icons'>" + icon_edit + "</i></a>");
+        var category = $("<a href='#!' class='collection-item active'> <i class='material-icons left'>" + icon + "</i> <i class='category-name'></i> <i class='tileset-size'></i> <i class='secondary-content delete material-icons'>delete</i></a>");
 
         //Asignamos el id
         category.attr("category-id", id);

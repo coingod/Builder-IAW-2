@@ -15,15 +15,28 @@
 	sesión y continuar su trabajo.
 	</p>
 
+	<h3> Configuracion Inicial</h3>
+	<p>
+	Una vez clonado el repositorio se deben realizar las migraciones. Luego configurar las tablas
+	de la Base de Datos ingresando a /setupdb, lo que tambien creara el usuaio admin.
+	La aplicacion ya estara lista, pero no habra categorias ni mapas. El administrador 
+	debera cargar las categorias desde la pagina de usuario. Una vez cargada al menos una categoria
+	se podran crear mapas. Se recomienda utilizar las imagenes provistas en /img/tilesets para las categorias,
+	ya que estas estan diseñadas acorde a los requerimientos de la aplicacion. 
+	<br>
+	La unica restriccion sobre las imagenes de las categorias son las dimensiones de los tiles, 
+	que se asumen <b>64x64px</b>. La imagen completa no tiene restricciones de tamaño.
+	</p>
+
 	<h3> Usuarios </h3>
 	<p>
 	Los visitantes de la aplicacion podran crear cuentas de usuario utilizando
 	un email y una contraseña. Alternativamente puede usar su cuenta de Facebook para logearse.
 	Los usuarios registrados cuentan con una pagina especial de usuarios para ver su contenido personalizado.
-	<br>Para crear el usuario administrador automaticamente se debe ingresar a /setupadmin
+	<br>Para crear el usuario administrador automaticamente se debe ingresar a /setupdb
 	<br>Las credenciales del usuario Administrador son las siguientes:
-	<br>email: admin@builder.com
-	<br>pass: root
+	<br><b>email: admin@builder.com</b>
+	<br><b>pass: root</b>
 	</p>
 
 	<h3> Guardado de Mapas </h3>

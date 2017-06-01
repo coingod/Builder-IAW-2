@@ -35,7 +35,6 @@ class Setupbuilder extends Migration
           $table->integer('width');
           $table->integer('height');
           $table->integer('emptyTiles');
-          $table->integer('habilitado');
           $table->integer('tilesetId')->unsigned();
           $table->foreign('tilesetId')->references('tilesetId')->on('tilesets')->onDelete('cascade');
       });

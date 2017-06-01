@@ -34,6 +34,9 @@ define([
             //Asignamos los datos
             Tileset.info.categories = response;
 
+            if(!response.length)
+                return;
+
             //Cargamos los tilesets
             Tileset.load();
         }});

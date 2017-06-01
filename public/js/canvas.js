@@ -103,24 +103,27 @@ define([
 
     //Dibuja en la capa actual un elemento especificado
     Canvas.loadElement = function(tileData) {
+        //console.log(tileData);
         //Formato: [id_tile, id_tileset, canvas_fila, canvas_columna]
-        var id_tile = tileData.tileInCategoria, id_ts=0, i;
-        //var id_ts = tileData.idCategoria;
+        var id_tile = tileData.tileInCategoria;//, id_ts=0, i;
+        var id_ts = tileData.idCategoria;
         var fila = tileData.cx;
         var col = tileData.cy;
-
-
-        for(i=0; i<Editor.currentState.json.tilesetInfo.categories.length; i++){
-          if(Editor.currentState.json.tilesetInfo.categories[i].categoriaId==tileData.idCategoria){
-            id_ts=i;
+        var category;
+        
+        //Buscamos la categoria en el arreglo
+        var i;
+        for(i=0; i < Editor.Tileset.info.categories.length; i++){
+          if(Editor.Tileset.info.categories[i].categoriaId==tileData.idCategoria){
+            category = Editor.Tileset.info.categories[i];
             break;
           }
         };
-
+            
 
         //Consultamos las dimensiones del tileset
-        var ts_width = Editor.Tileset.info.categories[id_ts].width; //$("#tileset_" + id_ts).attr("data-size");
-        var ts_height = Editor.Tileset.info.categories[id_ts].height;
+        var ts_width = category.width;//Editor.Tileset.info.categories[id_ts].width;
+        var ts_height = category.height;//Editor.Tileset.info.categories[id_ts].height;
 
         //Mapeamos el id del tile al offset dentro de la imagen en filas y columnas (tileset)
         var ofx = -((id_tile) % (ts_width / tw)); //col
@@ -261,6 +264,7 @@ define([
         //Precargamos las imagenes de los tilesets
         var sources = [];
         var tilesets = Editor.Tileset.info.categories;
+        var category;
         //console.log(tilesets);
         var i = 0;
         for (i = 0; i < tilesets.length; i++) {
@@ -271,7 +275,7 @@ define([
         loadImages(sources, function(tilesets) {
             var x, y, offset, ofx, ofy, ts_id;
 
-            //console.log(tilesets);
+            console.log(tilesets);
 
             //Recorremos todas las capas
             $(".layer").each(function(index) {
@@ -290,6 +294,14 @@ define([
                     ofy = -parseInt(offset[1]);
                     //Obtenemos la id del tileset
                     ts_id = parseInt($(this).attr("class").split("_")[1]);
+                    //Mapeamos el ID a un offset del arreglo
+                    var i;
+                    for(i=0; i < Editor.Tileset.info.categories.length; i++){
+                      if(Editor.Tileset.info.categories[i].categoriaId == ts_id){
+                        ts_id = i;
+                        break;
+                      }
+                    };  
                     //Dibujamos el tile en el buffer de la imagen PNG
                     buffer.drawImage(tilesets[ts_id], ofx, ofy, tw, th, x, y, tw, th);
                     //console.log("   Img: " + ofx + " " + ofy + " " + tw + " " + th + " " + x + " " + y + " " + tw + " " + th);

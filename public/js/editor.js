@@ -27,11 +27,13 @@ define([
 
         //Share
         var token=$("#canvas_wrapper").attr("data-map");
-        console.log("Hellouu "+token);
+        //console.log("Hellouu "+token);
         if(token!="new"){
           //Es un token compartido
           $.ajax({ method: "GET", url: "/getmap/" + token, success: function(response){
-              console.log(response);
+              //console.log(response);
+              if(!response.length)
+                return;
               //Eliminamos la capa de la interfaz
               Editor.currentState.json=response.toReturn;
               Editor.loadExternal();

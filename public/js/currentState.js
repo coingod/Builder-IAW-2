@@ -36,8 +36,8 @@ define([
         currentState.json.canvasInfo.th = Editor.Tileset.info.th;
         var wCanvas = parseInt($("#canvas").css("width")) / currentState.json.canvasInfo.tw;
         var hCanvas = parseInt($("#canvas").css("height")) / currentState.json.canvasInfo.th;
-        currentState.json.canvasInfo.width = wCanvas;
-        currentState.json.canvasInfo.height = hCanvas;
+        currentState.json.width = wCanvas;
+        currentState.json.height = hCanvas;
 
         currentState.loadLayerInfo();
 

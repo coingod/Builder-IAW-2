@@ -13,18 +13,30 @@ define([
         Tileset.info = {
             "tw": 64,
             "th": 64,
+            /*
             "categories": [
-                /*{ "name": "Default", "path": "img/tilesets/default.png", "icon": "extension", "width": 256, "height": 192 },*/
                 { "name": "Terreno", "path": "img/tilesets/terrain.png", "icon": "terrain", "width": 256, "height": 192, "emptyTiles": 0 },
                 { "name": "Naturaleza", "path": "img/tilesets/nature.png", "icon": "nature", "width": 256, "height": 192, "emptyTiles": 0 },
                 { "name": "Caminos", "path": "img/tilesets/roads.png", "icon": "directions", "width": 512, "height": 256, "emptyTiles": 2 },
                 { "name": "Edificios", "path": "img/tilesets/buildings.png", "icon": "store", "width": 256, "height": 192, "emptyTiles": 0 }
             ],
+            */
         };
+        /*
         //Cargamos los tilesets
         Tileset.load();
         //Mostrar la primer categoria
         $("#tilelist_0").show();
+        */
+
+        //Solicitamos las categorias/tilesets al servidor
+        $.ajax({ method: "GET", url: "/categories", success: function(response){
+            //Asignamos los datos
+            Tileset.info.categories = response;
+
+            //Cargamos los tilesets
+            Tileset.load();
+        }});
 
         return this;
     };
@@ -37,9 +49,17 @@ define([
         //Borramos el style de los tilesets viejos
         $("head style").remove();
 
+        //La primera vez no tenemos la clase tabs, asi que la agregamos
+        //No podemos ponerla directamente en el HTML por que al esperar al servidor, 
+        //para obtener las categorias, se bugea por estar vacio de contenido
+        $("#categorieslist").addClass("tabs");
+
         //Iteramos sobre la informacion del JSON creando una categoria para cada tileset
         var cantidad = Tileset.info.categories.length;
         for (i = 0; i < cantidad; i++) {
+            //Si no esta habilitada no la consideramos
+            if(!Tileset.info.categories[i].habilitado)
+                continue;
             //Generamos la pestaña de la categoria para el panel del editor
             var category = $("<li class='tab col s3'><a href='#tilelist_" + i + "' data-id=" + i + " data-delay='50' data-position='top' data-tooltip='" + Tileset.info.categories[i].name + "' class='tab-icon material-icons tooltipped'> " + Tileset.info.categories[i].icon + "</a></li>");
             $("#categorieslist").append(category);
@@ -50,19 +70,11 @@ define([
             } else {
                 scrollPaneApi.getContentPane().append("<div id='tilelist_" + i + "' class='tilelist collection col s12'></div>");
             }
-            $("#tilelist_" + i).hide();
-            /*
-            //Si hay mas de una categoria y no estamos procesando la primera
-            if ((cantidad > 1) && (i > 0)) {
-                //Ocultamos el contenido ya que no esta activo
-                $("#tilelist_" + i).hide();
-            }
-            */
+            //$("#tilelist_" + i).hide();
             Tileset.add(Tileset.info.categories[i], i, Tileset.info.tw, Tileset.info.th);
         }
         //Reinicializamos las tabs
-        //$(".tabs").tabs();
-
+        $("#categorieslist").tabs();
 
         //Configuramos el alto de la lista de tiles en funcion del alto de la pagina
         $("#tileset_container").css({

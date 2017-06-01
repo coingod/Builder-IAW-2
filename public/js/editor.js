@@ -115,6 +115,7 @@ define([
 
         //Obtenemos el JSON que se importo
         var json = Editor.currentState.json;
+        console.log(json);
 
         //Elimina todas las capas actuales
         Editor.Layers.removeAll();
@@ -124,8 +125,8 @@ define([
         Editor.Tileset.load();
 
         //Configuramos las dimensiones del canvas
-        var filas = json.canvasInfo.height;
-        var columnas = json.canvasInfo.width;
+        var filas = json.height;
+        var columnas = json.width;
         Canvas.setSize(columnas, filas);
 
         //Procesamos la lista de capas

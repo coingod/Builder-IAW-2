@@ -22,10 +22,6 @@ Route::get('/', function () {
 Route::get('/maps/{id}','MapsController@showMapsByUserId');
 //Map by token
 Route::get('/getmap/{token}','MapsController@mapByToken');
-//Esto es lo que se comparte
-Route::get('/share/{token}', function($token){
-	return view('builder',['map'=>$token]);
-});
 
 //Map by mapaId
 Route::get('/showmap/{id}','MapsController@mapById');
@@ -140,3 +136,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/redirect', 'SocialAuthController@redirect');
 Route::get('/callback', 'SocialAuthController@callback');
+
+//Esto es lo que se comparte
+Route::get('/{token}', function($token){
+	return view('builder',['map'=>$token]);
+});

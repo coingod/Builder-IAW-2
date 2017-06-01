@@ -124,7 +124,7 @@
                 </nav>
                 <div class="row">
                     <div class="col s12">
-                        <ul id="categorieslist" class="tabs tabs-fixed-width z-depth-1">
+                        <ul id="categorieslist" class="tabs-fixed-width z-depth-1">
                             <!-- En tiempo de ejecucion se genera un item por tileset -->
                         </ul>
                     </div>

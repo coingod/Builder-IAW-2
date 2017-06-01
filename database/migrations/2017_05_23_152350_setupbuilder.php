@@ -18,19 +18,7 @@ class Setupbuilder extends Migration
    */
   public function up()
   {
-/*
 
-      //Canvas
-      Schema::create('canvas', function (Blueprint $table) {
-        $table->increments('canvasId');
-        $table->string('descripcion')->nullable();
-        $table->integer('tw');
-        $table->integer('th');
-        $table->integer('width');
-        $table->integer('height');
-        $table->integer('habilitado');
-});
-*/
       //Tileset
       Schema::create('tilesets', function (Blueprint $table) {
           $table->increments('tilesetId');
@@ -85,7 +73,7 @@ class Setupbuilder extends Migration
       //Tiles
       Schema::create('tiles', function (Blueprint $table) {
           $table->increments('tileId');
-          $table->integer('idCategoria');
+          $table->integer('idCategoria')->references('categoriaId')->on('categoria')->onDelete('cascade')->onUpdate('cascade');
           $table->integer('layerId')->unsigned();
           $table->foreign('layerId')->references('layerId')->on('layers')->onDelete('cascade');
           $table->integer('cx');
@@ -107,8 +95,6 @@ class Setupbuilder extends Migration
         Schema::dropIfExists('layers');
         Schema::dropIfExists('categorias');
         Schema::dropIfExists('mapas');
-
-        Schema::dropIfExists('canvas');
         Schema::dropIfExists('tilesets');
 
 

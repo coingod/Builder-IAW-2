@@ -38,6 +38,7 @@ define([
             Tileset.load();
         }});
 
+
         return this;
     };
 
@@ -50,7 +51,7 @@ define([
         $("head style").remove();
 
         //La primera vez no tenemos la clase tabs, asi que la agregamos
-        //No podemos ponerla directamente en el HTML por que al esperar al servidor, 
+        //No podemos ponerla directamente en el HTML por que al esperar al servidor,
         //para obtener las categorias, se bugea por estar vacio de contenido
         $("#categorieslist").addClass("tabs");
 
@@ -60,6 +61,7 @@ define([
             //Si no esta habilitada no la consideramos
             if(!Tileset.info.categories[i].habilitado)
                 continue;
+
             //Generamos la pestaña de la categoria para el panel del editor
             var category = $("<li class='tab col s3'><a href='#tilelist_" + i + "' data-id=" + i + " data-delay='50' data-position='top' data-tooltip='" + Tileset.info.categories[i].name + "' class='tab-icon material-icons tooltipped'> " + Tileset.info.categories[i].icon + "</a></li>");
             $("#categorieslist").append(category);
@@ -102,7 +104,7 @@ define([
         var img = new Image(),
             name = category.name,
             style = document.createElement("style"), // Se deja este style en el head para que lo obtenga el canvas a la hora de dibujar
-            id = index; //Tileset.info.id;
+            id = category.categoriaId; //Tileset.info.id;
 
         img.src = category.path; //Imagen de la que vamos a cargar los tiles
         var that = this; //Var aux para poder acceder desde el listener al metodo set
@@ -113,7 +115,7 @@ define([
             buffer.canvas.height = Tileset.info.categories[index].height = this.height;
             buffer.drawImage(this, 0, 0);
             //Dibujamos la lista de tiles de la categoria
-            Tileset.draw(this, index);
+            Tileset.draw(this, index, id);
 
             $(style).attr("id", "tileset_" + id);
             css = ".ts_" + id + ", .ts_" + id + " > div {\n";
@@ -131,7 +133,7 @@ define([
 
     };
 
-    Tileset.draw = function(img, index) {
+    Tileset.draw = function(img, index, id) {
         var bufferADibujar = document.createElement("canvas").getContext("2d"),
             tw = Tileset.info.tw,
             th = Tileset.info.th,
@@ -155,7 +157,7 @@ define([
                     coords = xAct + "." + yAct;
                     nroit = x + y * celdasX;
                     bufferADibujar.drawImage(img, xAct, yAct, tw, th, 0, 0, tw, th);
-                    tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'></a>");
+                    tile = $("<a href='#!' class='collection-item avatar' data-ts='" + id + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'></a>");
                     $("#tilelist_" + index).append(tile);
                     bufferADibujar.clearRect(0, 0, tw, th); //Limpio el buffer para que al dibujar elementos transparentes no quede basura del tile anterior
                 }

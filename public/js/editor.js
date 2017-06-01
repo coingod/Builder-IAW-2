@@ -25,6 +25,18 @@ define([
         });
         */
 
+        //Share
+        var token=$("#canvas_wrapper").attr("data-map");
+        console.log("Hellouu "+token);
+        if(token!="new"){
+          //Es un token compartido
+          $.ajax({ method: "GET", url: "/getmap/" + token, success: function(response){
+              console.log(response);
+              //Eliminamos la capa de la interfaz
+              Editor.currentState.json=response.toReturn;
+              Editor.loadExternal();
+          }});
+        };
         //Configuramos la estructura de todos los cuadros de dialogo
         Editor.Layers.crearDialog();
         Editor.Maps.crearDialog();
@@ -70,6 +82,7 @@ define([
           Editor.currentState.json=JSON.parse(localStorage.json);
           Editor.loadExternal();
         });
+
         $("#upload_info").on("click", function(){
           Editor.currentState.loadCurrentState();
           Editor.currentState.json.layersInfo={}; //No necesitamos enviar esto, lo obviamos!

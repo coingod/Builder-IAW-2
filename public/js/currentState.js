@@ -116,9 +116,17 @@ define([
         var coords = backPos.split("px");
         var cx = Math.abs(parseInt(coords[0]) / tilesetInfo.tw);
         var cy = Math.abs(parseInt(coords[1]) / tilesetInfo.th);
-        var toReturn = cx + (cy * currentState.json.tilesetInfo.categories[idCategoria].width / currentState.json.tilesetInfo.tw);
-
-        return toReturn;
+        var i=0, index;
+        for(i=0; i<currentState.json.tilesetInfo.categories.length; i++){
+          if(currentState.json.tilesetInfo.categories[i].categoriaId==idCategoria){
+            index=i;
+            break;
+          }
+        }
+        if (index>=0)
+          return cx + (cy * currentState.json.tilesetInfo.categories[index].width / currentState.json.tilesetInfo.tw);
+        else
+          return -1;
     };
 
     return currentState;

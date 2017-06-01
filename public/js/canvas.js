@@ -104,10 +104,19 @@ define([
     //Dibuja en la capa actual un elemento especificado
     Canvas.loadElement = function(tileData) {
         //Formato: [id_tile, id_tileset, canvas_fila, canvas_columna]
-        var id_tile = tileData.tileInCategoria;
-        var id_ts = tileData.idCategoria;
+        var id_tile = tileData.tileInCategoria, id_ts=0, i;
+        //var id_ts = tileData.idCategoria;
         var fila = tileData.cx;
         var col = tileData.cy;
+
+
+        for(i=0; i<Editor.currentState.json.tilesetInfo.categories.length; i++){
+          if(Editor.currentState.json.tilesetInfo.categories[i].categoriaId==tileData.idCategoria){
+            id_ts=i;
+            break;
+          }
+        };
+
 
         //Consultamos las dimensiones del tileset
         var ts_width = Editor.Tileset.info.categories[id_ts].width; //$("#tileset_" + id_ts).attr("data-size");

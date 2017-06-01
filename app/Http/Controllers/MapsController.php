@@ -43,8 +43,8 @@ class MapsController extends Controller
         }
       }
 
-      return view('builder', ["map" => $toReturn]);
-      //return compact('toReturn');
+      //return view('builder', ["map" => $toReturn]);
+      return compact('toReturn');
     }
 
     public function mapById($id){
@@ -109,10 +109,16 @@ class MapsController extends Controller
     }
 
     public function deactivateCategory($id){
-      $categoria= Categoria::where('categoriaId','=',$id)->first();
-      $categoria->habilitado=0;
-      $categoria->save();
-      return Response($categoria, 200)->header('Content-Type', 'text/plain');
+      $tiles=Tile::where('idCategoria', '=', $id)->get()->toArray();
+      if(count($tiles)==0){
+        Categoria::where('categoriaId','=',$id)->getQuery()->delete();
+        return Response("eliminado", 200)->header('Content-Type', 'text/plain');
+      }
+      else
+      {
+        return Response("fail", 200)->header('Content-Type', 'text/plain');
+      }
+
     }
 
     //Creacion de nuevo mapa
@@ -159,8 +165,6 @@ class MapsController extends Controller
           //Para dada layer recorremos todos los tiles!
           for($j=0; $j<$cantTiles; $j++){
             $tile=new Tile();
-            //el campo idCategoria en el json tiene el offset dentro de las categorias.
-            //Sumamos a la primera y obtenemos el id real en la DB!
             $tile->idCategoria=$layersInfo[$i]["listaTiles"][$j]["idCategoria"];
             $tile->tileInCategoria=$layersInfo[$i]["listaTiles"][$j]["tileInCategoria"];
             $tile->cx=$layersInfo[$i]["listaTiles"][$j]["cx"];
